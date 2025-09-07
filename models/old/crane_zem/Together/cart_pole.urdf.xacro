@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<robot name="cart_pole" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:property name="M_PI" value="3.14159274"/>
+
+  <xacro:include filename="../base/base.urdf.xacro"/>
+  <xacro:include filename="../cart/cart.urdf.xacro"/>
+   <xacro:include filename="../cable/bar_part.xacro"/>
+  <xacro:include filename="../payload/payload_part.xacro"/>
+
+  
+
+  <!-- =============== Link & Joint =============== -->
+  <!-- Base -->
+  <link name="base_footprint"/>
+  <xacro:base_v0 parent="base_footprint">
+	<origin xyz="0 0 0"/>
+  </xacro:base_v0>
+
+  <!-- Yaw_joint -->
+  <xacro:cart_v0 parent="base_link">
+	<origin xyz="0 0 2.5" rpy="0 0 1.57"/>
+	<axis xyz="0 1 0"/>
+  </xacro:cart_v0>
+
+  <!-- Pitch_joint -->
+
+     <xacro:bar_v0 parent="cart_link">
+         <origin xyz="0 0 -0.2" rpy="0 -${M_PI} 0" />
+  </xacro:bar_v0> 
+
+
+  <xacro:payload_v0 parent="bar">
+         <origin xyz="0 0 0.5" rpy="0 0 0" />
+  </xacro:payload_v0> 
+  
+  <!-- =============== Transmissions =============== -->
+  <xacro:cart_trans_v0/>
+
+  <!-- =============== Gazebo =============== --> 
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
+  </gazebo>
+
+
+
+  <xacro:base_gazebo_v0/>
+  <xacro:cart_gazebo_v0/>
+
+
+</robot>

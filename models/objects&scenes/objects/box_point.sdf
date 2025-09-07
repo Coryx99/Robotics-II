@@ -1,0 +1,158 @@
+<sdf version="1.7">
+    <model name="box">
+        <pose>0 0 0.0 0 0 0</pose>
+        <link name="box_link">
+            <inertial>
+            !     <inertia>
+		    ! <ixx>0.000128</ixx>
+		    ! <iyy>0.000128</iyy>
+		    ! <izz>0.000128</izz>
+            !     </inertia> 
+                <mass>0.502</mass>
+            </inertial>
+
+            <!-- Box Visual -->
+            <visual name="visual_box">
+                <geometry>
+                    <box>
+                        <size>0.05 0.05 0.05</size>
+                    </box>
+                </geometry>
+                <material>
+                    <diffuse>1.0 0.55 0.0 0.5</diffuse>
+                </material>
+            </visual>
+
+            <!-- Four Corner Spheres -->
+            <collision name="collision_sphere_1">
+                <pose>-0.025 -0.025 -0.025 0 0 0</pose>
+                <geometry>
+                    <sphere>
+                        <radius>0.001</radius>
+                    </sphere>
+                </geometry>
+                <drake:proximity_properties>
+                    <drake:mu_dynamic>0.4</drake:mu_dynamic>
+                    <drake:hunt_crossley_dissipation>15.25</drake:hunt_crossley_dissipation>
+                </drake:proximity_properties>
+            </collision>
+
+
+            <collision name="collision_sphere_2">
+                <pose>0.025 -0.025 -0.025 0 0 0</pose>
+                <geometry>
+                    <sphere>
+                        <radius>0.001</radius>
+                    </sphere>
+                </geometry>
+                <drake:proximity_properties>
+                    <drake:mu_dynamic>0.4</drake:mu_dynamic>
+                    <drake:hunt_crossley_dissipation>15.25</drake:hunt_crossley_dissipation>
+                </drake:proximity_properties>
+            </collision>
+
+
+            <collision name="collision_sphere_3">
+                <pose>-0.025 0.025 -0.025 0 0 0</pose>
+                <geometry>
+                    <sphere>
+                        <radius>0.001</radius>
+                    </sphere>
+                </geometry>
+                <drake:proximity_properties>
+                    <drake:mu_dynamic>0.4</drake:mu_dynamic>
+                    <drake:hunt_crossley_dissipation>15.25</drake:hunt_crossley_dissipation>
+                </drake:proximity_properties>
+            </collision>
+
+            <collision name="collision_sphere_4">
+                <pose>0.025 0.025 -0.025 0 0 0</pose>
+                <geometry>
+                    <sphere>
+                        <radius>0.001</radius>
+                    </sphere>
+                </geometry>
+                <drake:proximity_properties>
+                    <drake:mu_dynamic>0.4</drake:mu_dynamic>
+                    <drake:hunt_crossley_dissipation>15.25</drake:hunt_crossley_dissipation>
+                </drake:proximity_properties>
+            </collision>
+            <!-- Four Top Corner Spheres -->
+		<collision name="collision_sphere_5">
+		    <pose>-0.025 -0.025 0.025 0 0 0</pose>
+		    <geometry>
+			<sphere>
+			    <radius>0.001</radius>
+			</sphere>
+		    </geometry>
+	        <drake:proximity_properties>
+	            <drake:mu_dynamic>0.4</drake:mu_dynamic>
+	            <drake:hunt_crossley_dissipation>15.25</drake:hunt_crossley_dissipation>
+	        </drake:proximity_properties>
+	    </collision>
+
+
+		<collision name="collision_sphere_6">
+		    <pose>0.025 -0.025 0.025 0 0 0</pose>
+		    <geometry>
+			<sphere>
+			    <radius>0.001</radius>
+			</sphere>
+		    </geometry>
+                <drake:proximity_properties>
+                    <drake:mu_dynamic>0.4</drake:mu_dynamic>
+                    <drake:hunt_crossley_dissipation>15.25</drake:hunt_crossley_dissipation>
+                </drake:proximity_properties>
+            </collision>
+
+
+		<collision name="collision_sphere_7">
+		    <pose>-0.025 0.025 0.025 0 0 0</pose>
+		    <geometry>
+			<sphere>
+			    <radius>0.001</radius>
+			</sphere>
+		    </geometry>
+                <drake:proximity_properties>
+                    <drake:mu_dynamic>0.4</drake:mu_dynamic>
+                    <drake:hunt_crossley_dissipation>15.25</drake:hunt_crossley_dissipation>
+                </drake:proximity_properties>
+            </collision>
+
+
+		<collision name="collision_sphere_8">
+		    <pose>0.025 0.025 0.025 0 0 0</pose>
+		    <geometry>
+			<sphere>
+			    <radius>0.001</radius>
+			</sphere>
+		    </geometry>
+                <drake:proximity_properties>
+                    <drake:mu_dynamic>0.4</drake:mu_dynamic>
+                    <drake:hunt_crossley_dissipation>15.25</drake:hunt_crossley_dissipation>
+                </drake:proximity_properties>
+            </collision>
+        </link>
+    </model>
+</sdf>
+            
+            <!-- Box Collision -->
+            <collision name="collision_box">
+                <geometry>
+                    <box>
+                        <size>0.05 0.05 0.05</size>
+                    </box>
+                </geometry>
+                <drake:proximity_properties>
+                    <drake:compliant_hydroelastic/>
+                    <drake:hydroelastic_modulus>1e7</drake:hydroelastic_modulus>
+                    <drake:mu_dynamic>0.4</drake:mu_dynamic>
+                    <drake:hunt_crossley_dissipation>15.25</drake:hunt_crossley_dissipation>
+                    <drake:mesh_resolution_hint>0.01</drake:mesh_resolution_hint>
+                </drake:proximity_properties>
+            </collision>
+
+
+
+<drake:mesh_resolution_hint>5.05</drake:mesh_resolution_hint>
+

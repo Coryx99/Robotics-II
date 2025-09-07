@@ -1,0 +1,246 @@
+<?xml version="1.0" ?>
+<robot name="">
+  <joint name="prop_0_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="prop_0_link"/>
+    <origin xyz="0.21213 -0.21213  0.01" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1e+16" upper="1e+16" effort="0.0" velocity="0.0"/>
+  </joint>
+  <joint name="prop_1_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="prop_1_link"/>
+    <origin xyz="-0.21213  0.21213  0.01" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1e+16" upper="1e+16" effort="0.0" velocity="0.0"/>
+  </joint>
+  <joint name="prop_2_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="prop_2_link"/>
+    <origin xyz="0.21213 0.21213 0.01" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1e+16" upper="1e+16" effort="0.0" velocity="0.0"/>
+  </joint>
+  <joint name="prop_3_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="prop_3_link"/>
+    <origin xyz="-0.21213 -0.21213  0.01" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1e+16" upper="1e+16" effort="0.0" velocity="0.0"/>
+  </joint>
+  <link name="base_link">
+    <inertial>
+      <mass value="3.5"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.05541666666666667" ixy="0" ixz="0" iyy="0.05541666666666667" iyz="0" izz="0.109375"/>
+    </inertial>
+    <collision name="base_link_collision">
+      <origin xyz="0     0    -0.075" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.325" length="0.15"/>
+      </geometry>
+    </collision>
+    <collision name="front_right_leg_link_collision">
+      <origin xyz="0.17677 -0.17677 -0.135" rpy="0       0      -0.78539"/>
+      <geometry>
+        <cylinder radius="0.012" length="0.24"/>
+      </geometry>
+    </collision>
+    <collision name="front_left_leg_link_collision">
+      <origin xyz="0.17677  0.17677 -0.135" rpy="0      0      0.78539"/>
+      <geometry>
+        <cylinder radius="0.012" length="0.24"/>
+      </geometry>
+    </collision>
+    <collision name="rear_left_leg_link_collision">
+      <origin xyz="-0.17677  0.17677 -0.135" rpy="0      0      2.35619"/>
+      <geometry>
+        <cylinder radius="0.012" length="0.24"/>
+      </geometry>
+    </collision>
+    <collision name="rear_right_leg_link_collision">
+      <origin xyz="-0.17677 -0.17677 -0.135" rpy="0       0      -2.35619"/>
+      <geometry>
+        <cylinder radius="0.012" length="0.24"/>
+      </geometry>
+    </collision>
+    <visual name="bottom_board_visual">
+      <origin xyz="0     0    -0.255" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_bottom_board.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="top_board_visual">
+      <origin xyz="0     0    -0.255" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_top_board.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="front_right_arm_visual">
+      <origin xyz="0     0    -0.255" rpy="0       0      -0.78539"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_arm_black.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="back_right_arm_visual">
+      <origin xyz="0     0    -0.255" rpy="0       0      -2.35619"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_arm_red.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="front_left_arm_visual">
+      <origin xyz="0     0    -0.255" rpy="0      0      0.78539"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_arm_black.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="back_left_arm_visual">
+      <origin xyz="0     0    -0.255" rpy="0      0      2.35619"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_arm_red.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="NUC_visual">
+      <origin xyz="0.002  0    -0.255" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_nuc.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="front_right_leg_visual">
+      <origin xyz="0.17677 -0.17677 -0.135" rpy="0       0      -0.78539"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_leg.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="front_left_leg_visual">
+      <origin xyz="0.17677  0.17677 -0.135" rpy="0      0      0.78539"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_leg.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="rear_left_leg_visual">
+      <origin xyz="-0.17677  0.17677 -0.135" rpy="0      0      2.35619"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_leg.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="rear_right_leg_visual">
+      <origin xyz="-0.17677 -0.17677 -0.135" rpy="0       0      -2.35619"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_leg.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="front_right_motor_visual">
+      <origin xyz="0.21213 -0.21213 -0.021" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_motor_black.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="back_right_rotor_visual">
+      <origin xyz="-0.21213 -0.21213 -0.021" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_motor_orange.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="front_left_rotor_visual">
+      <origin xyz="0.21213  0.21213 -0.021" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_motor_black.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="back_left_rotor_visual">
+      <origin xyz="-0.21213  0.21213 -0.021" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_motor_orange.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="battery_mount_visual">
+      <origin xyz="0       0      -0.03599" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_battery_mount.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <visual name="battery_visual">
+      <origin xyz="0      0     -0.0675" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.16 0.065 0.044"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="prop_0_link">
+    <inertial>
+      <mass value="0.005"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+    <collision name="prop_0_link_collision">
+      <origin xyz="0 0 0" rpy="3.14159 1.57079 3.14159"/>
+      <geometry>
+        <cylinder radius="0.01" length="0.39"/>
+      </geometry>
+    </collision>
+    <visual name="visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_prop_low_poly.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="prop_1_link">
+    <inertial>
+      <mass value="0.005"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+    <collision name="prop_1_link_collision">
+      <origin xyz="0 0 0" rpy="3.14159 1.57079 3.14159"/>
+      <geometry>
+        <cylinder radius="0.01" length="0.39"/>
+      </geometry>
+    </collision>
+    <visual name="visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_prop_low_poly.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="prop_2_link">
+    <inertial>
+      <mass value="0.005"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+    <collision name="prop_2_link_collision">
+      <origin xyz="0 0 0" rpy="3.14159 1.57079 3.14159"/>
+      <geometry>
+        <cylinder radius="0.01" length="0.39"/>
+      </geometry>
+    </collision>
+    <visual name="visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_prop_low_poly.dae" scale="-1 1 1"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="prop_3_link">
+    <inertial>
+      <mass value="0.005"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+    <collision name="prop_3_link_collision">
+      <origin xyz="0 0 0" rpy="3.14159 1.57079 3.14159"/>
+      <geometry>
+        <cylinder radius="0.01" length="0.39"/>
+      </geometry>
+    </collision>
+    <visual name="visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/tarot/t650/tarot_t650_prop_low_poly.dae" scale="-1 1 1"/>
+      </geometry>
+    </visual>
+  </link>
+</robot>

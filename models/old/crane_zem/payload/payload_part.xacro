@@ -1,0 +1,114 @@
+<?xml version="1.0" ?>
+
+<robot name="payload" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+
+  <xacro:macro name="payload_v0" params="parent *joint_origin">
+
+
+
+<joint name="joint11" type="continuous">
+    <xacro:insert_block name="joint_origin"/>
+    <parent link="${parent}"/>
+    <child link="link11"/>
+    <axis xyz="0 1 0" />
+  </joint>
+
+<transmission name="trans_11">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="joint11">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="motor_11">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    
+        
+  <link name="link11">
+    <inertial>
+      <mass value="0.025" />
+      <inertia ixx="5.8083e-4" ixy="0" ixz="0" iyy="3.0833e-5" iyz="0" izz="5.9083e-4" />
+    </inertial>
+  </link>
+
+
+<joint name="joint22" type="continuous">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="link11"/>
+    <child link="link22"/>
+    <axis xyz="0 0 1" />
+  </joint>
+
+<transmission name="trans_22">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="joint22">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="motor_22">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+  <link name="link22">
+    <inertial>
+      <mass value="0.025" />
+      <inertia ixx="5.8083e-4" ixy="0" ixz="0" iyy="3.0833e-5" iyz="0" izz="5.9083e-4" />
+    </inertial>  
+  </link>
+
+  <joint name="joint33" type="continuous">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="link22"/>
+    <child link="payload"/>
+    <axis xyz="1 0 0" />
+  </joint>
+
+<transmission name="trans_33">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="joint33">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="motor_33">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+ 
+
+<link name="payload">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0.3"/>
+            <geometry>
+                <box size="0.12 0.8 0.6"/>
+            </geometry>
+            <material name="dark_grey">
+       	 <color rgba="0.2 0.2 0.2 1.0"/> <!-- Dark grey color -->
+     	    </material>
+        </visual>
+       <inertial>
+          <mass value="70" />
+          <origin xyz="0 0 0.3" rpy="0 0 0" />
+          <inertia ixx="2.18" ixy="0" ixz="0" iyy="5.83" iyz="0" izz="3.82" />
+        </inertial>
+    <collision>
+             <origin rpy="0 0 0" xyz="0 0 0.3"/>
+            <geometry>
+                <box size="0.12 0.8 0.6"/>
+            </geometry>
+        </collision>
+    </link>
+
+ <gazebo reference="payload">
+      <selfCollide>true</selfCollide>
+      <mu1 value="1.2" />
+      <mu2 value="1.2" />
+    </gazebo>
+
+   </xacro:macro>
+ 
+</robot>

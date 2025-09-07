@@ -1,0 +1,27 @@
+<model name="slab_2">
+  <link name="link">
+    <inertial>
+      <mass>0.16709</mass>
+      <pose>0 0 0 0 0 0</pose>
+      <inertia>
+        <ixx>1.9628e-04</ixx>
+        <iyy>1.9451e-04</iyy>
+        <izz>1.123e-04</izz>
+      </inertia>
+    </inertial>
+    <visual name="visual">
+      <geometry><box><size>0.063 0.064 0.10</size></box></geometry>
+      <material><diffuse>0.6 0.3 0.1 1</diffuse></material>
+    </visual>
+    <collision name="collision">
+      <geometry><box><size>0.063 0.064 0.10</size></box></geometry>
+      <drake:proximity_properties>
+        <drake:compliant_hydroelastic/>
+        <drake:hydroelastic_modulus>100e6</drake:hydroelastic_modulus>
+        <drake:mu_dynamic>0.5</drake:mu_dynamic>
+        <drake:hunt_crossley_dissipation>100</drake:hunt_crossley_dissipation>
+      </drake:proximity_properties>
+    </collision>
+  </link>
+</model>
+

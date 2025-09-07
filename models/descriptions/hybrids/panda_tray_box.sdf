@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <world name="default">
+    <model name="manipulator">
+
+      <!-- Include the Panda robot -->
+      <include>              
+        <uri>/home/cory/Documents/drake_brubotics/models/descriptions/robots/panda_fr3/urdf/panda_fr3_tray.urdf</uri> 
+        <name>panda</name>
+      </include>
+
+      <!-- Include the box object -->
+      <include>
+        <uri>/home/cory/Documents/drake_brubotics/models/objects&scenes/objects/box.sdf</uri>
+        <name>box</name>
+      </include>
+      
+
+      <!-- Joint to fix the Panda tray to the box -->
+      <joint name="robot_to_world" type="fixed">
+        <parent>world</parent>
+        <child>panda::panda_link0</child>
+      </joint>
+      <joint name="tray_to_box" type="fixed">
+        <parent>panda::panda_tray_shaped_tcp</parent>
+        <child>box::box_link</child>
+      </joint>
+    </model>
+  </world>
+</sdf>
+

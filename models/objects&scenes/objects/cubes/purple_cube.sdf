@@ -1,0 +1,27 @@
+<model name="cube_purple">
+  <link name="link">
+    <inertial>
+      <mass>0.06544</mass>
+      <pose>0 0 0 0 0 0</pose>
+      <inertia>
+        <ixx>2.72666667e-05</ixx>
+        <iyy>2.72666667e-05</iyy>
+        <izz>2.72666667e-05</izz>
+      </inertia>
+    </inertial>
+    <visual name="visual">
+      <geometry><box><size>0.05 0.05 0.05</size></box></geometry>
+      <material><diffuse>0.5 0 0.5 1</diffuse></material>
+    </visual>
+    <collision name="collision">
+      <geometry><box><size>0.05 0.05 0.05</size></box></geometry>
+      <drake:proximity_properties>
+        <drake:compliant_hydroelastic/>
+        <drake:hydroelastic_modulus>90e6</drake:hydroelastic_modulus>
+        <drake:mu_dynamic>0.35</drake:mu_dynamic>
+        <drake:hunt_crossley_dissipation>100</drake:hunt_crossley_dissipation>
+      </drake:proximity_properties>
+    </collision>
+  </link>
+</model>
+

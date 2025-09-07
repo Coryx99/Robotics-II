@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="default">
+    <model name="husky_with_panda">
+      <pose>0.4 0 0.01 0 0 0</pose>
+      <!-- Include the Husky model -->
+      <include>
+        <uri>/home/cory/Documents/drake_brubotics/models/descriptions/robots/husky_description/urdf/husky.urdf</uri>
+        <name>husky</name>
+      </include>
+
+      <!-- Include the Panda robot model -->
+      <include>
+        <uri>/home/cory/Documents/drake_brubotics/models/old/panda_old/urdf/panda.urdf</uri> 
+        <name>panda</name>
+      </include>
+      <!-- Joint to fix the Panda base to the Husky platform -->
+      <joint name="panda_to_husky" type="fixed">
+        <parent>husky::top_plate_link</parent>
+        <child>panda::panda_link0</child>
+        <pose>0 0 0.5 0 0 0</pose> <!-- Adjust the Z value to place the Panda on top of the Husky -->
+      </joint>
+    </model>
+  </world>
+</sdf>
+
+
+<uri>/home/cory/panda_description/urdf/panda_nofix.urdf</uri>              
+<uri>/home/cory/Documents/drake_ddp-main/models/panda_fr3/urdf/panda_fr3_notfixed.urdf</uri>

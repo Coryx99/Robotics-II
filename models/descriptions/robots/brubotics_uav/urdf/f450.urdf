@@ -1,0 +1,301 @@
+<?xml version="1.0" ?>
+<robot name="f450">
+  <joint name="prop_0_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="prop_0_link"/>
+    <origin xyz="0.16263 -0.16263 0.0115" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="523.6" velocity="523.6"/>
+  </joint>
+  <joint name="prop_1_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="prop_1_link"/>
+    <origin xyz="-0.16263 0.16263 0.0115" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="523.6" velocity="523.6"/>
+  </joint>
+  <joint name="prop_2_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="prop_2_link"/>
+    <origin xyz="0.16263 0.16263 0.0115" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="523.6" velocity="523.6"/>
+  </joint>
+  <joint name="prop_3_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="prop_3_link"/>
+    <origin xyz="-0.16263 -0.16263 0.0115" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="523.6" velocity="523.6"/>
+  </joint>
+  
+  <link name="base_link">
+    <inertial>
+      <mass value="1.7"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.01735416666666667" ixy="0" ixz="0" iyy="0.01735416666666667" iyz="0" izz="0.034"/>
+    </inertial>
+    <collision name="base_link_collision">
+      <origin xyz="0    0   -0.05" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.2" length="0.1"/>
+      </geometry>
+    </collision>
+    <collision name="front_right_leg_link_collision">
+      <origin xyz="0.15754 -0.15754 -0.11" rpy="0      0      2.35619"/>
+      <geometry>
+        <cylinder radius="0.012" length="0.17"/>
+      </geometry>
+    </collision>
+    <collision name="front_left_leg_link_collision">
+      <origin xyz="0.15754  0.15754 -0.11" rpy="0       0      -2.35619"/>
+      <geometry>
+        <cylinder radius="0.012" length="0.17"/>
+      </geometry>
+    </collision>
+    <collision name="back_right_leg_link_collision">
+      <origin xyz="-0.15754 -0.15754 -0.11" rpy="0      0      0.78539"/>
+      <geometry>
+        <cylinder radius="0.012" length="0.17"/>
+      </geometry>
+    </collision>
+    <collision name="back_left_leg_link_collision">
+      <origin xyz="-0.15754  0.15754 -0.11" rpy="0       0      -0.78539"/>
+      <geometry>
+        <cylinder radius="0.012" length="0.17"/>
+      </geometry>
+    </collision>
+    <visual name="lower_central_board_visual">
+      <origin xyz="0    0   -0.05" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_central_bottom.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <visual name="upper_central_board_visual">
+      <origin xyz="0     0    -0.012" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_central_top.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <visual name="front_right_arm_visual">
+      <origin xyz="0.04596 -0.04596 -0.012" rpy="0       0      -0.78539"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_arm.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <visual name="front_left_arm_visual">
+      <origin xyz="0.04596  0.04596 -0.012" rpy="0      0      0.78539"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_arm.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <visual name="back_right_arm_visual">
+      <origin xyz="-0.04596 -0.04596 -0.012" rpy="0       0      -2.35619"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_arm.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <visual name="back_left_arm_visual">
+      <origin xyz="-0.04596  0.04596 -0.012" rpy="0      0      2.35619"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_arm.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <visual name="NUC_visual">
+      <origin xyz="0    0    0.023" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_nuc.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <visual name="front_right_leg_visual">
+      <origin xyz="0.15754 -0.15754 -0.11" rpy="1.57      0      2.35619"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_leg_170mm.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <visual name="front_left_leg_visual">
+      <origin xyz="0.15754  0.15754 -0.11" rpy="1.57       0      -2.35619"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_leg_170mm.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <visual name="back_right_leg_visual">
+      <origin xyz="-0.15754 -0.15754 -0.11" rpy="1.57      0      0.78539"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_leg_170mm.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <visual name="back_left_leg_visual">
+      <origin xyz="-0.15754  0.15754 -0.11" rpy="1.57       0      -0.78539"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_leg_170mm.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <visual name="front_right_motor_visual">
+      <origin xyz="0.16263 -0.16263 -0.012" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_rotor.obj" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="front_left_motor_visual">
+      <origin xyz="0.16263  0.16263 -0.012" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_rotor.obj" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="back_right_motor_visual">
+      <origin xyz="-0.16263 -0.16263 -0.012" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_rotor.obj" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="back_left_motor_visual">
+      <origin xyz="-0.16263  0.16263 -0.012" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_rotor.obj" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <visual name="battery_mount_visual">
+      <origin xyz="0     0    -0.078" rpy="0      0      1.57079"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_battery_mount.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <visual name="battery_visual">
+      <origin xyz="0     0    -0.077" rpy="0      0      1.57079"/>
+      <geometry>
+        <box size="0.13 0.042 0.044"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="prop_0_link">
+    <inertial>
+      <mass value="0.005"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+    <collision name="prop_0_link_collision">
+      <origin xyz="0 0 0" rpy="3.14159 1.57079 3.14159"/>
+      <geometry>
+        <cylinder radius="0.01" length="0.236"/>
+      </geometry>
+    </collision>
+    <visual name="visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_prop.obj"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="prop_1_link">
+    <inertial>
+      <mass value="0.005"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+    <collision name="prop_1_link_collision">
+      <origin xyz="0 0 0" rpy="3.14159 1.57079 3.14159"/>
+      <geometry>
+        <cylinder radius="0.01" length="0.236"/>
+      </geometry>
+    </collision>
+    <visual name="visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_prop.obj"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="prop_2_link">
+    <inertial>
+      <mass value="0.005"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+    <collision name="prop_2_link_collision">
+      <origin xyz="0 0 0" rpy="3.14159 1.57079 3.14159"/>
+      <geometry>
+        <cylinder radius="0.01" length="0.236"/>
+      </geometry>
+    </collision>
+    <visual name="visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_prop.obj"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="prop_3_link">
+    <inertial>
+      <mass value="0.005"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+    <collision name="prop_3_link_collision">
+      <origin xyz="0 0 0" rpy="3.14159 1.57079 3.14159"/>
+      <geometry>
+        <cylinder radius="0.01" length="0.236"/>
+      </geometry>
+    </collision>
+    <visual name="visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/dji/f450/dji_f450_prop.obj"/>
+      </geometry>
+    </visual>
+  </link>
+
+    <transmission name="prop_tran0">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="prop_0_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="prop_motor0">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+      <drake:gear_ratio value="1.0" />
+      <drake:rotor_inertia value="0.0000462474144" />
+    </actuator>
+  </transmission>
+
+  <transmission name="prop_tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="prop_1_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="prop_motor1">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+      <drake:gear_ratio value="1.0" />
+      <drake:rotor_inertia value="0.0000462474144" />
+    </actuator>
+  </transmission>
+
+  <transmission name="prop_tran2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="prop_2_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="prop_motor2">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+      <drake:gear_ratio value="1.0" />
+      <drake:rotor_inertia value="0.0000462474144" />
+    </actuator>
+  </transmission>
+
+  <transmission name="prop_tran3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="prop_3_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="prop_motor3">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+      <drake:gear_ratio value="1.0" />
+      <drake:rotor_inertia value="0.0000462474144" />
+    </actuator>
+  </transmission>
+  
+</robot>
+

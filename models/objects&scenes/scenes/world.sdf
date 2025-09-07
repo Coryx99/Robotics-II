@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <world name="scene">
+      <!-- Importing URDF model -->
+    <include>
+      <uri>/home/cory/Documents/object_models/zem_crane/URDF/pan_crane.urdf</uri>
+    </include>
+    </world>
+</sdf>
+
+
+

@@ -1,0 +1,1957 @@
+<sdf version='1.6'>
+	<model name='example_rope'>
+  <link name="example_rope_capsule_1">
+      <pose> 0 0.5 3.0 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 -0.025 0 0 0</pose>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>4.666666666666667e-06</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>4.666666666666667e-06</iyy>
+          <iyz>0</iyz>
+          <izz>1.0000000000000002e-06</izz>
+        </inertia>
+      </inertial>
+      <visual name='cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>0.0 0.5 0.0 1.0</diffuse>
+        </material>
+      </visual>
+    
+      <visual name='ball_1'>
+        <pose frame=''> 0 0 0 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <visual name='ball_2'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <collision name='example_rope_capsule_1_cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        
+        <surface>
+          <friction>
+          <ode>
+            <mu>0.5</mu>
+            <mu2>0.5</mu2>
+          </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- TODO: Put collision here -->
+  </link>
+  <link name="example_rope_capsule_2">
+      <pose> 0 0.5 2.95 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 -0.025 0 0 0</pose>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>4.666666666666667e-06</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>4.666666666666667e-06</iyy>
+          <iyz>0</iyz>
+          <izz>1.0000000000000002e-06</izz>
+        </inertia>
+      </inertial>
+      <visual name='cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>0.0 0.4 0.06666666666666667 1.0</diffuse>
+        </material>
+      </visual>
+    
+      <visual name='ball_1'>
+        <pose frame=''> 0 0 0 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <visual name='ball_2'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <collision name='example_rope_capsule_2_cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        
+        <surface>
+          <friction>
+          <ode>
+            <mu>0.5</mu>
+            <mu2>0.5</mu2>
+          </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- TODO: Put collision here -->
+  </link>
+  <link name="example_rope_capsule_1_extra">
+    <pose> 0 0.5 2.95 0 0 0</pose>
+    <inertial>
+      <!-- HACK: inertias are not consistent -->
+      <mass>1e-6</mass>
+      <inertia>
+        <ixx>1e-6</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>1e-6</iyy>
+        <iyz>0</iyz>
+        <izz>1e-6</izz>
+      </inertia>
+    </inertial>
+  </link>
+  <joint name="example_rope_capsule_1_example_rope_capsule_2_joint_x" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_2</child>
+    <parent>example_rope_capsule_1_extra</parent>
+    <axis>
+      <xyz> 1 0 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  
+  <joint name="example_rope_capsule_1_example_rope_capsule_2_joint_y" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_1_extra</child>
+    <parent>example_rope_capsule_1</parent>
+    <axis>
+      <xyz> 0 1 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  <link name="example_rope_capsule_3">
+      <pose> 0 0.5 2.9000000000000004 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 -0.025 0 0 0</pose>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>4.666666666666667e-06</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>4.666666666666667e-06</iyy>
+          <iyz>0</iyz>
+          <izz>1.0000000000000002e-06</izz>
+        </inertia>
+      </inertial>
+      <visual name='cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>0.0 0.3 0.13333333333333333 1.0</diffuse>
+        </material>
+      </visual>
+    
+      <visual name='ball_1'>
+        <pose frame=''> 0 0 0 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <visual name='ball_2'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <collision name='example_rope_capsule_3_cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        
+        <surface>
+          <friction>
+          <ode>
+            <mu>0.5</mu>
+            <mu2>0.5</mu2>
+          </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- TODO: Put collision here -->
+  </link>
+  <link name="example_rope_capsule_2_extra">
+    <pose> 0 0.5 2.9000000000000004 0 0 0</pose>
+    <inertial>
+      <!-- HACK: inertias are not consistent -->
+      <mass>1e-6</mass>
+      <inertia>
+        <ixx>1e-6</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>1e-6</iyy>
+        <iyz>0</iyz>
+        <izz>1e-6</izz>
+      </inertia>
+    </inertial>
+  </link>
+  <joint name="example_rope_capsule_2_example_rope_capsule_3_joint_x" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_3</child>
+    <parent>example_rope_capsule_2_extra</parent>
+    <axis>
+      <xyz> 1 0 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  
+  <joint name="example_rope_capsule_2_example_rope_capsule_3_joint_y" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_2_extra</child>
+    <parent>example_rope_capsule_2</parent>
+    <axis>
+      <xyz> 0 1 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  <link name="example_rope_capsule_4">
+      <pose> 0 0.5 2.8500000000000005 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 -0.025 0 0 0</pose>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>4.666666666666667e-06</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>4.666666666666667e-06</iyy>
+          <iyz>0</iyz>
+          <izz>1.0000000000000002e-06</izz>
+        </inertia>
+      </inertial>
+      <visual name='cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>0.0 0.19999999999999996 0.2 1.0</diffuse>
+        </material>
+      </visual>
+    
+      <visual name='ball_1'>
+        <pose frame=''> 0 0 0 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <visual name='ball_2'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <collision name='example_rope_capsule_4_cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        
+        <surface>
+          <friction>
+          <ode>
+            <mu>0.5</mu>
+            <mu2>0.5</mu2>
+          </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- TODO: Put collision here -->
+  </link>
+  <link name="example_rope_capsule_3_extra">
+    <pose> 0 0.5 2.8500000000000005 0 0 0</pose>
+    <inertial>
+      <!-- HACK: inertias are not consistent -->
+      <mass>1e-6</mass>
+      <inertia>
+        <ixx>1e-6</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>1e-6</iyy>
+        <iyz>0</iyz>
+        <izz>1e-6</izz>
+      </inertia>
+    </inertial>
+  </link>
+  <joint name="example_rope_capsule_3_example_rope_capsule_4_joint_x" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_4</child>
+    <parent>example_rope_capsule_3_extra</parent>
+    <axis>
+      <xyz> 1 0 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  
+  <joint name="example_rope_capsule_3_example_rope_capsule_4_joint_y" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_3_extra</child>
+    <parent>example_rope_capsule_3</parent>
+    <axis>
+      <xyz> 0 1 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  <link name="example_rope_capsule_5">
+      <pose> 0 0.5 2.8000000000000007 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 -0.025 0 0 0</pose>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>4.666666666666667e-06</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>4.666666666666667e-06</iyy>
+          <iyz>0</iyz>
+          <izz>1.0000000000000002e-06</izz>
+        </inertia>
+      </inertial>
+      <visual name='cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>0.0 0.09999999999999998 0.26666666666666666 1.0</diffuse>
+        </material>
+      </visual>
+    
+      <visual name='ball_1'>
+        <pose frame=''> 0 0 0 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <visual name='ball_2'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <collision name='example_rope_capsule_5_cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        
+        <surface>
+          <friction>
+          <ode>
+            <mu>0.5</mu>
+            <mu2>0.5</mu2>
+          </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- TODO: Put collision here -->
+  </link>
+  <link name="example_rope_capsule_4_extra">
+    <pose> 0 0.5 2.8000000000000007 0 0 0</pose>
+    <inertial>
+      <!-- HACK: inertias are not consistent -->
+      <mass>1e-6</mass>
+      <inertia>
+        <ixx>1e-6</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>1e-6</iyy>
+        <iyz>0</iyz>
+        <izz>1e-6</izz>
+      </inertia>
+    </inertial>
+  </link>
+  <joint name="example_rope_capsule_4_example_rope_capsule_5_joint_x" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_5</child>
+    <parent>example_rope_capsule_4_extra</parent>
+    <axis>
+      <xyz> 1 0 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  
+  <joint name="example_rope_capsule_4_example_rope_capsule_5_joint_y" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_4_extra</child>
+    <parent>example_rope_capsule_4</parent>
+    <axis>
+      <xyz> 0 1 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  <link name="example_rope_capsule_6">
+      <pose> 0 0.5 2.750000000000001 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 -0.025 0 0 0</pose>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>4.666666666666667e-06</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>4.666666666666667e-06</iyy>
+          <iyz>0</iyz>
+          <izz>1.0000000000000002e-06</izz>
+        </inertia>
+      </inertial>
+      <visual name='cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>0.0 0.0 0.3333333333333333 1.0</diffuse>
+        </material>
+      </visual>
+    
+      <visual name='ball_1'>
+        <pose frame=''> 0 0 0 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <visual name='ball_2'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <collision name='example_rope_capsule_6_cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        
+        <surface>
+          <friction>
+          <ode>
+            <mu>0.5</mu>
+            <mu2>0.5</mu2>
+          </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- TODO: Put collision here -->
+  </link>
+  <link name="example_rope_capsule_5_extra">
+    <pose> 0 0.5 2.750000000000001 0 0 0</pose>
+    <inertial>
+      <!-- HACK: inertias are not consistent -->
+      <mass>1e-6</mass>
+      <inertia>
+        <ixx>1e-6</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>1e-6</iyy>
+        <iyz>0</iyz>
+        <izz>1e-6</izz>
+      </inertia>
+    </inertial>
+  </link>
+  <joint name="example_rope_capsule_5_example_rope_capsule_6_joint_x" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_6</child>
+    <parent>example_rope_capsule_5_extra</parent>
+    <axis>
+      <xyz> 1 0 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  
+  <joint name="example_rope_capsule_5_example_rope_capsule_6_joint_y" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_5_extra</child>
+    <parent>example_rope_capsule_5</parent>
+    <axis>
+      <xyz> 0 1 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  <link name="example_rope_capsule_7">
+      <pose> 0 0.5 2.700000000000001 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 -0.025 0 0 0</pose>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>4.666666666666667e-06</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>4.666666666666667e-06</iyy>
+          <iyz>0</iyz>
+          <izz>1.0000000000000002e-06</izz>
+        </inertia>
+      </inertial>
+      <visual name='cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>0.0 0.10000000000000009 0.4 1.0</diffuse>
+        </material>
+      </visual>
+    
+      <visual name='ball_1'>
+        <pose frame=''> 0 0 0 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <visual name='ball_2'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <collision name='example_rope_capsule_7_cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        
+        <surface>
+          <friction>
+          <ode>
+            <mu>0.5</mu>
+            <mu2>0.5</mu2>
+          </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- TODO: Put collision here -->
+  </link>
+  <link name="example_rope_capsule_6_extra">
+    <pose> 0 0.5 2.700000000000001 0 0 0</pose>
+    <inertial>
+      <!-- HACK: inertias are not consistent -->
+      <mass>1e-6</mass>
+      <inertia>
+        <ixx>1e-6</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>1e-6</iyy>
+        <iyz>0</iyz>
+        <izz>1e-6</izz>
+      </inertia>
+    </inertial>
+  </link>
+  <joint name="example_rope_capsule_6_example_rope_capsule_7_joint_x" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_7</child>
+    <parent>example_rope_capsule_6_extra</parent>
+    <axis>
+      <xyz> 1 0 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  
+  <joint name="example_rope_capsule_6_example_rope_capsule_7_joint_y" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_6_extra</child>
+    <parent>example_rope_capsule_6</parent>
+    <axis>
+      <xyz> 0 1 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  <link name="example_rope_capsule_8">
+      <pose> 0 0.5 2.6500000000000012 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 -0.025 0 0 0</pose>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>4.666666666666667e-06</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>4.666666666666667e-06</iyy>
+          <iyz>0</iyz>
+          <izz>1.0000000000000002e-06</izz>
+        </inertia>
+      </inertial>
+      <visual name='cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>0.0 0.19999999999999996 0.4666666666666667 1.0</diffuse>
+        </material>
+      </visual>
+    
+      <visual name='ball_1'>
+        <pose frame=''> 0 0 0 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <visual name='ball_2'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <collision name='example_rope_capsule_8_cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        
+        <surface>
+          <friction>
+          <ode>
+            <mu>0.5</mu>
+            <mu2>0.5</mu2>
+          </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- TODO: Put collision here -->
+  </link>
+  <link name="example_rope_capsule_7_extra">
+    <pose> 0 0.5 2.6500000000000012 0 0 0</pose>
+    <inertial>
+      <!-- HACK: inertias are not consistent -->
+      <mass>1e-6</mass>
+      <inertia>
+        <ixx>1e-6</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>1e-6</iyy>
+        <iyz>0</iyz>
+        <izz>1e-6</izz>
+      </inertia>
+    </inertial>
+  </link>
+  <joint name="example_rope_capsule_7_example_rope_capsule_8_joint_x" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_8</child>
+    <parent>example_rope_capsule_7_extra</parent>
+    <axis>
+      <xyz> 1 0 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  
+  <joint name="example_rope_capsule_7_example_rope_capsule_8_joint_y" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_7_extra</child>
+    <parent>example_rope_capsule_7</parent>
+    <axis>
+      <xyz> 0 1 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  <link name="example_rope_capsule_9">
+      <pose> 0 0.5 2.6000000000000014 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 -0.025 0 0 0</pose>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>4.666666666666667e-06</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>4.666666666666667e-06</iyy>
+          <iyz>0</iyz>
+          <izz>1.0000000000000002e-06</izz>
+        </inertia>
+      </inertial>
+      <visual name='cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>0.0 0.30000000000000004 0.5333333333333333 1.0</diffuse>
+        </material>
+      </visual>
+    
+      <visual name='ball_1'>
+        <pose frame=''> 0 0 0 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <visual name='ball_2'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <collision name='example_rope_capsule_9_cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        
+        <surface>
+          <friction>
+          <ode>
+            <mu>0.5</mu>
+            <mu2>0.5</mu2>
+          </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- TODO: Put collision here -->
+  </link>
+  <link name="example_rope_capsule_8_extra">
+    <pose> 0 0.5 2.6000000000000014 0 0 0</pose>
+    <inertial>
+      <!-- HACK: inertias are not consistent -->
+      <mass>1e-6</mass>
+      <inertia>
+        <ixx>1e-6</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>1e-6</iyy>
+        <iyz>0</iyz>
+        <izz>1e-6</izz>
+      </inertia>
+    </inertial>
+  </link>
+  <joint name="example_rope_capsule_8_example_rope_capsule_9_joint_x" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_9</child>
+    <parent>example_rope_capsule_8_extra</parent>
+    <axis>
+      <xyz> 1 0 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  
+  <joint name="example_rope_capsule_8_example_rope_capsule_9_joint_y" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_8_extra</child>
+    <parent>example_rope_capsule_8</parent>
+    <axis>
+      <xyz> 0 1 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  <link name="example_rope_capsule_10">
+      <pose> 0 0.5 2.5500000000000016 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 -0.025 0 0 0</pose>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>4.666666666666667e-06</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>4.666666666666667e-06</iyy>
+          <iyz>0</iyz>
+          <izz>1.0000000000000002e-06</izz>
+        </inertia>
+      </inertial>
+      <visual name='cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>0.0 0.3999999999999999 0.6 1.0</diffuse>
+        </material>
+      </visual>
+    
+      <visual name='ball_1'>
+        <pose frame=''> 0 0 0 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <visual name='ball_2'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <collision name='example_rope_capsule_10_cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        
+        <surface>
+          <friction>
+          <ode>
+            <mu>0.5</mu>
+            <mu2>0.5</mu2>
+          </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- TODO: Put collision here -->
+  </link>
+  <link name="example_rope_capsule_9_extra">
+    <pose> 0 0.5 2.5500000000000016 0 0 0</pose>
+    <inertial>
+      <!-- HACK: inertias are not consistent -->
+      <mass>1e-6</mass>
+      <inertia>
+        <ixx>1e-6</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>1e-6</iyy>
+        <iyz>0</iyz>
+        <izz>1e-6</izz>
+      </inertia>
+    </inertial>
+  </link>
+  <joint name="example_rope_capsule_9_example_rope_capsule_10_joint_x" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_10</child>
+    <parent>example_rope_capsule_9_extra</parent>
+    <axis>
+      <xyz> 1 0 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  
+  <joint name="example_rope_capsule_9_example_rope_capsule_10_joint_y" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_9_extra</child>
+    <parent>example_rope_capsule_9</parent>
+    <axis>
+      <xyz> 0 1 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  <link name="example_rope_capsule_11">
+      <pose> 0 0.5 2.5000000000000018 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 -0.025 0 0 0</pose>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>4.666666666666667e-06</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>4.666666666666667e-06</iyy>
+          <iyz>0</iyz>
+          <izz>1.0000000000000002e-06</izz>
+        </inertia>
+      </inertial>
+      <visual name='cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>0.0 0.5 0.6666666666666666 1.0</diffuse>
+        </material>
+      </visual>
+    
+      <visual name='ball_1'>
+        <pose frame=''> 0 0 0 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <visual name='ball_2'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <collision name='example_rope_capsule_11_cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        
+        <surface>
+          <friction>
+          <ode>
+            <mu>0.5</mu>
+            <mu2>0.5</mu2>
+          </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- TODO: Put collision here -->
+  </link>
+  <link name="example_rope_capsule_10_extra">
+    <pose> 0 0.5 2.5000000000000018 0 0 0</pose>
+    <inertial>
+      <!-- HACK: inertias are not consistent -->
+      <mass>1e-6</mass>
+      <inertia>
+        <ixx>1e-6</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>1e-6</iyy>
+        <iyz>0</iyz>
+        <izz>1e-6</izz>
+      </inertia>
+    </inertial>
+  </link>
+  <joint name="example_rope_capsule_10_example_rope_capsule_11_joint_x" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_11</child>
+    <parent>example_rope_capsule_10_extra</parent>
+    <axis>
+      <xyz> 1 0 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  
+  <joint name="example_rope_capsule_10_example_rope_capsule_11_joint_y" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_10_extra</child>
+    <parent>example_rope_capsule_10</parent>
+    <axis>
+      <xyz> 0 1 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  <link name="example_rope_capsule_12">
+      <pose> 0 0.5 2.450000000000002 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 -0.025 0 0 0</pose>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>4.666666666666667e-06</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>4.666666666666667e-06</iyy>
+          <iyz>0</iyz>
+          <izz>1.0000000000000002e-06</izz>
+        </inertia>
+      </inertial>
+      <visual name='cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>0.19999999999999973 0.5999999999999999 0.7333333333333333 1.0</diffuse>
+        </material>
+      </visual>
+    
+      <visual name='ball_1'>
+        <pose frame=''> 0 0 0 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <visual name='ball_2'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <collision name='example_rope_capsule_12_cylinder'>
+        <pose frame=''> 0 0 -0.025 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.05</length>
+          </cylinder>
+        </geometry>
+        
+        <surface>
+          <friction>
+          <ode>
+            <mu>0.5</mu>
+            <mu2>0.5</mu2>
+          </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- TODO: Put collision here -->
+  </link>
+  <link name="example_rope_capsule_11_extra">
+    <pose> 0 0.5 2.450000000000002 0 0 0</pose>
+    <inertial>
+      <!-- HACK: inertias are not consistent -->
+      <mass>1e-6</mass>
+      <inertia>
+        <ixx>1e-6</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>1e-6</iyy>
+        <iyz>0</iyz>
+        <izz>1e-6</izz>
+      </inertia>
+    </inertial>
+  </link>
+  <joint name="example_rope_capsule_11_example_rope_capsule_12_joint_x" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_12</child>
+    <parent>example_rope_capsule_11_extra</parent>
+    <axis>
+      <xyz> 1 0 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  
+  <joint name="example_rope_capsule_11_example_rope_capsule_12_joint_y" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_11_extra</child>
+    <parent>example_rope_capsule_11</parent>
+    <axis>
+      <xyz> 0 1 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  <link name="example_rope_capsule_13">
+      <pose> 0 0.5 2.400000000000002 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 -0.05 0 0 0</pose>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>1.716666666666667e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1.716666666666667e-05</iyy>
+          <iyz>0</iyz>
+          <izz>1.0000000000000002e-06</izz>
+        </inertia>
+      </inertial>
+      <visual name='cylinder'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.1</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>0.40000000000000036 0.7000000000000002 0.8 1.0</diffuse>
+        </material>
+      </visual>
+    
+      <visual name='ball_1'>
+        <pose frame=''> 0 0 0 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <visual name='ball_2'>
+        <pose frame=''> 0 0 -0.1 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <collision name='example_rope_capsule_13_cylinder'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.1</length>
+          </cylinder>
+        </geometry>
+        
+        <surface>
+          <friction>
+          <ode>
+            <mu>0.5</mu>
+            <mu2>0.5</mu2>
+          </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- TODO: Put collision here -->
+  </link>
+  <link name="example_rope_capsule_12_extra">
+    <pose> 0 0.5 2.400000000000002 0 0 0</pose>
+    <inertial>
+      <!-- HACK: inertias are not consistent -->
+      <mass>1e-6</mass>
+      <inertia>
+        <ixx>1e-6</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>1e-6</iyy>
+        <iyz>0</iyz>
+        <izz>1e-6</izz>
+      </inertia>
+    </inertial>
+  </link>
+  <joint name="example_rope_capsule_12_example_rope_capsule_13_joint_x" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_13</child>
+    <parent>example_rope_capsule_12_extra</parent>
+    <axis>
+      <xyz> 1 0 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  
+  <joint name="example_rope_capsule_12_example_rope_capsule_13_joint_y" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_12_extra</child>
+    <parent>example_rope_capsule_12</parent>
+    <axis>
+      <xyz> 0 1 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  <link name="example_rope_capsule_14">
+      <pose> 0 0.5 2.300000000000002 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 -0.05 0 0 0</pose>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>1.716666666666667e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1.716666666666667e-05</iyy>
+          <iyz>0</iyz>
+          <izz>1.0000000000000002e-06</izz>
+        </inertia>
+      </inertial>
+      <visual name='cylinder'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.1</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>0.6000000000000001 0.8 0.8666666666666667 1.0</diffuse>
+        </material>
+      </visual>
+    
+      <visual name='ball_1'>
+        <pose frame=''> 0 0 0 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <visual name='ball_2'>
+        <pose frame=''> 0 0 -0.1 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <collision name='example_rope_capsule_14_cylinder'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.1</length>
+          </cylinder>
+        </geometry>
+        
+        <surface>
+          <friction>
+          <ode>
+            <mu>0.5</mu>
+            <mu2>0.5</mu2>
+          </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- TODO: Put collision here -->
+  </link>
+  <link name="example_rope_capsule_13_extra">
+    <pose> 0 0.5 2.300000000000002 0 0 0</pose>
+    <inertial>
+      <!-- HACK: inertias are not consistent -->
+      <mass>1e-6</mass>
+      <inertia>
+        <ixx>1e-6</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>1e-6</iyy>
+        <iyz>0</iyz>
+        <izz>1e-6</izz>
+      </inertia>
+    </inertial>
+  </link>
+  <joint name="example_rope_capsule_13_example_rope_capsule_14_joint_x" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_14</child>
+    <parent>example_rope_capsule_13_extra</parent>
+    <axis>
+      <xyz> 1 0 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  
+  <joint name="example_rope_capsule_13_example_rope_capsule_14_joint_y" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_13_extra</child>
+    <parent>example_rope_capsule_13</parent>
+    <axis>
+      <xyz> 0 1 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  <link name="example_rope_capsule_15">
+      <pose> 0 0.5 2.200000000000002 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 -0.05 0 0 0</pose>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>1.716666666666667e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1.716666666666667e-05</iyy>
+          <iyz>0</iyz>
+          <izz>1.0000000000000002e-06</izz>
+        </inertia>
+      </inertial>
+      <visual name='cylinder'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.1</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>0.7999999999999998 0.8999999999999999 0.9333333333333333 1.0</diffuse>
+        </material>
+      </visual>
+    
+      <visual name='ball_1'>
+        <pose frame=''> 0 0 0 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <visual name='ball_2'>
+        <pose frame=''> 0 0 -0.1 0 0 0 </pose>
+        <geometry>
+          <sphere>
+          <radius>0.01</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <diffuse>0.4 0.4 0.4 1.0</diffuse>
+        </material>
+      </visual>
+
+      <collision name='example_rope_capsule_15_cylinder'>
+        <pose frame=''> 0 0 -0.05 0 0 0 </pose>
+        <geometry>
+          <cylinder>
+          <radius>0.01</radius>
+          <length>0.1</length>
+          </cylinder>
+        </geometry>
+        
+        <surface>
+          <friction>
+          <ode>
+            <mu>0.5</mu>
+            <mu2>0.5</mu2>
+          </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- TODO: Put collision here -->
+  </link>
+  <link name="example_rope_capsule_14_extra">
+    <pose> 0 0.5 2.200000000000002 0 0 0</pose>
+    <inertial>
+      <!-- HACK: inertias are not consistent -->
+      <mass>1e-6</mass>
+      <inertia>
+        <ixx>1e-6</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>1e-6</iyy>
+        <iyz>0</iyz>
+        <izz>1e-6</izz>
+      </inertia>
+    </inertial>
+  </link>
+  <joint name="example_rope_capsule_14_example_rope_capsule_15_joint_x" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_15</child>
+    <parent>example_rope_capsule_14_extra</parent>
+    <axis>
+      <xyz> 1 0 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  
+  <joint name="example_rope_capsule_14_example_rope_capsule_15_joint_y" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_14_extra</child>
+    <parent>example_rope_capsule_14</parent>
+    <axis>
+      <xyz> 0 1 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+<link name="example_rope_brick">
+<pose>0 0.5 1.8000000000000014 0 0 0</pose>
+    <inertial>
+        <mass>300.0</mass>
+        <inertia>
+            <ixx>0.8333333333333333</ixx>
+            <iyy>0.3333333333333333</iyy>
+            <izz>0.5666666666666668</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+        </inertia>
+    </inertial>
+    <collision name="example_rope_brick_collision">
+        <geometry>
+            <box>
+                <size>0.2 0.8 0.6</size>
+            </box>
+        </geometry>
+    </collision>
+    <visual name="example_rope_brick_visual">
+        <geometry>
+            <box>
+                <size>0.2 0.8 0.6</size>
+            </box>
+        </geometry>
+        <material>
+            <ambient>1 0 0 1</ambient>
+        </material>
+    </visual>
+</link>
+
+  <link name="example_rope_capsule_15_extraLINK">
+    <pose> 0 0.5 0.6 0 0 0</pose>
+    <inertial>
+      <!-- HACK: inertias are not consistent -->
+      <mass>1e-6</mass>
+      <inertia>
+        <ixx>1e-6</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>1e-6</iyy>
+        <iyz>0</iyz>
+        <izz>1e-6</izz>
+      </inertia>
+    </inertial>
+  </link>
+  
+  <joint name="example_rope_capsule_15_example_rope_brick_joint_x" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_brick</child>
+    <parent>example_rope_capsule_15_extraLINK</parent>
+    <axis>
+      <xyz> 1 0 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+  
+  <joint name="example_rope_capsule_15_example_rope_brick_joint_y" type="revolute">
+    <pose> 0 0 0 0 0 0 </pose>
+    <child>example_rope_capsule_15_extraLINK</child>
+    <parent>example_rope_capsule_15</parent>
+    <axis>
+      <xyz> 0 1 0 </xyz>
+      <limit>
+        <effort>0</effort>
+        <lower>-1</lower>
+        <upper>1</upper>
+      </limit>
+      <dynamics>
+        <damping> 0.001 </damping>
+        <friction> 0 </friction>
+        <spring_reference> 0 </spring_reference>
+        <spring_stiffness> 0 </spring_stiffness>
+      </dynamics>
+      <use_parent_model_frame>1</use_parent_model_frame>
+    </axis>
+  </joint>
+	</model>
+</sdf>
