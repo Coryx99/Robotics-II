@@ -1,9 +1,8 @@
 # Installation and Setup guide
 To run and follow the tutorials, you will need [Ubuntu](https://releases.ubuntu.com/)(recommended: Ubuntu 22.04 LTS), preferably a version that is officially supported by [Drake](https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html#id1). 
  
-* If you **already have Ubuntu installed** → jump directly to [Install Drake](#Install-Drake).
-
 * If you are on **Windows** and don’t have Ubuntu → follow [Install Linux via WSL](#install-linux-via-wsl).
+* If you **already have Ubuntu installed** → jump directly to [Install Drake](#Install-Drake).
 
 * If you are on **older Ubuntu (e.g. 20.04 LTS)** → the scripts here will still work using Drake’s compatible version.
 
