@@ -9,7 +9,8 @@ This course focuses on the design and implementation of a complete robotics appl
 3. Design and implement control strategies for motion or interaction.
 4. Incorporate sensing, planning, or decision-making elements where relevant.
 5. Validate their solution in simulation.
-6. Communicate results through a clear report and presentation.
+
+***Results demonstrated/communicated through:*** Clear report and group presentation.
 
 ## Project scope
 Each team will design a robotics application that demonstrates:
@@ -54,16 +55,7 @@ If you find a bug in the repository, require assistance, or have any other quest
 
 We will try to help you as soon as possible.
 
-
-## Additional open source tutorials and examples
-- [Getting Started with Drake](https://drake.guzhaoyuan.com/to-get-started) 
-- [Kinova Drake Examples](https://github.com/vincekurtz/kinova_drake)
-
-
-
-
-
---------------------
+<!-- --------------------
 ## 📘 What Needs Strengthening (since students lack software background @Mohayad)
 
 Every tutorial should include step-by-step terminal commands.
@@ -78,4 +70,4 @@ Debugging Support: A dedicated Q&A.md with common errors, like:
 
 Module not found → check PYTHONPATH.
 MeshCat not showing → restart the webpage.
-Simulation exploding → timestep too large.
+Simulation exploding → timestep too large. -->
