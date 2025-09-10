@@ -12,13 +12,6 @@ from pydrake.all import (DiagramBuilder, Simulator, SimulatorConfig,
 ####################################
 #         Helper functions         #
 ####################################
-
-def get_relative_path(path):
-    """Get the absolute path relative to the script's directory."""
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    return os.path.normpath(os.path.join(script_dir, path))
-
-
 def calc_dynamics(x, u, plant, plant_context, diagram, diagram_context, dt):
     """Calculate the next state based on current state and input."""
     if diagram.IsDifferenceEquationSystem()[0]:  # Discrete-time system
@@ -76,8 +69,10 @@ def create_multibody_plant(time_step):
     plant, scene_graph = AddMultibodyPlant(plant_config, builder)
 
     # Parse the URDF model of the robot
-    model_path = get_relative_path("../../models/descriptions/robots/panda_fr3/urdf/panda_fr3.urdf")
-    Parser(plant).AddModelsFromUrl("file://" + model_path)
+    model_path = os.path.join(
+        "..", "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
+    )
+    Parser(plant).AddModelsFromUrl("file://" + os.path.abspath(model_path))
     
     # Finalize the plant (required before simulation)
     plant.Finalize()

@@ -25,15 +25,6 @@ from pydrake.all import (DiagramBuilder, Simulator, RigidTransform, RotationMatr
                          ConnectMeshcatVisualizer, ContactSolverResults, 
                          SceneGraph, FindResourceOrThrow)
 
-
-
-# Function to get the path relative to the script's directory
-def get_relative_path(path):
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    return os.path.normpath(os.path.join(script_dir, path))
-
-model_path = get_relative_path("../../models/descriptions/robots/panda_fr3/urdf/panda_fr3.urdf")
-
 def create_multibody_plant(time_step):
     """
     Creates a multibody plant with a simple setup for testing continuous or discrete simulations.

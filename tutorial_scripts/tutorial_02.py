@@ -17,18 +17,13 @@ from pydrake.systems.framework import DiagramBuilder
 from pydrake.visualization import AddDefaultVisualization, ModelVisualizer
 from pydrake.all import WeldJoint, ConstantVectorSource
 
-# Function to get the path relative to the script's directory
-def get_relative_path(path):
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    return os.path.normpath(os.path.join(script_dir, path))
-
-
 # Start the visualizer. The cell will output an HTTP link after the execution.
 # Click the link and a MeshCat tab should appear in your browser.
 meshcat = StartMeshcat()
-visualize = True # Bool to switch the viszualization and simulation
-model_path = get_relative_path("../../models/descriptions/robots/panda_fr3/urdf/panda_fr3.urdf")
-
+visualize = False # Bool to switch the viszualization and simulation
+model_path = os.path.join(
+    "..", "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
+)
 
 def create_sim_scene(sim_time_step):   
     """
@@ -46,8 +41,9 @@ def create_sim_scene(sim_time_step):
 
     builder = DiagramBuilder()
     plant_1, scene_graph = AddMultibodyPlantSceneGraph(builder, time_step=sim_time_step)
-    Parser(plant_1).AddModelsFromUrl("file://" + model_path)
-
+    Parser(plant_1).AddModelsFromUrl("file://" + os.path.abspath(model_path))
+    base_link = plant_1.GetBodyByName("panda_link0")  # replace with your robot’s root link name
+    plant_1.WeldFrames(plant_1.world_frame(), base_link.body_frame())
     # Finalize the plant after loading the scene.
     plant_1.Finalize()
 
@@ -59,11 +55,9 @@ def create_sim_scene(sim_time_step):
 
 def run_simulation(sim_time_step):
     if visualize:
-        # First we will choose our definition file of the panda robot
-        model_path = get_relative_path("../../models/descriptions/robots/panda_fr3/urdf/panda_fr3.urdf")
         # Create a model visualizer and add the robot arm.
         visualizer = ModelVisualizer(meshcat=meshcat)
-        visualizer.parser().AddModelsFromUrl("file://" + model_path)
+        visualizer.parser().AddModelsFromUrl("file://" + os.path.abspath(model_path))
 
         # Start the interactive visualizer.
         # Note: the visualizer will be closed automatically when the script exits or  

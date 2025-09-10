@@ -16,18 +16,16 @@ from pydrake.all import Variable, MakeVectorVariable
 
 from helper.dynamics import CalcRobotDynamics
 
-# Function to get the path relative to the script's directory
-def get_relative_path(path):
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    return os.path.normpath(os.path.join(script_dir, path))
-
 # Start the visualizer and clean up previous instances
 meshcat = StartMeshcat()
 meshcat.Delete()
 meshcat.DeleteAddedControls()
 
 # Set the path to your robot model:
-robot_path = get_relative_path("../../models/descriptions/robots/panda_fr3/urdf/panda_fr3.urdf")
+robot_path = os.path.join(
+    "..", "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
+)
+
 
 ######################################################################################################
 #                             ########Define PD+G Controller as a LeafSystem #######   
@@ -57,7 +55,7 @@ class Controller(LeafSystem):
             update=self.compute_tau_u) # Call the Update method defined below.
         
         # Create a periodic event to publish the Dynamics of our robot.
-        self.DeclarePeriodicPublishEvent(1, 10, self.PublishDynamics) 
+        self.DeclarePeriodicPublishEvent(1, 0, self.PublishDynamics) 
     
     def compute_tau_u(self, context, discrete_state):
         num_positions = self.plant.num_positions()
@@ -76,7 +74,7 @@ class Controller(LeafSystem):
         # Update the output port = state
         discrete_state.get_mutable_vector().SetFromVector(tau)
 
-    def PublishDynamics(self, context, mode='symbolic'):
+    def PublishDynamics(self, context, mode='numerical'):
         print("Publishing event")
 
         # Get current state
@@ -107,7 +105,9 @@ def create_sim_scene(sim_time_step):
     builder = DiagramBuilder()
     plant, scene_graph = AddMultibodyPlantSceneGraph(builder, time_step=sim_time_step)
     parser = Parser(plant)
-    parser.AddModelsFromUrl("file://" + robot_path)
+    parser.AddModelsFromUrl("file://" + os.path.abspath(robot_path))
+    base_link = plant.GetBodyByName("panda_link0")  # replace with your robot’s root link name
+    plant.WeldFrames(plant.world_frame(), base_link.body_frame())
     plant.Finalize()
 
     # Set the initial joint position of the robot otherwise it will correspond to zero positions
@@ -153,4 +153,4 @@ def run_simulation(sim_time_step):
     meshcat.PublishRecording()
 
 # Run the simulation with a specific time step. Try gradually increasing it!
-run_simulation(sim_time_step=0.001)
+run_simulation(sim_time_step=0.01)

@@ -1,5 +1,5 @@
 """
-tutorial_01_intro.py
+tutorial_01.py
 --------------------
 Minimal Drake intro: visualize the Panda robot in MeshCat.
 """
@@ -18,7 +18,7 @@ visualize = True  # True = only visualize, False = run full simulation
 meshcat = StartMeshcat()
 # Adjust the path to where the URDF is in your directory
 model_path = os.path.join(
-    "models", "descriptions", "robots", "quadruped", "mini_cheetah", "mini_cheetah_simple_v2.urdf"
+    "..", "models", "descriptions", "robots", "humanoids", "pr2_description", "urdf","pr2_simplified.urdf"
 )
 
 # ------------------ Functions ------------------
@@ -30,6 +30,8 @@ def create_sim_scene(sim_time_step=0.0):
     builder = DiagramBuilder()
     plant, scene_graph = AddMultibodyPlantSceneGraph(builder, time_step=sim_time_step)
     Parser(plant).AddModelsFromUrl("file://" + os.path.abspath(model_path))
+    base_link = plant.GetBodyByName("panda_link0")  # replace with your robot’s root link name
+    plant.WeldFrames(plant.world_frame(), base_link.body_frame())
     plant.Finalize()
     AddDefaultVisualization(builder, meshcat)
     return builder.Build()
