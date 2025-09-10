@@ -23,7 +23,7 @@ Right-click PowerShell → Run as administrator. Then run:
    ```powershell
    wsl --install -d Ubuntu-22.04
    ``` 
-then restart your machine.
+   then restart your machine.
 
 2) Check your WSL version
    ```PowerShell
@@ -34,31 +34,17 @@ then restart your machine.
    wsl --set-version Ubuntu-22.04 2
    ```
 
-3) Create a Linux username and password
+3) The first time you start Ubuntu (from the Start menu), you’ll be asked to create a Linux username and password.
 <div style="text-align: center;">
     <img src="images/ubuntUSER.png" alt="UbuntuUser">
 </div>
-
-   The first time you start Ubuntu (from the Start menu), you’ll be asked to create them.
-   * The password entry is hidden while typing (normal in Linux).
-
-   * This user account has admin rights (`sudo`).
-
-      Forgot your password?
-
-      * "**Open PowerShell** → ``wsl -u root``"
-
-      * "**Reset with** ``passwd <username>``"
 
 4) Update your Linux packages
    ```bash
    sudo apt update && sudo apt upgrade
    ```
 ## Install Drake
-1. [Install the Drake Toolbox](https://drake.mit.edu/installation.html), preferably a [stable release](https://drake.mit.edu/apt.html#stable-releases), either locally or globally on your system. We recommend using the APT-based stable release (not pip). 
-\
-\
-installation via apt:
+1. [Install the Drake Toolbox](https://drake.mit.edu/installation.html), preferably a [stable release](https://drake.mit.edu/apt.html#stable-releases), either locally or globally on your system. We recommend using the APT-based stable release:
 
    ```sh
    sudo apt-get update
