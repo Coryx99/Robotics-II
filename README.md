@@ -14,11 +14,11 @@ This course focuses on the design and implementation of a complete robotics appl
 ## Project scope
 Each team will design a robotics application that demonstrates:
 
-- System Modeling – kinematic/dynamic modeling of the chosen robot (manipulator, mobile robot, aerial system, multi-robot system, etc.).
+- **System Modeling**: kinematic/dynamic modeling of the chosen robot (manipulator, mobile robot, aerial system, multi-robot system, etc.).
 
-- Control – feedback or trajectory-based control to achieve a task.
+- **Robot control**: feedback or trajectory-based control to achieve a task.
 
-- Simulation & vERFICATION – testing, validation, and performance analysis.
+- **Simulation & Verfication**: testing, validation, and performance analysis.
 
 
 ## Possible application examples:
@@ -27,7 +27,7 @@ Each team will design a robotics application that demonstrates:
 * Cooperative transport of an object by multiple robots.
 * Contact-rich interaction such as pushing or grasping.
 
-## Contents
+## Tutorial content
 | File                                                                                                                | Summary                         |
 | ---                                                                                                                 | ---                             |
 | [00_Startup.md](./tutorial_doc/00_Startup.md)         | Installation guide of the project material and its dependancies, along with a guide on setting up Ubuntu for your machine. |
