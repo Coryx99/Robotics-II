@@ -38,7 +38,9 @@ then restart your machine.
    ```
 
 3) Create a Linux username and password
-<add-input image = /images/ubuntUSER.png>
+<div style="text-align: center;">
+    <img src="images/ubuntUSER.png" alt="UbuntuUser">
+</div>
 
    The first time you start Ubuntu (from the Start menu), you’ll be asked to create them.
    * The password entry is hidden while typing (normal in Linux).
