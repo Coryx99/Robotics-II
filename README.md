@@ -30,11 +30,11 @@ Each team will design a robotics application that demonstrates:
 ## Contents
 | File                                                                                                                | Summary                         |
 | ---                                                                                                                 | ---                             |
-| [00_Startup.md](./tutorial_doc/00_Startup.md)         | Installation guide of the repo and its dependancies. |
+| [00_Startup.md](./tutorial_doc/00_Startup.md)         | Installation guide of the project material and its dependancies, along with a guide on setting up Ubuntu for your machine. |
 | [01_Introduction.md](./tutorial_doc/01_Introduction.md)         | Introduction to the simulation framework (Drake), its basic components, and what you can achieve with it. |
-| [02_Modelling.md](./tutorial_doc/02_Modelling.md)                 | Modeling robots and environments in Drake using the `MultibodyPlant`: joints, links, and URDF files. Includes visualization with MeshCat. |
+| [02_Modelling.md](./tutorial_doc/02_Modelling.md)                 | Modeling and simulating robots and environments in Drake using the `MultibodyPlant`. Includes visualization with MeshCat. |
 | [03_Dynamics.md](./tutorial_doc/03_Dynamics.md)                 | 	Running simulations with dynamics. Introduction to Drake’s `LeafSystem` for designing system blocks, and building model-based controllers. |
-| [05_TrajectoryPlanning.md](./tutorial_doc/05_TrajectoryPlanning.md)                 | 	A simple introduction to trajectory planning: defining a reference trajectory, sending it to the controller, and visualizing results. |
+| [05_TrajectoryPlanning.md](./tutorial_doc/05_TrajectoryPlanning.md)                 | 	Short introduction to trajectory planning: defining a reference trajectory, sending it to the controller, and visualizing results. |
 | [Q&A.md](./tutorial_doc/Q&A.md)   | 	Practical tips and debugging guide: common issues, error messages, and how to fix them.|
 ---
 
