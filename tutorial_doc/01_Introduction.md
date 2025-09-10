@@ -1,60 +1,88 @@
-# Introduction to Drake
-Welcome to the Drake tutorial! This guide will help you get started with Drake, a powerful tool for robotics simulation and control. 
+# Introduction to Drake toolbox
+Welcome to the Drake tutorials!  
+This guide introduces Drake, the simulation framework we will use throughout the sessions.
 
-## What is Drake?
-Drake is an open-source toolbox developed by the Robot Locomotion Group at MIT. It provides a comprehensive framework for modeling, simulation, and optimization of dynamic systems. Drake supports both Python and C++, and its core library is organized into three major clusters:
-1) **Dynamical system Modelling**: Drake provides tools for modeling the physics of dynamical systems, useful for both analysis and simulation.
+Over the next tutorials, you will:
+1. **Model** a simple robot and visualize it in [MeshCat](https://github.com/RobotLocomotion/drake/tree/main/tools/meshcat).  
+2. **Simulate** how it behaves under gravity.  
+3. **Control** it with a PD controller.  
+4. **Plan a trajectory** and make the robot follow it.  
 
-2) **Multibody Kinematics and Dynamics:**
-This involves multiple rigid bodies connected in an articulated structure. The core element is the MultibodyPlant, which uses rigid body tree algorithms to compute the robot's kinematics, dynamics, and Jacobians. MultibodyPlant has input/output ports for integration with other systems like controllers and visualizers.
+## 1. What is Drake?
+[Drake](https://drake.mit.edu/) is an open-source toolbox developed by the Robot Locomotion Group at MIT. It provides a framework for **modeling, simulating, and controlling robots**.  
 
-3) **Mathematical programming:** Drake incorporates optimization tools such as Gurobi, SNOPT, IPOPT, SCS, and MOSEK, full list is available [here](add/link/later). These tools solve mathematical problems in robotics, including motion planning and control.
+You can think of Drake as a set of building blocks:
+1. **Dynamical system modeling**  
+– build systems from simple blocks (integrators, gains, sensors, etc.).  
+– very similar in spirit to Simulink diagrams.  
 
-## Prerequisites
-Before starting this tutorial, ensure you have the following:
+2. **Multibody kinematics and dynamics**  
+– describe robots as rigid bodies connected by joints.  
+– compute kinematics, Jacobians, and simulate full rigid-body dynamics.  
 
-- Basic knowledge of Python and/or C++.
-- Familiarity with [spatial algebra](https://drake.mit.edu/doxygen_cxx/group__multibody__spatial__algebra.html).
+3. **Mathematical programming**  
+– solve optimization problems (motion planning, inverse kinematics, control).  
+– connects to solvers such as IPOPT, SNOPT, Gurobi, Mosek, etc. Full list is available [here](add/link/later)  
+
+## 2. Why Drake in this course?
+We chose Drake because:
+- It follows the **standard terminology of control engineering** (systems, plants, controllers, diagrams).  
+- It integrates **modeling, dynamics, optimization, and visualization** in one place.  
+- It is open-source and widely used in the robotics community.  
+
+> ⚠️ Even if you later use another simulator (PyBullet, Gazebo, Mujoco), the **concepts** we teach remain the same.
+
 
 ## Important concepts in drake
 
 ### What is a system?
 
-Drake constructs complex systems from blocks called *"systems"*. Each system has inputs and outputs that can connect to other systems. Similar to Simulink, [`drake::systems`](https://drake.mit.edu/doxygen_cxx/namespacedrake_1_1systems.html) provides a library of dynamical systems and allows users to define their own. These systems include primitives (adders, multiplexers, integrators, delays), physics models of mechanical systems (propellers, wings), and a growing list of sensors, actuators, controllers, planners, and estimators.
+Drake constructs complex systems from blocks called *"systems"*. Each system has inputs and outputs that can connect to other systems. Similar to Simulink, [`drake::systems`](https://drake.mit.edu/doxygen_cxx/namespacedrake_1_1systems.html) provides a library of dynamical systems and allows users to define their own. Examples include integrators, gains, sensors, or a robot model.
 
 ### What is a diagram?
 
-A *"diagram"* represents compound systems, containing several connected subsystems. A diagram itself is a system and can be nested. The root diagram contains all subsystems and sub-diagrams. The main function in Drake typically starts from a blank root diagram, to which systems are added and connected through their input/output ports. The [`drake::systems::Diagram`](https://drake.mit.edu/doxygen_cxx/classdrake_1_1systems_1_1_diagram.html) class supports modeling complex systems from library components, which can be combined into more intricate systems.
+A *"diagram"* is a collection of systems connected together. A diagram itself is a system and can be nested. The root diagram contains all subsystems and sub-diagrams. You can think of it as the full “circuit” that defines your simulation.
 
 ### What is a context?
-A [`context`](https://drake.mit.edu/doxygen_cxx/classdrake_1_1systems_1_1_context.html) in Drake contains the data of system states and parameters, cached separately. Each diagram and system has its own context, as illustrated bellow.
+A [`context`](https://drake.mit.edu/doxygen_cxx/classdrake_1_1systems_1_1_context.html) in Drake stores the state and parameters of a system at a given time. It is like the “memory” of your simulation. Each diagram and system has its own context, as illustrated bellow.
 <div style="text-align: center;">
     <img src="images/diagram.png" alt="Diagram">
 </div>
 The context and the diagram are the only information needed for simulation. Given the context, all methods called on a system should be deterministic and repeatable.
 
-### What is a scene graph?
+<!-- ### What is a scene graph?
 A `SceneGraph` is a data structure that stores and manages all the geometry of the models in a simulation. it serves as a visualization and collision-checking tool. 
 
 **Collision Checking:** Before simulation, the `SceneGraph` is initialized and connected to the dynamical systems in a diagram. During simulation, it detects collisions between objects and computes distances based on the systems' state. Using this collision information, the physics engine then decides the nature of the collision (soft contact or hard impact) and calculates the resulting forces between the objects.
 
 **Visualization:** For visualization, the dynamical system must be linked with the `SceneGraph`. The `SceneGraph` sends rendering messages to a visualizer (e.g., Meshcat, RVIZ, Drake Visualizer) via LCM or ROS, depending on the selected tool. The visualizer then renders the robot, frames, and other elements as required.
 
-*Note: This is a very general introduction to `SceneGraph` click [here](https://drake.mit.edu/doxygen_cxx/classdrake_1_1geometry_1_1_scene_graph.html) for further details.*
+*Note: This is a very general introduction to `SceneGraph` click [here](https://drake.mit.edu/doxygen_cxx/classdrake_1_1geometry_1_1_scene_graph.html) for further details.* -->
+
+<!-- Think of it this way:  
+- *System = block*,  
+- *Diagram = the whole circuit*,  
+- *Context = the memory (values at a given time)*,  
+- *SceneGraph = how it looks and where things collide*.   -->
+
 
 ## Terminology and Notation
-Understanding the notation used in Drake is crucial for interpreting the code. The official description is available [here](https://drake.mit.edu/doxygen_cxx/group__multibody__notation.html).
+Understanding the notation used in Drake is beneficial for interpreting the code. The official description is available.
+* Official notation: [here](https://drake.mit.edu/doxygen_cxx/group__multibody__notation.html)
+* Documentation: 
+    - [C++ doxygen](https://drake.mit.edu/doxygen_cxx/index.html) (very detailed).
+    - [Python API](https://drake.mit.edu/pydrake/index.html) (autogenerated, maps closely to C++).
 
-**A quick note on drake's documentation:** The C++ classes are well documented in [doxygen](https://drake.mit.edu/doxygen_cxx/index.html). The [Python API](https://drake.mit.edu/pydrake/index.html) is also documented, but the autogenerated documentation may not be as detailed. Hence, Consider using the C++ doxygen as a secondary source of documentation as a secondary resource for Python development, as much of the pydrake API maps directly to the C++ API.
+**Tip:** When the Python docs are unclear, check the C++ docs, most functions follow the same naming.
 
-
-## Lets start
-
-The tutorial is divided into several sections written in a `.md` file, each of the markdown file should be ran with the accompaying [python script](../python_tutorials/), as explained in the [README](../README.md) file. Now we will start with the basics of modelling and multibody simulation in the tutorial [02a_Modelling](./02a_Modelling.md).
-
-
-<!-- # TODOS and add later 
-- make it more clear,
-- add relevent links/refrences. -->
+## 6. Next steps
+The tutorials are divided into Markdown files `.md` file with matching Python scripts in [python script](../python_tutorials/).
 
 
+
+Proceed to [02a_Modelling](./02a_Modelling.md) where you will:
+
+* Load a URDF robot model.
+* Inspect its joints and links.
+* Add a ground plane.
+* Visualize everything in MeshCat.
