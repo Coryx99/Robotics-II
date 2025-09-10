@@ -1,15 +1,3 @@
-Session 2 – Dynamics + Control
-
-02b_Dynamics.md
-
-Running a simulation (forward dynamics).
-
-Logging state trajectories (joint positions/velocities).
-
-Simple controllers (PD control, trajectory tracking).
-
-(Optional mini-extension if time): show how to add an external force or disturbance.
-
 # Modelling dynamical systems
 The previous tutorial provided an introduction to adding, viewing, and simulating your robot in Drake. In this tutorial, we will delve deeper into controlling our simulated robot for setpoint regulation **without contact**.
 
@@ -20,9 +8,10 @@ Drake's system modeling approach is inspired by MATLAB's Simulink but without th
 * Obtain/Compute your system dynamics.
 * Examine the equations of motion in manipulator form.
 
-We will be running the tutorial example [tutorial_2b.py](../python_tutorials/tutorial_2b.py), which can be executed with the command: 
+We will be running the tutorial example [tutorial_2b.py](../tutorial_scripts/tutorial_03.py), which can be executed with the command: 
 ```sh
-python3 ./tutorial_2a.py
+cd ~/RoboticsII/tutorial_scripts 
+python3 ./tutorial_03.py
 ```
 
 ## Adding an existing dynamic block 

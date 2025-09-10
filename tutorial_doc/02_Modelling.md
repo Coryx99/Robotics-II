@@ -1,15 +1,4 @@
 # Multibody simulation
-
-Welcome to the second Drake tutorial!
-In this tutorial, you will learn how to:
-
-* Load a robot model (URDF/SDF).
-* Understand frames, joints, and links.
-* Add a simple environment (ground plane).
-* Visualize your robot in MeshCat.Loading a robot model (URDF/SDF).
-
-
-# MultibodyPlant
 The `MultibodyPlant` class in is central to modeling interconnected bodies, such as robotic systems. It supports parsing robot models from formats like .URDF, .SDF, or .MJCF, representing them as tree structures. This class provides APIs to add bodies, joints, forces, and sensors, enabling kinematic and dynamic computations. In this tutorial, you will learn how to:
 * Define a multibody scenario in Drake.
 * Inspect its joints and links in Meshcat.
@@ -17,10 +6,10 @@ The `MultibodyPlant` class in is central to modeling interconnected bodies, such
 * Add a ground plane.
 * Construct and simulate a diagram of your plant.
 
-You can run the example script [tutorial_2a.py](../python_tutorials/tutorial_2a.py):
+You can run the example script [tutorial_02.py](../tutorial_scripts/tutorial_02.py):
 ```sh
-cd ~/robotics_ws/python_tutorials
-python3 ./tutorial_2a.py
+cd ~/RoboticsII/tutorial_scripts 
+python3 ./tutorial_02.py
 ```
 Switch between visualization and simulation modes using the visualize flag in the script:
 ```python

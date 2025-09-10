@@ -84,7 +84,7 @@ Navigate to the `tutorial_scripts/` folder.
 
 - Run the sanity check script:
 ```sh 
-cd ~/RoboticsII/python_tutorials 
+cd ~/RoboticsII/tutorial_scripts 
 python3 tutorial_sanity_check.py
 ```
 Drake uses MeshCat for 3D visualization, therefore, when you run a script, you will see output like:
