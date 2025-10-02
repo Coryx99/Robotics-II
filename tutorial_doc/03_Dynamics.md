@@ -148,21 +148,22 @@ From the rendered block diagram, we can verify our diagram definition by inspect
 ### Inspecting the dynamics (the manipulator equations)
 We can use Drake to evaluate the dynamics of a given `MultibodyPlant` in **manipulator equation form**. This form explicitly shows how joint accelerations, velocities, and forces interact:
 
-\[
-\mathbf{M}(\mathbf{q})\, \ddot{\mathbf{q}} + \mathbf{C}(\mathbf{q}, \dot{\mathbf{q}})\, \dot{\mathbf{q}} + \mathbf{g}(\mathbf{q}) = \boldsymbol{\tau}_u + \boldsymbol{\tau}_\text{ext},
-\]
+$$
+\mathbf{M}(\mathbf{q})\, \ddot{\mathbf{q}} 
++ \mathbf{C}(\mathbf{q}, \dot{\mathbf{q}})\, \dot{\mathbf{q}} 
++ \mathbf{g}(\mathbf{q}) 
+= \boldsymbol{\tau}_u + \boldsymbol{\tau}_\mathrm{ext},
+$$
 
 where:
 
-* \(\mathbf{M}(\mathbf{q})\) is the **mass (inertia) matrix**. It depends on the joint positions \(\mathbf{q}\) and relates joint accelerations \(\ddot{\mathbf{q}}\) to generalized forces.  
-* \(\mathbf{C}(\mathbf{q}, \dot{\mathbf{q}})\, \dot{\mathbf{q}}\) contains **Coriolis and centrifugal terms**. It depends on both positions and velocities.  
-* \(\mathbf{g}(\mathbf{q})\) is the **gravity vector**, representing torques required to compensate for gravity.  
-* \(\boldsymbol{\tau}_u\) are the **control torques** applied by your controller.  
-* \(\boldsymbol{\tau}_\text{ext}\) are **external generalized forces**, such as forces from contacts or payloads.  
+* $\mathbf{M}(\mathbf{q})$ is the **mass (inertia) matrix**, depending on joint positions $\mathbf{q}$.  
+* $\mathbf{C}(\mathbf{q}, \dot{\mathbf{q}}) \dot{\mathbf{q}}$ contains **Coriolis and centrifugal effects**.  
+* $\mathbf{g}(\mathbf{q})$ is the **gravity vector**, representing torques required to compensate for gravity.  
+* $\boldsymbol{\tau}_u$ are the **control torques** applied by your controller.  
+* $\boldsymbol{\tau}_\mathrm{ext}$ are **external generalized forces**, such as contact forces or payload effects.  
 
 By passing your `MultibodyPlant` to the dynamics computation functions, you can extract each of these components **numerically** for a given state or **symbolically** for analysis and algorithm design.
-
-
 ```python
         def PublishDynamics(self, context, mode='numerical'):
         print("Publishing event")
