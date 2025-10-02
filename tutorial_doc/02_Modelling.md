@@ -238,7 +238,7 @@ Moreever, you can inspect the robots links and joints:
         print(plant.GetFreeBodyPose(plant_context, box))
 
 ```
-This helps you understand the robot structure: links, joints, and fixed or movable parts. Moreever depending on the elements, as a body or joint we have more parameters that can be inspected, please check the documentations to see..https://drake.mit.edu/doxygen_cxx/classdrake_1_1multibody_1_1_rigid_body.html
+Use this to confirm and get familiar with the robot structure, links, and joints. For more info, see [RigidBody docs](https://drake.mit.edu/doxygen_cxx/classdrake_1_1multibody_1_1_rigid_body.html).
 
 ## Running a simulation
 Now that we have everything set up, to let's run the simulator and visualize it in a MeshCat tab, here we will run the default simulation setting but we will set some configurations (We will go more in depth in [03_contact&solvers.md](./03_contact&solvers.md)).
@@ -275,11 +275,11 @@ The image file below displays the input and output ports of our MultibodyPlant, 
 <div style="text-align: center;">
     <img src="../tutorial_scripts/figures/block_diagram_02.png" alt="Diagram">
 </div>
-Some important inpute/output ports that you might need for building your robotics application are: **modelinstance**_actuation_inpute_port and applied_spacial_force. *modelinstance**_state, *modelinstance**_geenralized_acceleration, *modelinstance**_geenralized_contact forces, body_poses.
+<!-- Some important inpute/output ports that you might need for building your robotics application are: **modelinstance**_actuation_inpute_port and applied_spacial_force. *modelinstance**_state, *modelinstance**_geenralized_acceleration, *modelinstance**_geenralized_contact forces, body_poses. -->
 
 For a detailed description for each of the input/output ports of the Multibody plant, refer [here](https://drake.mit.edu/doxygen_cxx/group__systems__diagram.html).
 
 # Next steps
-This tutorial helps you set up the physics engine (MultibodyPlant) and visualize the simulation in MeshCat. However, to build your robotics applications you would require more, ...., and control systems for a real-world robot platform.
+This tutorial shows you how to set up the physics engine (`MultibodyPlant`) and visualize the simulation in MeshCat. To build more advanced robotics applications in simulation, you will also need controllers and additional system blocks that interact with the robot model.
 
 Therefore proceed to tutorial [02b_dynamics.md](./02b_dynamics.md), where we will define a controller as a system block and connect it to the MultibodyPlant for the set-point regulation. 
