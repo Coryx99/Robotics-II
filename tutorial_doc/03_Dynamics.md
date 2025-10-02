@@ -3,12 +3,13 @@ The previous tutorial provided an introduction to adding, viewing, and simulatin
 
 Drake's system modeling approach is inspired by MATLAB's Simulink but without the graphical user interface. It focuses on introspecting the structure of governing equations, allowing for advanced algorithms for analysis, system identification, and feedback or state estimator design. In this tutorial, you will learn how to:
 
-* Write your own controller as a system block.
-* Integrate your controller into your simulation.
-* Obtain/Compute your system dynamics.
-* Examine the equations of motion in manipulator form.
+* Implement a controller as a system block (`LeafSystem`).
+* Integrate your controller into a simulation diagram.
+* Compute and inspect your system’s dynamics.
+* Log and plot joint positions and velocities to analyze performance.
 
-We will be running the tutorial example [tutorial_03.py](../tutorial_scripts/tutorial_03.py), which can be executed with the command: 
+
+We will be running the tutorial example [tutorial_03.py](../tutorial_scripts/tutorial_03.py): 
 ```sh
 cd ~/Robotics-II/tutorial_scripts 
 python3 ./tutorial_03.py
@@ -19,7 +20,6 @@ Before implementing our controller, we need to understand what a `LeafSystem` is
 <div style="text-align: center;">
     <img src="images/leafblock.png" alt="Leaf Block">
 </div>
-
 
 
 ### Deriving from `LeafSystem`
@@ -142,11 +142,27 @@ When running the code, the robot will be simulated and vizsualized in meshcat. i
 </div>
 From the rendered block diagram, we can verify our diagram definition by inspecting the port connections:
 <div style="text-align: center;">
-    <img src="../python_tutorials/figures/block_diagram_2b.png" alt="Diagram">
+    <img src="../tutorial_scripts/figures/block_diagram_03.png" alt="Diagram">
 </div>
 
 ### Inspecting the dynamics (the manipulator equations)
-We can also use Drake to evaluate the dynamics of a given MultibodyPlant in manipulator equations form. 
+We can use Drake to evaluate the dynamics of a given `MultibodyPlant` in **manipulator equation form**. This form explicitly shows how joint accelerations, velocities, and forces interact:
+
+\[
+\mathbf{M}(\mathbf{q})\, \ddot{\mathbf{q}} + \mathbf{C}(\mathbf{q}, \dot{\mathbf{q}})\, \dot{\mathbf{q}} + \mathbf{g}(\mathbf{q}) = \boldsymbol{\tau}_u + \boldsymbol{\tau}_\text{ext},
+\]
+
+where:
+
+* \(\mathbf{M}(\mathbf{q})\) is the **mass (inertia) matrix**. It depends on the joint positions \(\mathbf{q}\) and relates joint accelerations \(\ddot{\mathbf{q}}\) to generalized forces.  
+* \(\mathbf{C}(\mathbf{q}, \dot{\mathbf{q}})\, \dot{\mathbf{q}}\) contains **Coriolis and centrifugal terms**. It depends on both positions and velocities.  
+* \(\mathbf{g}(\mathbf{q})\) is the **gravity vector**, representing torques required to compensate for gravity.  
+* \(\boldsymbol{\tau}_u\) are the **control torques** applied by your controller.  
+* \(\boldsymbol{\tau}_\text{ext}\) are **external generalized forces**, such as forces from contacts or payloads.  
+
+By passing your `MultibodyPlant` to the dynamics computation functions, you can extract each of these components **numerically** for a given state or **symbolically** for analysis and algorithm design.
+
+
 ```python
         def PublishDynamics(self, context, mode='numerical'):
         print("Publishing event")
@@ -208,20 +224,64 @@ def CalcRobotDynamics(
     return (M, Cv, tauG, B, tauExt)
 ```
 
-## How to use an existing system block? @ToADD-MOHAYAD
+<!-- ## How to use an existing system block? @ToADD-MOHAYAD -->
 
-
-## How to log the measurements? @ToADD-MOHAYAD
+## How to log and plot measurements? 
 ```python
-from pydrake.systems.primitives import LogVectorOutput
-logger = LogVectorOutput(plant.get_output_port(0), builder)
-logger.set_name("logger")
+# We connect the logger to the desired port to record its measurements at its timestep.
+logger_state = LogVectorOutput(plant.get_state_output_port(), builder)
+logger_state.set_name("State logger")
+# Then we build the builder using builder.Build() and we pass it to simulator 
 
 # after simulator.AdvanceTo()....
-# Grab results from Logger:
-log = logger.FindLog(context)
-time = log.sample_times()
-data = log.data().transpose()
+# At the end of the simulation we grab and plot results using the `simulator.get_mutable_context()`
+plot_transient_response(logger_state, simulator_context)
+
+def plot_transient_response(logger_state, simulator_context, num_joints=9):
+    """
+    Plot joint positions and velocities from a LogVectorOutput logger.
+
+    Parameters
+    ----------
+    logger_state : LogVectorOutput
+        The logger that recorded the system state.
+    simulator_context : Context
+        The simulator context to extract logged data.
+    num_joints : int
+        Number of joints in the robot (default=9).
+    """
+    # Grab results from Logger
+    log = logger_state.FindLog(simulator_context)
+    time = log.sample_times()        # time vector
+    data = log.data()    # shape: [num_joints*2, num_samples]
+
+    # Separate joint positions and velocities
+    q = data[:num_joints, :]        # positions
+    qdot = data[num_joints:, :]     # velocities
+
+    # Plot joint positions
+    plt.figure(figsize=(12, 6))
+    for i in range(num_joints):
+        plt.plot(time, q[i, :], label=f'Joint {i+1}')
+    plt.title('Joint Positions Over Time')
+    plt.xlabel('Time [s]')
+    plt.ylabel('Joint Position [rad]')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+    # Plot joint velocities
+    plt.figure(figsize=(12, 6))
+    for i in range(num_joints):
+        plt.plot(time, qdot[i, :], label=f'Joint {i+1}')
+    plt.title('Joint Velocities Over Time')
+    plt.xlabel('Time [s]')
+    plt.ylabel('Joint Velocity [rad/s]')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
 ```
 
 
