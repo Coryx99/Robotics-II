@@ -3,7 +3,7 @@ Welcome to the Drake tutorials!
 This guide introduces Drake, the simulation framework we will use throughout the sessions.
 
 Over the next tutorials, you will:
-1. **Model** a simple robot and visualize it in [MeshCat](https://github.com/RobotLocomotion/drake/tree/main/tools/meshcat).  
+1. **Model** a robot and visualize it in [MeshCat](https://github.com/RobotLocomotion/drake/tree/main/tools/meshcat).  
 2. **Simulate** how it behaves under gravity.  
 3. **Control** it with a PD controller.  
 4. **Plan a trajectory** and make the robot follow it.  
@@ -76,7 +76,7 @@ Understanding the notation used in Drake is beneficial for interpreting the code
 **Tip:** When the Python docs are unclear, check the C++ docs, most functions follow the same naming as the python ones.
 
 ## 6. Next steps
-The tutorials are divided into Markdown files `.md` file with matching Python scripts in [python script](../python_tutorials/). Proceed to [02a_Modelling](./02a_Modelling.md) where you will:
+The tutorials are divided into Markdown files `.md` file with matching Python scripts in [python script](../python_tutorials/). Proceed to [02_Modelling](./02_Modelling.md) where you will:
 * Load a URDF robot model.
 * Inspect its joints and links.
 * Add a ground plane.

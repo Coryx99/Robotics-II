@@ -5,13 +5,13 @@
       <pose>0.4 0 0.01 0 0 0</pose>
       <!-- Include the Husky model -->
       <include>
-        <uri>/home/cory/Documents/drake_brubotics/models/descriptions/robots/husky_description/urdf/husky.urdf</uri>
+        <uri>/add-path-to/husky_description/urdf/husky.urdf</uri>
         <name>husky</name>
       </include>
 
       <!-- Include the Panda robot model -->
       <include>
-        <uri>/home/cory/Documents/drake_brubotics/models/old/panda_old/urdf/panda.urdf</uri> 
+        <uri>/add-path-to/urdf/panda.urdf</uri> 
         <name>panda</name>
       </include>
       <!-- Joint to fix the Panda base to the Husky platform -->
@@ -23,7 +23,3 @@
     </model>
   </world>
 </sdf>
-
-
-<uri>/home/cory/panda_description/urdf/panda_nofix.urdf</uri>              
-<uri>/home/cory/Documents/drake_ddp-main/models/panda_fr3/urdf/panda_fr3_notfixed.urdf</uri>
