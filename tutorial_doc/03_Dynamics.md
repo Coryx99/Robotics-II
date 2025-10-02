@@ -110,15 +110,19 @@ def create_sim_scene(sim_time_step):
     builder.Connect(controller.GetOutputPort("tau_u"), plant.GetInputPort("applied_generalized_force"))
     builder.Connect(des_pos.get_output_port(), controller.GetInputPort("Desired_state"))
 
+    # We connect the logger to the state port to record at each timestep.
+    logger_state = LogVectorOutput(plant.get_state_output_port(), builder)
+    logger_state.set_name("State logger")
+
     # Build and return the diagram
     diagram = builder.Build()
-    return diagram
+    return diagram, logger_state
 ```
 This diagram is then simulated and rendered with the following settings.
 ```python
 # Create a function to run the simulation and save the block diagram:
 def run_simulation(sim_time_step):
-    diagram = create_sim_scene(sim_time_step)
+    diagram, logger_state = create_sim_scene(sim_time_step)
     simulator = Simulator(diagram)
     simulator.Initialize()
     simulator.set_target_realtime_rate(1.)
@@ -226,18 +230,14 @@ def CalcRobotDynamics(
 
 ## How to log and plot measurements? 
 ```python
-# We connect the logger to the desired port to record its measurements at its timestep.
-logger_state = LogVectorOutput(plant.get_state_output_port(), builder)
-logger_state.set_name("State logger")
-# Then we build the builder using builder.Build() and we pass it to simulator 
+# After simulator.AdvanceTo() and publishing the recordings
+# At the end of the simulation we grab and plot results using the simulator context
+plot_transient_response(logger_state, simulator.get_context(), [-0.2, -1.5, 0.2, -2.356, 0.0, 1.571, 0.785, 0.0, 0.0])
 
-# after simulator.AdvanceTo()....
-# At the end of the simulation we grab and plot results using the `simulator.get_mutable_context()`
-plot_transient_response(logger_state, simulator_context)
-
-def plot_transient_response(logger_state, simulator_context, num_joints=9):
+def plot_transient_response(logger_state, simulator_context, desired_positions, num_joints=9):
     """
-    Plot joint positions and velocities from a LogVectorOutput logger.
+    Plot joint positions (first 7 joints) and velocities from a LogVectorOutput logger.
+    Shows desired positions (q_r) vs actual positions (q_n).
 
     Parameters
     ----------
@@ -245,40 +245,45 @@ def plot_transient_response(logger_state, simulator_context, num_joints=9):
         The logger that recorded the system state.
     simulator_context : Context
         The simulator context to extract logged data.
+    desired_positions : list or np.array
+        Desired joint positions (q_r) for plotting.
     num_joints : int
         Number of joints in the robot (default=9).
     """
-    # Grab results from Logger
     log = logger_state.FindLog(simulator_context)
-    time = log.sample_times()        # time vector
-    data = log.data()    # shape: [num_joints*2, num_samples]
+    time = log.sample_times()        # shape: (num_samples,)
+    data = log.data()                # shape: (num_joints*2, num_samples)
 
     # Separate joint positions and velocities
-    q = data[:num_joints, :]        # positions
+    q = data[:num_joints, :]        # actual positions
     qdot = data[num_joints:, :]     # velocities
 
-    # Plot joint positions
-    plt.figure(figsize=(12, 6))
-    for i in range(num_joints):
-        plt.plot(time, q[i, :], label=f'Joint {i+1}')
-    plt.title('Joint Positions Over Time')
-    plt.xlabel('Time [s]')
-    plt.ylabel('Joint Position [rad]')
-    plt.legend()
-    plt.grid(True)
-    plt.tight_layout()
+    # Convert desired_positions to array if needed
+    q_r = np.array(desired_positions)
+
+    # ---------------- Joint Positions (first 7) ----------------
+    fig, axes = plt.subplots(7, 1, figsize=(12, 14), sharex=True)
+    for i in range(7):
+        axes[i].plot(time, q[i, :], label='q_n')           # actual
+        axes[i].plot(time, q_r[i]*np.ones_like(time), '--', label='q_r')  # desired
+        axes[i].set_ylabel(f'Joint {i+1} [rad]')
+        axes[i].legend()
+        axes[i].grid(True)
+    axes[-1].set_xlabel('Time [s]')
+    fig.suptitle('Joint Positions vs Desired Positions (q_r vs q_n)')
+    plt.tight_layout(rect=[0, 0, 1, 0.97])
     plt.show()
 
-    # Plot joint velocities
-    plt.figure(figsize=(12, 6))
-    for i in range(num_joints):
-        plt.plot(time, qdot[i, :], label=f'Joint {i+1}')
-    plt.title('Joint Velocities Over Time')
-    plt.xlabel('Time [s]')
-    plt.ylabel('Joint Velocity [rad/s]')
-    plt.legend()
-    plt.grid(True)
-    plt.tight_layout()
+    # ---------------- Joint Velocities (first 7) ----------------
+    fig, axes = plt.subplots(7, 1, figsize=(12, 14), sharex=True)
+    for i in range(7):
+        axes[i].plot(time, qdot[i, :], label=f'Joint {i+1} velocity')
+        axes[i].set_ylabel(f'Joint {i+1} [rad/s]')
+        axes[i].legend()
+        axes[i].grid(True)
+    axes[-1].set_xlabel('Time [s]')
+    fig.suptitle('Joint Velocities')
+    plt.tight_layout(rect=[0, 0, 1, 0.97])
     plt.show()
 ```
 
