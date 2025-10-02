@@ -282,4 +282,4 @@ For a detailed description for each of the input/output ports of the Multibody p
 # Next steps
 This tutorial shows you how to set up the physics engine (`MultibodyPlant`) and visualize the simulation in MeshCat. To build more advanced robotics applications in simulation, you will also need controllers and additional system blocks that interact with the robot model.
 
-Therefore proceed to tutorial [02b_dynamics.md](./02b_dynamics.md), where we will define a controller as a system block and connect it to the MultibodyPlant for the set-point regulation. 
+Therefore proceed to tutorial [03_Dynamics.md](./03_Dynamics.md), where we will define a controller as a system block and connect it to the MultibodyPlant for the set-point regulation. 

@@ -8,55 +8,19 @@ Drake's system modeling approach is inspired by MATLAB's Simulink but without th
 * Obtain/Compute your system dynamics.
 * Examine the equations of motion in manipulator form.
 
-We will be running the tutorial example [tutorial_2b.py](../tutorial_scripts/tutorial_03.py), which can be executed with the command: 
+We will be running the tutorial example [tutorial_03.py](../tutorial_scripts/tutorial_03.py), which can be executed with the command: 
 ```sh
-cd ~/RoboticsII/tutorial_scripts 
+cd ~/Robotics-II/tutorial_scripts 
 python3 ./tutorial_03.py
 ```
 
-## Adding an existing dynamic block 
-
-## Writing your own dynamics
+## Writing your own system block
 Before implementing our controller, we need to understand what a `LeafSystem` is. A `LeafSystem` is a class in Drake that provides the basic functionality for a system, including the declaration of the input and output ports of the system. Every user-defined system should derive from the `Drake::Systems::LeafSystem` class. 
 <div style="text-align: center;">
     <img src="images/leafblock.png" alt="Leaf Block">
 </div>
 
-<!-- ### Using `SymbolicVectorSystem`
-There are various ways to define a leaf system; the simplest approach is using the `SymbolicVectorSystem` class. This class in Drake simplifies the creation of state-space systems using symbolic expressions. Below, we demonstrate how to create a simple continuous-time system using symbolic expressions.
-#### Continuous-Time System Example
-Consider a continuous-time, nonlinear, input-output dynamical system described by:
-$$\dot{x} = x^2 + x, \qquad y = x$$
-Here’s how to implement this system in Drake:
 
-```python
-from pydrake.symbolic import Variable
-from pydrake.systems.primitives import SymbolicVectorSystem
-
-# Define a new symbolic Variable
-x = Variable("x")
-
-# Define the System
-continuous_vector_system = SymbolicVectorSystem(state=[x], dynamics=[x**2 + x], output=[x])
-```
-This code  continuous_vector_system variable is now an instantiation of a Drake System class, that can be used in a number of ways, as we will illustrate below. 
-
-**Note:** the `state` argument expects a vector of `symbolic::Variable` (Python lists are automatically converted), while the `dynamics` and `output` arguments expect vectorS of `symbolic::Expressions`.
-
-#### Discrete-Time System Example
-If you want to implement a discrete-time system, you can specify the time period of the system. For example, to implement the system described by:
-$$x[n+1] = x^2+1, \qquad y[n]=x(n),$$
-This system, with zero inputs, one state variable, and one output, can be implemented as follows:
-```python
-from pydrake.symbolic import Variable
-from pydrake.systems.primitives import SymbolicVectorSystem
-
-# Define a new symbolic Variable
-x = Variable("x")
-
-# Define the System with a time period
-discrete_vector_system = SymbolicVectorSystem(state=[x], dynamics=[x**2 + 1], output=[x], time_period=1.0)
-``` -->
 
 ### Deriving from `LeafSystem`
 There are various ways to define a leaf system; the simplest approach is using the templates provided by Drake, such as `SymbolicVectorSystem` class. This class, for example, simplifies the creation of state-space systems using symbolic expressions. However, for systems with multiple inputs and outputs, mixed discrete and continuous dynamics, hybrid dynamics with guards and resets, constraints, and stochastic systems, a flexible approach is to derive directly from  `Drake::Systems::LeafSystem`.
@@ -243,6 +207,23 @@ def CalcRobotDynamics(
     tauExt = plant.CalcGeneralizedForces(context, forces) - tauG     
     return (M, Cv, tauG, B, tauExt)
 ```
+
+## How to use an existing system block? @ToADD-MOHAYAD
+
+
+## How to log the measurements? @ToADD-MOHAYAD
+```python
+from pydrake.systems.primitives import LogVectorOutput
+logger = LogVectorOutput(plant.get_output_port(0), builder)
+logger.set_name("logger")
+
+# after simulator.AdvanceTo()....
+# Grab results from Logger:
+log = logger.FindLog(context)
+time = log.sample_times()
+data = log.data().transpose()
+```
+
 
 # Next steps
 Now you should be able to write your own system blocks and connect them in your diagram. We also saw that we can compute and obtain the dynamics of a multibody plant, both symbolically and numerically. We will use a similar approach for automatic differentiation, as you will see in the next tutorial.
