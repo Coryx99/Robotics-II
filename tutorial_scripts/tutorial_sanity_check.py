@@ -11,14 +11,14 @@ from pydrake.multibody.parsing import Parser
 from pydrake.multibody.plant import AddMultibodyPlantSceneGraph
 from pydrake.systems.framework import DiagramBuilder
 from pydrake.visualization import AddDefaultVisualization, ModelVisualizer
-from pydrake.systems.analysis import Simulator
+from pydrake.systems.analysis import Simulator  
 
 # ------------------ Settings ------------------
 visualize = True  # True = only visualize, False = run full simulation
 meshcat = StartMeshcat()
 # Adjust the path to where the URDF is in your directory
 model_path = os.path.join(
-    "..", "models", "descriptions", "robots", "humanoids", "pr2_description", "urdf","pr2_simplified.urdf"
+    "..", "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
 )
 
 # ------------------ Functions ------------------
