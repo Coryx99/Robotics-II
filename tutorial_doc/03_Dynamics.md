@@ -148,12 +148,7 @@ From the rendered block diagram, we can verify our diagram definition by inspect
 ### Inspecting the dynamics (the manipulator equations)
 We can use Drake to evaluate the dynamics of a given `MultibodyPlant` in **manipulator equation form**. This form explicitly shows how joint accelerations, velocities, and forces interact:
 
-$$
-\mathbf{M}(\mathbf{q})\, \ddot{\mathbf{q}} 
-+ \mathbf{C}(\mathbf{q}, \dot{\mathbf{q}})\, \dot{\mathbf{q}} 
-+ \mathbf{g}(\mathbf{q}) 
-= \boldsymbol{\tau}_u + \boldsymbol{\tau}_\mathrm{ext},
-$$
+$$\mathbf{M}(\mathbf{q})\, \ddot{\mathbf{q}}+\mathbf{C}(\mathbf{q}, \dot{\mathbf{q}})\, \dot{\mathbf{q}}+\mathbf{g}(\mathbf{q}) = \boldsymbol{\tau}_u + \boldsymbol{\tau}_\mathrm{ext},$$
 
 where:
 
