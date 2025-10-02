@@ -27,7 +27,9 @@ There are various ways to define a leaf system; the simplest approach is using t
 
 #### PD controller example
 We will use the `LeafSystem` to construct a PD controller with gravity compensation. We will define 2 input ports for our controller block: one for the desired robot state "$q_r$" and another to feedback the state of the robot $q$ and $\dot{q}$. The output of our controller is given as:
-$$\tau_u = K_P (q_r - q) - K_D \dot{q} + g(q) ,$$
+
+$$\mathbf{\tau_u} = \mathbf{K}_P (\mathbf{q}_r - \mathbf{q}) - \mathbf{K}_D \mathbf{\dot{q}} + \mathbf{g}(\mathbf{q}) ,$$
+
 where $K_P$ and $K_D$ are the proportional and derivative gains, respectively.
 
 The state of a multibody system is given by its generalized positions vector $q$, and its generalized velocities vector $\dot{q}$. Our Panda robot URDF has 9 actuated degrees of freedom corresponding to the 7 revolute joints and 2 prismatic joints (left and right fingers). Thus, we declare our current state input with a size of 18, equal to the state vector provided by the multibody plant of the form $x = [q, \dot{q}]$.
