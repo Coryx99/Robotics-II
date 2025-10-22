@@ -36,7 +36,7 @@ add_bodies = True  # If True: add ground and a box to the scene
 
 # Path to Panda robot URDF
 model_path = os.path.join(
-    "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
+    "..", "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
 )
 
 # --------------------------------------------------------------------
@@ -225,7 +225,7 @@ def run_simulation(sim_time_step):
         # Save system block diagram as PNG
         svg_data = diagram.GetGraphvizString(max_depth=2)
         graph = pydot.graph_from_dot_data(svg_data)[0]
-        image_path = "../figures/block_diagram_02.png"
+        image_path = "figures/block_diagram_02.png"
         graph.write_png(image_path)
         print(f"\nBlock diagram saved as: {image_path}")
 

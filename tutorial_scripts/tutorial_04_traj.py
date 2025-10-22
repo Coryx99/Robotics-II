@@ -31,7 +31,7 @@ meshcat.DeleteAddedControls()
 
 # Set the path to your robot model:
 robot_path = os.path.join(
-    "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
+    "..", "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
 )
 
 def plot_joint_tracking(logger_state, logger_traj, simulator_context, num_joints=9):
@@ -127,88 +127,110 @@ class Controller(LeafSystem):
 ######################################################################################################
 
 class JointSpaceTrajectorySystem(LeafSystem):
-    def __init__(self, q_start, q_goal, v_max, a_max, mode="trapezoidal"):
+    def __init__(self, q_start, q_goal, v_max, a_max):
         super().__init__()
         self.q_start = np.array(q_start)
         self.q_goal  = np.array(q_goal)
         self.v_max   = np.broadcast_to(v_max, self.q_start.shape)
         self.a_max   = np.broadcast_to(a_max, self.q_start.shape)
         self.n = len(q_start)
-        self.mode = mode
         # Precompute motion profiles for each joint.
         # This sets up the timing and kinematic parameters (acceleration time,
         # flat time, total duration, etc.) used later to evaluate q_ref(t) and qd_ref(t).
-        # It supports both trapezoidal and smooth S-curve profiles depending on 'mode'.
         self._compute_profiles()
         self.DeclareVectorOutputPort("joint_ref", BasicVector(2*self.n), self._output_reference)
 
     def _compute_profiles(self):
+        """
+        Precompute motion parameters for each joint.
+
+        The trapezoidal velocity profile consists of three phases:
+        1. Acceleration with constant a_max
+        2. Constant velocity at v_max (flat section)
+        3. Deceleration with constant -a_max
+
+        However, depending on the motion distance (Δq) and limits (v_max, a_max),
+        the profile can take two shapes:
+
+            • **Trapezoidal** → when the joint reaches v_max before decelerating.
+            • **Triangular**  → when the joint does not reach v_max; 
+                                acceleration and deceleration phases overlap.
+
+        This method computes the timing parameters (t_acc, t_flat, T_total)
+        for each joint and ensures all joints are synchronized by using
+        the maximum duration among them.
+        """
         self.profiles = []
         self.duration = 0.0
 
-        # First pass: compute per-joint minimal S-curve durations (and trapezoid params too)
-        self._T_scurve = []
-        for i in range(self.n):
-            q0, qf = self.q_start[i], self.q_goal[i]
-            dq = qf - q0
-            v = np.broadcast_to(self.v_max, self.q_start.shape)[i]
-            a = np.broadcast_to(self.a_max, self.q_start.shape)[i]
-
-            # S-curve (cubic time scaling) minimal duration for this joint
-            T_v = 1.5*abs(dq)/max(v, 1e-9)
-            T_a =  np.sqrt(6 * abs(dq) / max(a, 1e-9)) #np.sqrt(3*abs(dq)/max(a, 1e-9))
-            T_i = 0.0 if np.isclose(dq, 0.0) else max(T_v, T_a)
-            self._T_scurve.append(T_i)
-
-        # Make a single synchronized duration
-        self._T = max(self._T_scurve) if self.mode == "s_curve" else 0.0
-
-        # Also keep your trapezoid params (unchanged) for mode="trapezoidal"
-        self.profiles = []
-        self.duration = 0.0
         for i in range(self.n):
             q0, qf = self.q_start[i], self.q_goal[i]
             dq = qf - q0
             s = np.sign(dq) if dq != 0 else 1.0
             dq_abs = abs(dq)
-            v = np.broadcast_to(self.v_max, self.q_start.shape)[i]
-            a = np.broadcast_to(self.a_max, self.q_start.shape)[i]
+            v = self.v_max[i]
+            a = self.a_max[i]
 
-            # Trapezoid calculations (as you already had)
+            # Acceleration time and peak velocity
             t_acc = v / a if a > 0 else 0.0
+
+            # Check for triangular vs. trapezoidal
             if dq_abs < a * t_acc**2:
+                # Triangular (no constant-velocity phase)
                 t_acc = np.sqrt(dq_abs / max(a, 1e-9))
                 t_flat = 0.0
                 v_peak = a * t_acc
             else:
+                # Trapezoidal (with constant velocity)
                 v_peak = v
                 t_flat = (dq_abs - a * t_acc**2) / max(v, 1e-9)
-            T_trap = 2*t_acc + t_flat
 
+            T_trap = 2 * t_acc + t_flat
             self.duration = max(self.duration, T_trap)
-            self.profiles.append({
-                "q0": q0, "dq": dq, "s": s,
-                "t_acc": t_acc, "t_flat": t_flat, "T": T_trap,
-                "a": a, "v_peak": v_peak
-            })
 
-        # Final overall duration:
-        if self.mode == "s_curve":
-            self.duration = max(self._T, 1e-9)  # avoid zero
+            self.profiles.append(
+                {
+                    "q0": q0,
+                    "dq": dq,
+                    "s": s,
+                    "t_acc": t_acc,
+                    "t_flat": t_flat,
+                    "T": T_trap,
+                    "a": a,
+                    "v_peak": v_peak,
+                }
+            )
 
     def _eval_trapezoid(self, t, p):
-        """Compute joint position and velocity for a trapezoidal velocity profile."""
+        """
+        Compute joint position and velocity for a trapezoidal velocity profile.
+
+        Each joint moves following a constant-acceleration, constant-velocity,
+        constant-deceleration pattern. The parameter 's' ∈ {+1, -1} represents
+        the direction of motion (sign of Δq = q_goal - q_start).
+
+        Motion phases and equations:
+            1. Acceleration (0 ≤ t < t_acc)
+            q = q0 + s·½·a·t²
+            q̇ = s·a·t
+
+            2. Constant velocity (t_acc ≤ t < t_acc + t_flat)
+            q = q0 + s·[½·a·t_acc² + v_peak·(t - t_acc)]
+            q̇ = s·v_peak
+
+            3. Deceleration (t_acc + t_flat ≤ t < T)
+            q = q0 + s·[½·a·t_acc² + v_peak·t_flat
+                            + v_peak·t_d - ½·a·t_d²]
+            q̇ = s·(v_peak - a·t_d)
+            where t_d = t - (t_acc + t_flat)
+
+        Total duration:  T = 2·t_acc + t_flat
+        """
         # Extract parameters for this joint
         q0, s, a, t_acc, t_flat, T, dq = (
             p["q0"], p["s"], p["a"], p["t_acc"], p["t_flat"], p["T"], p["dq"]
         )
 
-        # Motion phases: accelerate → constant velocity → decelerate
-        # Formulas:
-        # 1. Accel: q = q0 + ½ a t²,      q̇ = a t
-        # 2. Cruise: q = q0 + ½ a t_acc² + v_peak (t - t_acc),  q̇ = v_peak
-        # 3. Decel: q = qf - ½ a (T - t)², q̇ = v_peak - a (t - t_acc - t_flat)
-        # where v_peak = a * t_acc and total T = 2·t_acc + t_flat
         if t <= 0:
             q, qd = q0, 0.0
         elif t < t_acc:  # accelerating
@@ -225,57 +247,13 @@ class JointSpaceTrajectorySystem(LeafSystem):
         else:  # end of motion
             q, qd = q0 + p["dq"], 0.0
         return q, qd
-
-    def _eval_s_curve(self, t, i):
-        """
-        Compute joint position and velocity for a smooth cubic S-curve profile.
-
-        Concept:
-        The motion is generated using a *time-scaling function* s(τ) that smoothly
-        interpolates from 0 -> 1 as time progresses from 0 -> T. Instead of moving
-        with constant acceleration (like a trapezoid), s(τ) gradually increases and
-        decreases acceleration, ensuring zero velocity and zero acceleration at both
-        start and end points.
-
-        The cubic polynomial chosen,
-            s(τ)  = 3τ² - 2τ³,
-        satisfies boundary conditions:
-            s(0)=0,  s(1)=1,  s'(0)=0,  s'(1)=0.
-        Its derivative,
-            s'(τ) = (6/T)(τ - τ²),
-        defines a bell-shaped velocity profile that rises and falls smoothly.
-        """
-        q0 = self.q_start[i]
-        dq = self.q_goal[i] - q0
-        T = max(self._T, 1e-9)  # total duration (avoid division by zero)
-
-        if t <= 0:
-            return q0, 0.0
-        if t >= T:
-            return q0 + dq, 0.0
-
-        # Normalized time τ ∈ [0, 1]
-        tau = t / T
-
-        # Cubic time-scaling function and its derivative
-        s = 3 * tau**2 - 2 * tau**3       # smooth position interpolation
-        sd = (6 / T) * (tau - tau**2)     # corresponding velocity scaling
-
-        # Apply scaling to get actual joint motion
-        q = q0 + dq * s                   # position q(t) = q₀ + Δq·s(τ)
-        qd = dq * sd                      # velocity q̇(t) = Δq·s'(τ)
-        return q, qd
-
+    
     def _output_reference(self, context, output):
+        """Compute [q_ref, qd_ref] at current simulation time."""
         t = context.get_time()
         q_ref, qd_ref = np.zeros(self.n), np.zeros(self.n)
         for i, p in enumerate(self.profiles):
-            if self.mode == "trapezoidal":
-                q_ref[i], qd_ref[i] = self._eval_trapezoid(t, p)
-            elif self.mode == "s_curve":  # <- use the new mode name
-                q_ref[i], qd_ref[i] = self._eval_s_curve(t, i)
-            else:
-                raise ValueError(f"Unknown trajectory mode: {self.mode}")
+            q_ref[i], qd_ref[i] = self._eval_trapezoid(t, p)
         output.SetFromVector(np.hstack([q_ref, qd_ref]))
 
 ######################################################################################################
@@ -283,7 +261,6 @@ class JointSpaceTrajectorySystem(LeafSystem):
 # Function to Create Simulation Scene
 def create_sim_scene(sim_time_step):   
     builder = DiagramBuilder()
-    trajectory_mode = "s_curve"  # Options: "trapezoidal" or "s_curve"
     plant, scene_graph = AddMultibodyPlantSceneGraph(builder, time_step=sim_time_step)
     parser = Parser(plant)
     parser.AddModelsFromUrl("file://" + os.path.abspath(robot_path))
@@ -312,7 +289,6 @@ def create_sim_scene(sim_time_step):
             q_goal=q_target,
             v_max=0.2,   # rad/s
             a_max=2.0,    # rad/s²
-            mode=trajectory_mode
         )
     )
     # des_pos = builder.AddNamedSystem("Desired position", ConstantVectorSource(q_target))
@@ -345,13 +321,13 @@ def run_simulation(sim_time_step):
     # Save the block diagram as an image file
     svg_data = diagram.GetGraphvizString(max_depth=2)
     graph = pydot.graph_from_dot_data(svg_data)[0]
-    image_path = "tutorial_scripts/figures/block_diagram_04_traj.png"  # Change this path as needed
+    image_path = "figures/block_diagram_04_traj.png"  # Change this path as needed
     graph.write_png(image_path)
     print(f"Block diagram saved as: {image_path}")
     
     # Run simulation and record for replays in MeshCat
     meshcat.StartRecording()
-    simulator.AdvanceTo(10.0)  # Adjust this time as needed
+    simulator.AdvanceTo(6.0)  # Adjust this time as needed
     meshcat.PublishRecording()
 
     # At the end of the simulation

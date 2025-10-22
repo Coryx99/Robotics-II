@@ -35,7 +35,7 @@ meshcat.DeleteAddedControls()
 
 # Set the path to your robot model:
 robot_path = os.path.join(
-    "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
+    "..", "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
 )
 
 def plot_joint_tracking(logger_state, logger_traj, simulator_context, num_joints=9):
@@ -50,7 +50,6 @@ def plot_joint_tracking(logger_state, logger_traj, simulator_context, num_joints
     qdot_actual = log_state.data()[num_joints:, :]
 
     q_ref = log_traj.data()[:num_joints, :]
-    qdot_ref = log_traj.data()[num_joints:, :]
 
     # --- Joint positions ---
     fig, axes = plt.subplots(7, 1, figsize=(12, 14), sharex=True)
@@ -63,19 +62,6 @@ def plot_joint_tracking(logger_state, logger_traj, simulator_context, num_joints
         axes[i].set_ylim(-3, 3)
     axes[-1].set_xlabel('Time [s]')
     fig.suptitle('Joint Positions: Actual vs Reference')
-    plt.tight_layout(rect=[0, 0, 1, 0.97])
-    plt.show()
-
-    # --- Joint velocities ---
-    fig, axes = plt.subplots(7, 1, figsize=(12, 14), sharex=True)
-    for i in range(7):
-        axes[i].plot(time, qdot_actual[i, :], label='qdot_actual')
-        axes[i].set_ylabel(f'Joint {i+1} [rad/s]')
-        axes[i].legend()
-        axes[i].grid(True)
-        axes[i].set_ylim(-1.0, 1.0)
-    axes[-1].set_xlabel('Time [s]')
-    fig.suptitle('Joint Velocities: Actual vs Reference')
     plt.tight_layout(rect=[0, 0, 1, 0.97])
     plt.show()
 
@@ -143,16 +129,16 @@ class MotionProfile(LeafSystem):
         super().__init__()
         self.trajInit_ = trajInit_
         self.num_points = 40
-        time_period = 4
+        time_period = 3.0
         self.index = 0
-        self.index1 = 0
+        self.flag = True
         self.min_distance = 0.05
         update_period = time_period / self.num_points
         builder = DiagramBuilder()
         plant, scene_graph = AddMultibodyPlantSceneGraph(builder, time_step=0.01)
         parser = Parser(plant)
         parser.AddModelsFromUrl("file://" + os.path.abspath(robot_path))
-        base_link = plant.GetBodyByName("panda_link0")  # replace with your robot’s root link name
+        base_link = plant.GetBodyByName("panda_link0")
         plant.WeldFrames(plant.world_frame(), base_link.body_frame())
 
         # --- A floating box ---
@@ -211,42 +197,73 @@ class MotionProfile(LeafSystem):
         )
 
     def compute_trajectory(self, context, discrete_state):
+        """
+        Periodically updates the next target joint configuration (q_next)
+        along a collision-free path planned by RRTConnect.
 
+        This function is triggered by a discrete update event inside Drake’s
+        simulation loop. It computes a sequence of joint-space waypoints
+        that guide the robot from its current configuration to the desired
+        goal configuration while avoiding obstacles.
+
+        Parameters
+        ----------
+        context : pydrake.systems.framework.Context
+            Provides access to the current simulation time and inputs.
+        discrete_state : pydrake.systems.framework.DiscreteValues
+            The system's internal discrete state vector (used to store q_next).
+        """
+
+        # q_desired: the desired goal configuration provided by an external node
         q_desired = self._q_desired_port.Eval(context)
+        # state: the current robot joint positions + velocities
         state = self._state_port.Eval(context)
 
+        # Extract current joint positions
         q_i = state[:self.num_positions]
+        # Update the plant’s internal configuration for accurate collision checking
         self.plant.SetPositions(self.plant_context, q_i)
 
-        if np.allclose(q_desired, 0.0):
-            q_desired = self.trajInit_
+        if self.flag:
+            # Run OMPL’s RRT-Connect planner to compute a joint-space path
             self.path = self.plan_joint_space(q_i, q_desired, timeout=4)
-            if self.path is None:
-                self.path = q_i[np.newaxis, :]
 
-        if np.linalg.norm(q_desired - self.trajInit_) > 0.2 and self.index1 == 0:
-            self.path = self.plan_joint_space(q_i, q_desired, timeout=4)
+            # If planner fails, fall back to holding the current position
             if self.path is None:
                 self.path = q_i[np.newaxis, :]
             
-            self.q_desired = q_desired
             self.index = 0
-            self.index1 = 1
-            
+            self.flag = False
+
+        # If a valid path exists, follow it step by step 
         if self.path is not None and len(self.path) > self.index:
+            # Select the next waypoint on the planned path
             q_next = self.path[self.index]
-            if np.linalg.norm(q_next - state[:self.num_positions]) < 1:
+
+            # Advance to the next waypoint if we are close enough to the current one
+            if np.linalg.norm(q_next - state[:self.num_positions]) < 0.2:
                 self.index += 1
         else:
+            # End of path reached -> hold final configuration
             q_next = self.path[-1]
 
+        # Update the system’s discrete output (next target configuration)
         discrete_state.get_mutable_vector().SetFromVector(q_next)
 
         
     def check_configuration_validity(self, q):
+
+        # This updates the positions of all robot bodies in the scene.
         self.plant.SetPositions(self.plant_context, q)
+
+        # This provides access to Drake's geometry engine for computing
+        # distances and collision information at the current configuration.
         query_object = self.plant.get_geometry_query_input_port().Eval(self.plant_context)
+
+        # Retrieve an inspector to map geometry IDs to frames/bodies.
         inspector = query_object.inspector()
+
+        # Compute signed distances between all geometry pairs.
         distances = query_object.ComputeSignedDistancePairwiseClosestPoints()
 
         # Iterate and find the smallest *relevant* distance
@@ -254,7 +271,10 @@ class MotionProfile(LeafSystem):
 
         for pair in distances:
 
+            # Extract the two bodies associated with this distance pair.
             body_A, body_B = self._get_bodies_from_pair(pair, inspector)
+
+            # Retrieve the model names (e.g., "panda", "box") for filtering.
             robot_A_name = self._get_robot_name(body_A)
             robot_B_name = self._get_robot_name(body_B)
 
@@ -273,41 +293,76 @@ class MotionProfile(LeafSystem):
         return min_dist >= self.min_distance
         
     def plan_joint_space(self, q_start, q_goal, timeout=3):
-        num_dof = self.num_positions
-        space = ob.RealVectorStateSpace(num_dof)
+        """
+        Plans a collision-free path in the robot's joint space using OMPL's RRT-Connect algorithm.
+
+        Parameters
+        ----------
+        q_start : array-like
+            The starting joint configuration of the robot.
+        q_goal : array-like
+            The desired target joint configuration.
+        timeout : float
+            The maximum time allowed for the planner to search for a valid path (in seconds).
+
+        Returns
+        -------
+        sampled : np.ndarray or None
+            A set of intermediate joint configurations representing the collision-free path.
+            Returns None if the planner fails to find a path within the timeout.
+        """
+        num_dof = self.num_positions                         # number of joints in the manipulator
+        space = ob.RealVectorStateSpace(num_dof)             # N-dimensional Euclidean space ℝⁿ
+        
+        # Set the upper and lower limits for each joint
         bounds = ob.RealVectorBounds(num_dof)
         lower_limits = self.plant.GetPositionLowerLimits()
         upper_limits = self.plant.GetPositionUpperLimits()
 
+        # Apply per-joint bounds to the OMPL state space
         for i in range(num_dof):
             bounds.setLow(i, lower_limits[i])
             bounds.setHigh(i, upper_limits[i])
         space.setBounds(bounds)
 
+        # Configure the SpaceInformation (contains state validity)
         si = ob.SpaceInformation(space)
         validity_checker = JointSpaceValidityChecker(si, self.check_configuration_validity, num_dof)
-        si.setStateValidityChecker(validity_checker)
+        si.setStateValidityChecker(validity_checker) # geometry engine to ensure the robot is collision-free.
         si.setup()
 
+         # Define start and goal configurations
         start = ob.State(space)
         goal = ob.State(space)
         for i in range(num_dof):
             start[i] = q_start[i]
             goal[i] = q_goal[i]
 
+        # Problem definition: connect q_start -> q_goal with a feasible path
         pdef = ob.ProblemDefinition(si)
+        # The last argument (1e-2) is the acceptable goal tolerance in joint space
         pdef.setStartAndGoalStates(start, goal, 1e-2)
 
-        planner = og.RRTConnect(si)
-        planner.setProblemDefinition(pdef)
-        planner.setup()
-
+        # Choose the planner (RRT-Connect) and initialize it
+        planner = og.RRTConnect(si)             # create planner object
+        planner.setProblemDefinition(pdef)      # assign start/goal/problem
+        planner.setup()                         # initialize internal structures
+        
+        # The planner will attempt to find a collision-free path
+        # connecting q_start and q_goal within the given timeout.
         solved = planner.solve(timeout)
+        # Extract, simplify, and interpolate the path if found
         if solved:
             path = pdef.getSolutionPath()
+
+            # Simplify the path by shortcutting redundant waypoints
             simplifier = og.PathSimplifier(si)
             simplifier.ropeShortcutPath(path)
+
+            # Interpolate to obtain evenly spaced samples along the path
             path.interpolate(self.num_points)
+
+            # Convert OMPL path states into a NumPy array [N × num_dof]
             sampled = np.array([
                             [state[i] for i in range(num_dof)]
                             for index, state in enumerate(path.getStates())
@@ -318,13 +373,20 @@ class MotionProfile(LeafSystem):
             return None
     
     def _get_bodies_from_pair(self, pair, inspector):
+        # Get the frame IDs for the two geometries in the distance pair.
         frame_id_A = inspector.GetFrameId(pair.id_A)
         frame_id_B = inspector.GetFrameId(pair.id_B)
+
+        # Map the frame IDs to their corresponding Body objects in the plant.
         body_A = self.plant.GetBodyFromFrameId(frame_id_A)
         body_B = self.plant.GetBodyFromFrameId(frame_id_B)
+        
         return body_A, body_B
     
     def _get_robot_name(self, body):
+        # Retrieve the human-readable name of that model instance.
+        # This allows you to distinguish which robot or object the body comes from.
+
         model_instance = body.model_instance()
         return self.plant.GetModelInstanceName(model_instance)
 ######################################################################################################
@@ -425,7 +487,7 @@ def run_simulation(sim_time_step):
     # Save the block diagram as an image file
     svg_data = diagram.GetGraphvizString(max_depth=2)
     graph = pydot.graph_from_dot_data(svg_data)[0]
-    image_path = "tutorial_scripts/figures/block_diagram_04_path_planner.png"  # Change this path as needed
+    image_path = "figures/block_diagram_04_path_planner.png"  # Change this path as needed
     graph.write_png(image_path)
     print(f"Block diagram saved as: {image_path}")
     

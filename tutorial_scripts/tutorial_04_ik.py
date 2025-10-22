@@ -29,7 +29,7 @@ meshcat.DeleteAddedControls()
 
 # Set the path to your robot model:
 robot_path = os.path.join(
-    "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
+    "..", "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
 )
 
 def plot_transient_response(logger_state, simulator_context, desired_positions, num_joints=9):
@@ -262,11 +262,11 @@ def create_sim_scene(sim_time_step):
     # This finalizes all connections between components (plant, scene graph, logger, etc.)
     # and returns a single Diagram that can be simulated.
     diagram = builder.Build()
-    return diagram, logger_state
+    return diagram, logger_state, q_target
 
 # Create a function to run the simulation scene and save the block diagram:
 def run_simulation(sim_time_step):
-    diagram, logger_state = create_sim_scene(sim_time_step)
+    diagram, logger_state, q_target = create_sim_scene(sim_time_step)
     # Initialize the Drake simulator with the built diagram.
     # The simulator handles time stepping, integration, and advancing system dynamics.
     simulator = Simulator(diagram)
@@ -284,7 +284,7 @@ def run_simulation(sim_time_step):
     # Save the block diagram as an image file
     svg_data = diagram.GetGraphvizString(max_depth=2)
     graph = pydot.graph_from_dot_data(svg_data)[0]
-    image_path = "tutorial_scripts/figures/block_diagram_04_ik.png"
+    image_path = "figures/block_diagram_04_ik.png"
     graph.write_png(image_path)
     print(f"Block diagram saved as: {image_path}")
     
@@ -294,8 +294,7 @@ def run_simulation(sim_time_step):
     meshcat.PublishRecording()
 
     # At the end of the simulation
-    desired_positions = [-0.2, -1.5, 0.2, -2.356, 0.0, 1.571, 0.785, 0.0, 0.0]
-    plot_transient_response(logger_state, simulator.get_context(), desired_positions)
+    plot_transient_response(logger_state, simulator.get_context(), q_target)
 
 # Run the simulation with a specific time step. Try gradually increasing it!
 run_simulation(sim_time_step=0.01)

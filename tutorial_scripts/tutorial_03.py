@@ -24,7 +24,7 @@ meshcat.DeleteAddedControls()
 
 # Set the path to your robot model:
 robot_path = os.path.join(
-    "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
+    "..", "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
 )
 
 def plot_transient_response(logger_state, simulator_context, desired_positions, num_joints=9):
@@ -199,7 +199,7 @@ def run_simulation(sim_time_step):
     # Save the block diagram as an image file
     svg_data = diagram.GetGraphvizString(max_depth=2)
     graph = pydot.graph_from_dot_data(svg_data)[0]
-    image_path = "tutorial_scripts/figures/block_diagram_03.png"  # Change this path as needed
+    image_path = "figures/block_diagram_03.png"  # Change this path as needed
     graph.write_png(image_path)
     print(f"Block diagram saved as: {image_path}")
     

@@ -1,252 +1,451 @@
-# Trajectory Planning with PyDrake
+# Trajectory and Path Planning in PyDrake
 
-In the previous tutorials, we explored modeling, dynamics, and control of robotic manipulators in Drake.  
-In this tutorial, we will build upon those foundations to **generate feasible trajectories** for our robot — from simple end-effector positioning to full motion planning in cluttered environments.
+In the previous tutorial, we developed a PD+G controller to regulate the robot to a desired configuration.  
+In this tutorial, we take a major step forward: **planning and following trajectories**.  
+We will explore three key concepts:
 
-You will learn how to:
+1. **Inverse Kinematics (IK):** Computing a single target configuration (`q_target`) that achieves a desired end-effector pose.  
+2. **Trapezoidal Trajectories:** Generating smooth, time-parameterized joint-space trajectories between configurations.  
+3. **OMPL Path Planning:** Computing collision-free paths using sampling-based planners.
 
-* Solve **inverse kinematics (IK)** problems to reach desired Cartesian poses.  
-* Design **primitive paths** (e.g., line and arc segments) in task space.  
-* Convert discrete waypoints into **smooth time-parameterized trajectories** (e.g., trapezoidal or S-curve).  
-* Integrate **obstacle-aware motion planning** using the OMPL framework.  
+By the end of this tutorial, you will be able to:
+* Compute target configurations using PyDrake’s `InverseKinematics`.
+* Generate and execute time-based trapezoidal joint trajectories.
+* Integrate OMPL with Drake for collision-free motion planning.
 
-We will progressively develop four tutorial scripts:
+We will execute three example scripts:
+
 ```bash
 cd ~/Robotics-II/tutorial_scripts
-python3 tutorial_inverse_kinematics.py
-python3 tutorial_primitive_path.py
-python3 tutorial_trajectory_generation.py
-python3 tutorial_path_planning.py
+python3 ./tutorial_04_ik.py
+python3 ./tutorial_04_traj.py
+python3 ./tutorial_04_path_planner.py
 ```
 
 ---
 
-## 1. Inverse Kinematics (IK)
+## 1. Inverse Kinematics — Generating a Target Configuration
 
-Inverse kinematics finds a joint configuration $\mathbf{q}$ that positions the robot’s end effector at a desired Cartesian pose $T_\text{goal}$ (position + orientation).  
-Drake’s `InverseKinematics` class provides a flexible way to define pose constraints, joint limits, and even soft costs.
+### 1.1 Concept
+Inverse kinematics (IK) computes the joint configuration `q_target` that achieves a desired **end-effector pose**.  
+For the Panda robot, the pose is defined by the position and orientation of the frame `"panda_hand"` in the world frame.
 
-### Example: reaching a Cartesian target
-We begin with a simple problem: move the Panda end effector to a desired target point in 3D.
+The inverse kinematics (IK) problem aims to find the joint configuration  $\mathbf{q}$ that places the robot’s end-effector at a desired position and orientation in space while keeping the joints within their physical limits. To achieve this, we formulate an optimization problem that minimizes the distance from a nominal or “comfortable” configuration $\mathbf{q}_{\text{nominal}}$, subject to geometric constraints on the end-effector and bounds on the joints. The cost function $(\mathbf{q} - \mathbf{q}_{\text{nominal}})^{\top} W (\mathbf{q} - \mathbf{q}_{\text{nominal}})$ penalizes large joint deviations, where $W$ is a weighting matrix that controls the relative importance of each joint. The position constraint enforces that the end-effector’s Cartesian coordinates match a desired target point, and the orientation constraint limits the angular deviation between the current and desired orientations to within a small tolerance. Finally, lower and upper joint limits $\mathbf{q}_{\min}$ and $\mathbf{q}_{\max}$ are imposed to ensure feasibility. The solution of this problem, $\mathbf{q}_{\text{target}}$, provides a physically valid configuration that realizes the requested end-effector pose and can be directly used by the controller.
+
+
+In optimization form, the IK problem can be expressed as:
+
+```math
+\begin{aligned}
+\min_{q}\;& \| q - q_{\text{nominal}} \|^2_W \\
+\text{s.t.}\;& f_{\text{position}}(q) = p_{\text{desired}} \\
+& f_{\text{orientation}}(q) = R_{\text{desired}} \\
+& q_{\min} \le q \le q_{\max}
+\end{aligned}
+```
+
+The cost function plays a crucial role in ensuring that the solution of the inverse kinematics (IK) problem is not only feasible but also desirable from a practical and numerical standpoint. In the optimization formulation, the quadratic cost 
+
+```math
+\begin{aligned}
+J(\text{q}) = (\text{q} - \text{q}_{\text{nominal}})^{\top} 
+W (\text{q} - \text{q}_{\text{nominal}})
+\end{aligned}
+```
+
+penalizes large deviations of the joint configuration $\mathbf{q}$ from a reference configuration $\mathbf{q}_{\text{nominal}}$. This reference, often called the $\emph{nominal pose}$, is typically chosen to be a comfortable or neutral configuration of the robot, such as its home or ready position.
+
+By minimizing this cost, we bias the optimization toward solutions that are as close as possible to $\mathbf{q}_{\text{nominal}}$ while still satisfying the end-effector constraints. This has several important benefits:
+
+1. It prevents the solver from selecting extreme or awkward joint angles when multiple IK solutions exist (e.g., elbow-up vs.\ elbow-down postures).
+2. It improves numerical stability by providing a well-conditioned and smooth objective function, helping the optimizer converge more reliably.
+3. It ensures continuity between successive IK solutions when the target pose changes slightly, leading to smoother overall motion in practice.
+
+In summary, the cost function introduces a preference for “natural” and physically reasonable joint configurations, ensuring that the resulting solution $\mathbf{q}_{\text{target}}$ is both feasible and close to the robot’s typical working region.
+
+### 1.2 Implementation Overview
+Drake’s [InverseKinematics](https://drake.mit.edu/doxygen_cxx/classdrake_1_1multibody_1_1_inverse_kinematics.html) class provides a convenient interface to set these constraints and solve the problem using [Solve()](https://drake.mit.edu/doxygen_cxx/namespacedrake_1_1solvers.html#a07bf1722e3e347d7878ae44be98b4b92). In [tutorial_04_ik.py](../tutorial_scripts/tutorial_04_ik.py), the function `solve_ik()` defines and solves the IK problem:
 
 ```python
-from pydrake.all import (
-    MultibodyPlant, Parser, InverseKinematics, RigidTransform,
-    RotationMatrix, Solve
+ik = InverseKinematics(plant, context)
+
+# Set nominal joint positions to current positions
+q_nominal = plant.GetPositions(context).reshape((-1, 1))
+
+
+# Constrain position and orientation
+# Position constraint
+p_AQ = X_WE_desired.translation().reshape((3, 1))
+ik.AddPositionConstraint(
+    frameB=frame_E,
+    p_BQ=np.zeros((3, 1)),
+    frameA=plant.world_frame(),
+    p_AQ_lower=p_AQ,
+    p_AQ_upper=p_AQ
 )
-import numpy as np
 
-plant = MultibodyPlant(time_step=0.0)
-Parser(plant).AddModelsFromUrl("package://franka_description/urdf/panda_arm.urdf")
-plant.Finalize()
-context = plant.CreateDefaultContext()
-
-# Define target pose (position + orientation)
-target_position = np.array([0.5, 0.0, 0.4])
-target_orientation = RotationMatrix.MakeXRotation(np.pi)  # flipped orientation
-target_pose = RigidTransform(target_orientation, target_position)
-
-# Create inverse kinematics problem
-ik = InverseKinematics(plant)
-q = ik.q()
-
-ee_frame = plant.GetFrameByName("panda_link8")
-
-# Add position and orientation constraints
-ik.AddPositionConstraint(ee_frame, [0, 0, 0], plant.world_frame(),
-                         target_position - 1e-3, target_position + 1e-3)
+# Orientation constraint
+theta_bound = 1e-2  # radians
 ik.AddOrientationConstraint(
-    ee_frame, RotationMatrix(), plant.world_frame(),
-    target_orientation, np.deg2rad(1)
+    frameAbar=plant.world_frame(),      # world frame
+    R_AbarA=X_WE_desired.rotation(),    # desired orientation
+    frameBbar=frame_E,                  # end-effector frame
+    R_BbarB=RotationMatrix(),           # current orientation
+    theta_bound=theta_bound             # allowable deviation
 )
+```
 
-# Solve
-result = Solve(ik.prog())
-if result.is_success():
-    q_sol = result.GetSolution(q)
-    print("IK success! Joint positions:", q_sol)
+A quadratic cost penalizes deviation from a nominal configuration:
+
+```python
+# Access the underlying MathematicalProgram to add costs and constraints manually.
+prog = ik.prog()
+q_var = ik.q()  # decision variables (joint angles)
+# Add a quadratic cost to stay close to the nominal configuration:
+#   cost = (q - q_nominal)^T * W * (q - q_nominal)
+W = np.identity(q_nominal.shape[0])
+prog.AddQuadraticErrorCost(W, q_nominal, q_var)
+
+# Enforce joint position limits from the robot model.
+lower = plant.GetPositionLowerLimits()
+upper = plant.GetPositionUpperLimits()
+prog.AddBoundingBoxConstraint(lower, upper, q_var)
+
+
+# Solve the optimization problem using Drake’s default solver.
+# The initial guess is the nominal configuration (q_nominal).
+result = Solve(prog, q_nominal)
+```
+
+Once solved, the resulting `q_target` is passed to a `ConstantVectorSource` feeding the PD+G controller.
+
+### 1.3 Running the Simulation
+```bash
+python3 ./tutorial_04_ik.py
+```
+
+You will see the robot move its end-effector to the desired target pose defined as:
+
+```python
+X_WE_desired = RigidTransform(
+    RollPitchYaw(np.pi, 0, 0),
+    [0.6, 0.0, 0.4]
+)
+```
+
+The controller regulates the robot to the computed configuration, as shown below.
+
+<div style="text-align:center;">
+  <img src="images/ik_result.png" alt="IK Simulation" >
+  <p><em>Figure 1 – Robot reaching target pose computed via inverse kinematics.</em></p>
+</div>
+
+### 1.4 Exercises
+* Change the target position in `X_WE_desired` and re-run.
+* Relax `theta_bound` to 0.1 and observe how orientation accuracy changes.
+
+---
+
+## 2. Trapezoidal Joint-Space Trajectories
+
+### 2.1 Concept
+Trajectory generation is a fundamental component of robot motion planning, 
+bridging the gap between high-level path planning and low-level control. 
+While path planning determines $\emph{where}$ the robot should move (i.e., the 
+sequence of desired configurations), trajectory generation determines 
+$\emph{how}$ the robot should move in time. It specifies the time evolution of 
+each joint position, velocity, and acceleration in a smooth and dynamically 
+feasible manner. Without a properly designed trajectory, even a collision-free 
+path could result in jerky, unstable, or physically infeasible motions that 
+violate actuator limits or cause vibrations and excessive torques.
+
+A common and computationally efficient approach is to use a 
+$\textbf{trapezoidal velocity profile}$, which defines the motion of each joint 
+as a sequence of three phases: acceleration, constant velocity, and 
+deceleration. For a single joint moving from an initial position $q_0$ to a 
+final position $q_f$ with a maximum velocity $v_{\max}$ and acceleration 
+$a_{\max}$, the displacement is $\Delta q = q_f - q_0$. The trajectory is 
+designed such that the joint accelerates at a constant rate $a_{\max}$ until 
+it reaches $v_{\max}$, moves at this constant velocity for a period of time, 
+and then decelerates symmetrically with $-a_{\max}$ to stop precisely at $q_f$.
+
+Mathematically, the joint position $q(t)$ and velocity $\dot{q}(t)$ over time 
+are given by:
+```math
+\begin{aligned}
+q(t) =
+\begin{cases}
+q_0 + \tfrac{1}{2} a_{\max} t^2, & 0 \le t < t_{\text{acc}} \\[6pt]
+q_0 + \tfrac{1}{2} a_{\max} t_{\text{acc}}^2 + v_{\max}(t - t_{\text{acc}}),
+& t_{\text{acc}} \le t < t_{\text{acc}} + t_{\text{flat}} \\[6pt]
+q_f - \tfrac{1}{2} a_{\max} (T - t)^2, & t_{\text{acc}} + t_{\text{flat}} \le t \le T
+\end{cases}
+\end{aligned}
+```
+```math
+\begin{aligned}
+
+\dot{q}(t) =
+\begin{cases}
+a_{\max} t, & 0 \le t < t_{\text{acc}} \\[6pt]
+v_{\max}, & t_{\text{acc}} \le t < t_{\text{acc}} + t_{\text{flat}} \\[6pt]
+a_{\max} (T - t), & t_{\text{acc}} + t_{\text{flat}} \le t \le T
+\end{cases}
+\end{aligned}
+```
+
+Here, $t_{\text{acc}} = v_{\max}/a_{\max}$ is the acceleration time, 
+$t_{\text{flat}}$ is the duration of constant velocity, and 
+$T = 2t_{\text{acc}} + t_{\text{flat}}$ is the total motion time. 
+If the motion distance $\Delta q$ is too small for the joint to reach 
+$v_{\max}$ before decelerating, the trajectory becomes $\emph{triangular}$, 
+meaning the acceleration and deceleration phases overlap, and the velocity 
+never saturates at $v_{\max}$.
+
+This piecewise-defined trajectory ensures continuous and smooth profiles 
+for both $q(t)$ and $\dot{q}(t)$ while respecting joint velocity and 
+acceleration limits. The trapezoidal profile is therefore widely used in 
+industrial robotics due to its simplicity, deterministic timing, and ability 
+to generate smooth, dynamically consistent joint trajectories suitable for 
+real-time control.
+
+
+### 2.2 Implementation
+The class `JointSpaceTrajectorySystem` in [tutorial_04_traj.py](../tutorial_scripts/tutorial_04_traj.py) generates the reference signals:
+
+```python
+class JointSpaceTrajectorySystem(LeafSystem):
+    def __init__(self, q_start, q_goal, v_max, a_max):
+        ...
+        self._compute_profiles()
+        self.DeclareVectorOutputPort("joint_ref", BasicVector(2*self.n), self._output_reference)
+```
+
+The method `_compute_profiles()` precomputes motion parameters for each joint:
+
+```python
+t_acc = v / a
+if dq_abs < a * t_acc**2:
+    # Triangular profile
+    t_acc = np.sqrt(dq_abs / max(a, 1e-9))
+    t_flat = 0.0
 else:
-    print("IK failed to find a solution.")
+    # Trapezoidal profile
+    t_flat = (dq_abs - a * t_acc**2) / max(v, 1e-9)
+T_trap = 2 * t_acc + t_flat
 ```
 
-This minimal example demonstrates how to formulate and solve an IK problem.  
-Try varying the `target_position` or `target_orientation` to see how the solution changes.
+At runtime, `_output_reference()` evaluates \( $q(t)$ \) and \( $\dot{q}(t)$ \) for each joint and outputs them as `[q_ref, qd_ref]`.
 
-<div style="text-align: center;">
-    <img src="images/viz_meshcat.png" alt="IK visualization">
+The reference is connected to the controller’s desired state input:
+
+```python
+builder.Connect(traj_system.get_output_port(0), controller.GetInputPort("Desired_state"))
+```
+
+The controller computes:
+
+```math
+\begin{aligned}
+\boldsymbol{\tau}_u = K_P(\mathbf{q}_r - \mathbf{q}) + K_D(\dot{\mathbf{q}}_r - \dot{\mathbf{q}}) + \mathbf{g}(\mathbf{q})
+\end{aligned}
+```
+
+<div style="text-align:center;">
+  <img src="images/block_diagram_04_traj.png" alt="Trajectory Block Diagram">
+  <p><em>Figure 2 – Diagram showing the trajectory generator connected to the PD+G controller.</em></p>
 </div>
 
----
-
-## 2. Primitive Path Planning
-
-Once we can reach a Cartesian point, we can plan **continuous motion** between two points.  
-A *primitive path* is a geometric curve parameterized by distance, such as a **line** or **arc**.  
-We can sample points along these curves and solve IK at each point to generate a joint-space path.
-
-### Example: straight-line motion in task space
-
-```python
-import numpy as np
-
-def generate_line_path(start, goal, num_points=20):
-    """Generate linearly interpolated positions between start and goal."""
-    return np.linspace(start, goal, num_points)
-
-start = np.array([0.4, -0.2, 0.3])
-goal = np.array([0.6, 0.2, 0.5])
-path_points = generate_line_path(start, goal, 25)
+### 2.3 Simulation
+```bash
+python3 ./tutorial_04_traj.py
 ```
 
-We can then compute IK for each path point and record the resulting joint trajectory:
+The output includes two plots:
+- Joint positions (actual vs reference)
+- Joint velocities (actual vs reference)
 
-```python
-joint_traj = []
-for p in path_points:
-    target_pose = RigidTransform(RotationMatrix.MakeXRotation(np.pi), p)
-    ik = InverseKinematics(plant)
-    ik.AddPositionConstraint(ee_frame, [0,0,0], plant.world_frame(), p - 1e-3, p + 1e-3)
-    result = Solve(ik.prog())
-    if result.is_success():
-        joint_traj.append(result.GetSolution(q))
-```
-
-Plotting or visualizing these joint states in MeshCat will show the end effector smoothly tracing the line segment.
-
-<div style="text-align: center;">
-    <img src="images/diagram.png" alt="Primitive path illustration">
+<div style="text-align:center;">
+  <img src="images/traj_q_result.png" alt="Trajectory Tracking">
+  <p><em>Figure 3 – Trapezoidal joint trajectory tracking in simulation.</em></p>
 </div>
 
-You can easily extend this to circular arcs by parameterizing the motion as:
-
-```python
-theta = np.linspace(0, np.pi/2, num_points)
-arc = np.column_stack([
-    0.5 + 0.1*np.cos(theta),
-    0.0 + 0.1*np.sin(theta),
-    np.full_like(theta, 0.4)
-])
-```
-
----
-
-## 3. Trajectory Generation
-
-Now that we have discrete waypoints, we must generate a **smooth time-based trajectory**  
-that can be followed by a controller or simulator. Drake provides several utilities for this:
-
-* `PiecewisePolynomial.FirstOrderHold()` — linear interpolation between samples.  
-* `PiecewisePolynomial.CubicShapePreserving()` — smooth cubic spline with monotonicity.  
-* Custom trapezoidal or S-curve velocity profiles for industrial motion planning.
-
-### Example: trapezoidal velocity profile
-
-```python
-from pydrake.all import PiecewisePolynomial
-
-waypoints = np.array([0.0, 0.2, 0.5, 0.8, 1.0])
-times = np.array([0, 1, 2, 3, 4])
-traj = PiecewisePolynomial.FirstOrderHold(times, waypoints.reshape(1,-1))
-
-# Evaluate at t=1.5
-print("Position:", traj.value(1.5))
-print("Velocity:", traj.derivative().value(1.5))
-```
-
-### Multi-DOF joint trajectory
-
-We can extend this to multiple joints:
-
-```python
-waypoints = np.array([
-    [0.0, 0.0, 0.0, 0.0],
-    [0.3, 0.2, -0.1, 0.4],
-    [0.6, 0.3, -0.2, 0.8]
-]).T
-times = [0.0, 1.0, 2.0]
-joint_traj = PiecewisePolynomial.CubicShapePreserving(times, waypoints, zero_end_point_derivatives=True)
-```
-
-You can then feed this `joint_traj` into a controller block in a simulation, e.g. your PD+G controller, to track the trajectory.
-
-<div style="text-align: center;">
-    <img src="images/cont_sim.png" alt="Trajectory simulation">
+<div style="text-align:center;">
+  <img src="images/traj_qd_result.png" alt="Trajectory Tracking">
+  <p><em>Figure 4 – Trapezoidal joint velocity trajectory tracking in simulation.</em></p>
 </div>
 
+### 2.4 Exercises
+* Modify `v_max` and `a_max` values in the script and observe the duration change.
+* Create a triangular trajectory by reducing the displacement between start and goal.
+* Integrate the inverse kinematics (IK) solver with the trajectory generator so that, given a desired Cartesian position and orientation, the robot computes the corresponding joint configuration and follows a smooth, time-parameterized trapezoidal trajectory to reach it.
+
 ---
 
-## 4. Path Planning with OMPL
+## 3. OMPL Path Planning — Collision-Free Motion
 
-The previous approaches assume an obstacle-free environment.  
-In realistic scenes, we must plan **collision-free trajectories**.  
-Drake provides bindings for the **OMPL** (Open Motion Planning Library) framework, allowing you to integrate sampling-based planners (RRT, PRM, etc.).
 
-### Example: OMPL motion planning
+### 3.1 Concept
 
-```python
-from pydrake.all import (
-    SceneGraph, AddMultibodyPlantSceneGraph,
-    Parser, MeshcatVisualizerCpp, Simulator
-)
-from ompl import base as ob, geometric as og
+Up to this point, the robot has been operating in an empty workspace, where the motion from one configuration to another could be achieved using simple interpolation or trapezoidal trajectories.  
+However, in realistic environments, robots must navigate around obstacles such as tables, tools, or other robots.  
+To safely reach a goal configuration without collisions, we need a **path planner** that searches for a sequence of feasible configurations in the robot’s **configuration space (C-space)**.
 
-def plan_with_ompl():
-    plant, scene_graph = AddMultibodyPlantSceneGraph(MultibodyPlant(0.0))
-    Parser(plant).AddModelsFromUrl("package://franka_description/urdf/panda_arm.urdf")
-    plant.Finalize()
+The [**Open Motion Planning Library (OMPL)**](https://ompl.kavrakilab.org/) is a widely used, open-source framework that implements a large variety of state-of-the-art path planning algorithms, such as:
+- **RRT (Rapidly-exploring Random Tree)** and **RRT-Connect**,  
+- **PRM (Probabilistic Roadmap)**,  
+- **RRT\*** (asymptotically optimal variant), and  
+- several planners for kinodynamic and multi-query problems.
 
-    # Define the configuration space bounds (joint limits)
-    space = ob.RealVectorStateSpace(7)
-    bounds = ob.RealVectorBounds(7)
-    bounds.setLow(-2.9)
-    bounds.setHigh(2.9)
-    space.setBounds(bounds)
+OMPL focuses purely on the *geometric* aspects of planning — finding a feasible or optimal path from a start to a goal configuration while avoiding obstacles.  
+It does not depend on a specific robot model or simulator; instead, users provide interfaces for:
+1. The **state space** (e.g., the robot’s joint positions).  
+2. The **state validity checker**, which determines whether a given configuration is collision-free.  
+3. The **start** and **goal** states, and optionally, the **distance metric** and **interpolation methods**.
 
-    # Define start and goal configurations
-    start = ob.State(space)
-    goal = ob.State(space)
-    for i, q in enumerate([0, -1, 0, -2, 0, 1, 0]):
-        start[i] = q
-    for i, q in enumerate([0.4, -0.5, 0, -2.2, 0, 1.2, 0.4]):
-        goal[i] = q
+In this tutorial, OMPL is integrated with **Drake’s geometry engine**, which provides efficient collision checking through signed distance queries.  
+This allows OMPL to explore only those configurations that are valid within Drake’s current simulation environment.
 
-    si = ob.SpaceInformation(space)
-    pdef = ob.ProblemDefinition(si)
-    pdef.setStartAndGoalStates(start, goal)
+---
 
-    planner = og.RRTConnect(si)
-    planner.setProblemDefinition(pdef)
-    planner.setup()
+### 3.2 Overview of Configuration Space (C-space)
 
-    if planner.solve(5.0):
-        path = pdef.getSolutionPath()
-        print("Found path with", path.getStateCount(), "states")
-    else:
-        print("No path found.")
+The robot’s **configuration space** \( $\mathcal{C}$ \) is defined by all possible joint configurations \( $\mathbf{q} \in \mathbb{R}^n$ \), where \( n \) is the number of joints.  
+Each point in this space represents a unique posture of the robot.  
+Some configurations cause collisions with obstacles or violate joint limits — these are called **invalid** configurations.  
+The remaining configurations define the **collision-free subspace**, denoted as \( $\mathcal{C}_{\text{free}}$ \):
+
+```math
+\begin{aligned}
+\mathcal{C}_{\text{free}} = 
+\{ \mathbf{q} \in \mathcal{C} \;|\; 
+\text{robot at configuration } \mathbf{q} \text{ is collision-free} \}
+\end{aligned}
 ```
 
-This snippet sets up a minimal OMPL motion planner for the Panda arm.  
-In a full Drake pipeline, you would integrate collision checking using `SceneGraph` geometries.
+The goal of path planning is to find a **continuous path**  
+\( $\pi: [0,1] \to \mathcal{C}_{\text{free}}$ \)  
+such that:
 
-<div style="text-align: center;">
-    <img src="images/diagram.svg" alt="OMPL planning illustration">
+```math
+\begin{aligned}
+\pi(0) = \mathbf{q}_{\text{start}}, 
+\qquad 
+\pi(1) = \mathbf{q}_{\text{goal}}.
+\end{aligned}
+```
+
+The resulting path \( $\pi(s)$ \) is a sequence of intermediate, collision-free configurations that connect the start and goal without intersecting any obstacles.
+
+<div style="text-align:center;">
+  <img src="images/RRT_Connect.png" alt="RRT Connect Concept" width="600" style="display:block;margin:auto;">
+  <p><em>Figure 5 – <a href="https://www.cs.cmu.edu/afs/cs/academic/class/15494-s12/readings/kuffner_icra2000.pdf">
+  RRT-Connect - Sampling-based path planning in configuration space</a>.</em></p>
 </div>
+---
+
+### 3.3 Why Sampling-Based Planners?
+
+For high-dimensional manipulators like the Panda robot (\( n = 7 \) revolute + 2 prismatic joints),  
+the configuration space is **nonlinear** and **nonconvex**.  
+Analytical path planning (e.g., solving for all collision-free trajectories algebraically) is computationally intractable.  
+Instead, **sampling-based motion planners** such as RRT and PRM use random sampling to efficiently explore feasible regions of \( $\mathcal{C}$ \):
+
+- **RRT (Rapidly-exploring Random Tree)** incrementally builds a tree rooted at the start configuration, expanding toward random samples to quickly cover the space.
+- **RRT-Connect**, a bidirectional variant, grows two trees (from start and goal) and attempts to connect them, greatly reducing computation time.
+- **PRM (Probabilistic Roadmap)** samples random configurations, connects nearby samples that are collision-free, and builds a graph used to find paths between configurations.
+
+These methods are **probabilistically complete**, meaning they are guaranteed to find a path if one exists (given enough time and samples).  
+They are particularly well-suited for complex robot geometries and environments where traditional grid or graph search would be infeasible.
 
 ---
 
-## Summary
+### 3.4 Integrating OMPL with Drake
 
-| Concept | Tool | Purpose |
-|----------|------|----------|
-| Inverse Kinematics | `InverseKinematics` | Reach Cartesian goals |
-| Primitive Path | Geometric interpolation | Define simple Cartesian paths |
-| Trajectory Generation | `PiecewisePolynomial`, Trapezoidal / S-curve | Time-parameterize waypoints |
-| Path Planning | OMPL (e.g., RRT, PRM) | Avoid obstacles and collisions |
+In this tutorial, the integration between OMPL and Drake is implemented through the `MotionProfile` class.  
+Drake provides the **collision checking** capabilities, while OMPL handles the **planning** logic.
 
-Each method progressively increases in complexity and capability.  
-Together, they form the foundation of **modern motion planning** pipelines for robotic manipulators.
+The following components are key:
+
+1. **State Space Definition**
+   ```python
+   space = ob.RealVectorStateSpace(num_dof)
+   bounds = ob.RealVectorBounds(num_dof)
+   bounds.setLow(plant.GetPositionLowerLimits())
+   bounds.setHigh(plant.GetPositionUpperLimits())
+   space.setBounds(bounds)
+   ```
+   This defines the \( n \)-dimensional joint space \( $\mathcal{C} = \mathbb{R}^n$ \),  
+   bounded by each joint’s physical limits.
+
+2. **State Validity Checker**
+   The validity checker uses Drake’s geometry engine to determine if a sampled configuration \( $\mathbf{q}$ \) is in \( $\mathcal{C}_{\text{free}}$ \):
+   ```python
+   si.setStateValidityChecker(JointSpaceValidityChecker(si, self.check_configuration_validity, num_dof))
+   ```
+   Internally, this calls:
+   ```python
+   distances = query_object.ComputeSignedDistancePairwiseClosestPoints()
+   return min_distance >= self.min_distance
+   ```
+
+3. **Planner Setup**
+   ```python
+   planner = og.RRTConnect(si)
+   pdef = ob.ProblemDefinition(si)
+   pdef.setStartAndGoalStates(start, goal, tolerance=1e-2)
+   planner.setProblemDefinition(pdef)
+   planner.setup()
+   ```
+   This creates the RRT-Connect planner, defines the start and goal configurations, and initializes the internal OMPL data structures.
+
+4. **Solving and Interpolation**
+   Once planning succeeds, OMPL returns a set of discrete waypoints that are interpolated to create a smooth joint-space trajectory:
+   ```python
+   solved = planner.solve(timeout)
+   if solved:
+       path = pdef.getSolutionPath()
+       path.interpolate(self.num_points)
+       sampled = np.array([[state[i] for i in range(num_dof)] for state in path.getStates()])
+   ```
+
+The output `sampled` is a sequence of feasible configurations that the controller can track over time.
 
 ---
 
-## Next steps
-In the next tutorial, we will integrate these planning components into a **simulation loop** with feedback control, allowing the robot to track and execute trajectories in real time while avoiding obstacles.
+### 3.5 Benefits of Using Path Planning
+
+Using OMPL-based path planning offers several practical advantages over direct interpolation or naive trajectories:
+
+1. **Collision Avoidance:**  
+   Ensures that all intermediate configurations are free of self-collisions and obstacles, even in cluttered environments.
+
+2. **Feasibility in Complex Spaces:**  
+   Sampling-based planners can handle high-dimensional, nonlinear configuration spaces that are infeasible for grid-based search methods.
+
+3. **Modularity and Extensibility:**  
+   OMPL’s interface allows you to easily switch between planners (e.g., `RRTStar`, `PRM`, `BITStar`) or tune parameters such as step size and goal tolerance.
+
+4. **Integration with Simulation and Control:**  
+   By connecting OMPL with Drake’s geometry engine, planned paths can be directly simulated and visualized in MeshCat, providing an end-to-end motion planning workflow.
+
+5. **Foundation for Advanced Planning:**  
+   The OMPL pipeline can later be extended to include trajectory smoothing, time parameterization, or integration with optimization-based planners (e.g., direct collocation).
+
+In summary, OMPL enables the robot to move safely and intelligently in complex environments by searching for a collision-free sequence of configurations in its configuration space.  
+Combined with the PD+G controller and Drake’s visualization tools, it provides a complete framework for both high-level motion planning and low-level execution.
+
+### 3.6 Simulation
+```bash
+python3 ./tutorial_04_path_planner.py
+```
+
+The robot plans and follows a path avoiding the red box obstacle.
+
+
+### 3.7 Exercises
+* Add more obstacles and re-run the simulation.
+* Try different OMPL planners like `RRTStar` or `PRM`.
+* Adjust `self.min_distance` to make the robot move closer or further from obstacles.
+
+---
