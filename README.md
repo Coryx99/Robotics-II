@@ -21,6 +21,23 @@ Each team will design a robotics application that demonstrates:
 
 - **Simulation & Verfication**: testing, validation, and performance analysis.
 
+<!-- ## Current list of projects:
+1. Pick-and-place using a fixed robotics manipulator. You have two tables, one has 8 objects always place randomly, the objects are 3 cubes, 1 pyramid, and 1 cylinder; between the two tables there is a robot arm, the Objective is to move all the objects from a table to the second in thhe fastest time possible!.
+
+2. An omnidirectional robot moving in "inifinity" shaped trajectory, in the scene you have a nonholonomic mobile robot and you objective is to always follow this robot while mainting a specific distance of 2 cm at all time. and your objective is to follow this robot.
+
+3. Navigation in dynamic environment, here you will have two cylindars moving up and down; your robot is a mobile robot that you have to move it accros the map avoiding the collisoin with the cylinders while you move from the left to the right.
+
+3. ... -->
+
+### How to start with the repo?
+
+1. Follow the [`00_Startup.md`](./tutorial_doc/00_Startup.md) installation section for a complete installation of the repository and its dependancies.
+
+2. Start with the [tutorials](./tutorial_doc/) starting from [`00_Introduction.md`](./tutorial_doc/01_Introduction.md) for an overview of the simulation framework and its functionalities.
+
+3. Use the accompanying [python scripts](./tutorial_scripts/) to run the examples from the tutorial. For example, the tutorial [`02_Modelling.md`](./tutorial_doc/02_Modelling.md) is accompayned by [`tutorial_02.py`](../tutorial_scripts/tutorial_02.py). 
+
 ## Tutorial content
 | File                                                                                                                | Summary                         |
 | ---                                                                                                                 | ---                             |
@@ -32,19 +49,11 @@ Each team will design a robotics application that demonstrates:
 | [Q&A.md](./tutorial_doc/Q&A.md)   | 	Practical tips and debugging guide: common issues, error messages, and how to fix them.|
 ---
 
-### How to Navigate the tutorials?
-
-1. Follow the [`00_Startup.md`](./tutorial_doc/00_Startup.md) installation section for a complete installation of the repository and its dependancies.
-
-2. Start with the [tutorials](./tutorial_doc/) starting from [`00_Introduction.md`](./tutorial_doc/01_Introduction.md) for an overview of the simulation framework and its functionalities.
-
-3. Use the accompanying [python scripts](./tutorial_scripts/) to run the examples from the tutorial. For example, the tutorial [`02_Modelling.md`](./tutorial_doc/02_Modelling.md) is accompayned by [`tutorial_02.py`](../tutorial_scripts/tutorial_02.py). 
-
 # Troubleshooting & Support 
 If you find a bug in the repository, require assistance, or have any other questions, please open an issue in the repository **(recommended)** or contact one or more of the following via email:
-* xx xx `xxxx.xxx@vub.be`
-* Mohayad Omer `Mohayad.omer99@gmail`
-* xx xx `xxxx.xxx@vub.be`
+* Mohayad Omer `Mohayad.Abdelmonim.Mahmoud.Omer@vub.be`
+* Mehran Raisi Hatmabadi `Mehran.Raisi.Hatmabadi@vub.be`
+* Zemerart Asani `Zemerart.Asani@vub.be`
 
 We will try to help you as soon as possible.
 

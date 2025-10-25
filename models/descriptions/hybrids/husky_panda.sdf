@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <sdf version="1.6">
   <world name="default">
-    <model name="husky_with_panda">
-      <pose>0.4 0 0.01 0 0 0</pose>
+    <model name="mobile_manipulator">
+      <pose>0 0 0 0 0 0</pose>
       <!-- Include the Husky model -->
       <include>
         <uri>file://../models/descriptions/husky_description/urdf/husky.urdf</uri>
@@ -11,11 +11,11 @@
 
       <!-- Include the Panda robot model -->
       <include>
-        <uri>/add-path-to/urdf/panda.urdf</uri> 
+        <uri>file://../models/descriptions/panda.urdf</uri> 
         <name>panda</name>
       </include>
       <!-- Joint to fix the Panda base to the Husky platform -->
-      <joint name="panda_to_husky" type="fixed">
+      <joint name="panda_base_to_husky" type="fixed">
         <parent>husky::top_plate_link</parent>
         <child>panda::panda_link0</child>
         <pose>0 0 0.5 0 0 0</pose> <!-- Adjust the Z value to place the Panda on top of the Husky -->
