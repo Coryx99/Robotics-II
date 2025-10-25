@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <model name="pyramid_20cm">
+    <static>false</static>
+    <link name="link">
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>file://pyramid_20cm.obj</uri>
+          </mesh>
+        </geometry>
+        <drake:proximity_properties>
+          <drake:mu_dynamic>0.5</drake:mu_dynamic>
+          <drake:mu_static>0.5</drake:mu_static>
+        </drake:proximity_properties>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>file://pyramid_20cm.obj</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.2 0.8 0.2 1.0</diffuse>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

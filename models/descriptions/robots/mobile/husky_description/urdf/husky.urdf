@@ -56,6 +56,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <geometry>
         <mesh filename="../meshes/base_link.obj"/>
       </geometry>
+      <material name="">
+            <color rgba="0.8 0.8 0.0 1.0"/>
+      </material>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.0 0 0.061875"/>
@@ -102,6 +105,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <geometry>
         <mesh filename="../meshes/wheel.obj"/>
       </geometry>
+          <material name="">
+            <color rgba="0.42 0.42 0.42 1"/>
+      </material>
     </visual>
     <collision>
       <origin rpy="1.570795 0 0" xyz="0 0 0"/>
@@ -143,6 +149,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <geometry>
         <mesh filename="../meshes/wheel.obj"/>
       </geometry>
+      <material name="">
+            <color rgba="0.42 0.42 0.42 1"/>
+      </material>
     </visual>
     <collision>
       <origin rpy="1.570795 0 0" xyz="0 0 0"/>
@@ -184,6 +193,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <geometry>
         <mesh filename="../meshes/wheel.obj"/>
       </geometry>
+      <material name="">
+            <color rgba="0.42 0.42 0.42 1"/>
+      </material>
     </visual>
     <collision>
       <origin rpy="1.570795 0 0" xyz="0 0 0"/>
@@ -225,6 +237,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <geometry>
         <mesh filename="../meshes/wheel.obj"/>
       </geometry>
+      <material name="">
+            <color rgba="0.42 0.42 0.42 1"/>
+      </material>
     </visual>
     <collision>
       <origin rpy="1.570795 0 0" xyz="0 0 0"/>
@@ -266,6 +281,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <geometry>
         <mesh filename="../meshes/top_chassis.obj"/>
       </geometry>
+      <material name="">
+            <color rgba="0.8 0.8 0.0 1.0"/>
+      </material>
     </visual>
   </link>
   <!-- Attach chassis to the robot -->
@@ -278,6 +296,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <geometry>
         <mesh filename="../meshes/bumper.dae"/>
       </geometry>
+      <material name="">
+            <color rgba="0.22 0.22 0.22 1.0"/>
+      </material>
     </visual>
   </link>
   <!-- Attach front bumper -->
@@ -291,6 +312,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <geometry>
         <mesh filename="../meshes/bumper.dae"/>
       </geometry>
+      <material name="">
+            <color rgba="0.22 0.22 0.22 1.0"/>
+      </material>
     </visual>
   </link>
   <!-- Attach rear bumper -->
@@ -305,6 +329,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <geometry>
         <mesh filename="../meshes/user_rail.obj"/>
       </geometry>
+      <material name="">
+            <color rgba="0.22 0.22 0.22 1.0"/>
+      </material>
     </visual>
   </link>
   <!-- Attach user rails to base link -->
@@ -320,6 +347,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <geometry>
         <mesh filename="../meshes/top_plate.obj"/>
       </geometry>
+      <material name="">
+            <color rgba="0.22 0.22 0.22 1.0"/>
+      </material>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>

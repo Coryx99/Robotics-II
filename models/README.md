@@ -11,7 +11,7 @@ This folder contains detailed descriptions of various models including robots, s
 - **sensors**: Specifications and configurations of sensor models.
 - **hybrids**: Specifications and configurations of hybrid models (combinations of robots and sensors).
 
-### objects&scenes
+### objects_scenes
 This folder contains SDF (Simulation Description Format) files used to define objects and scenes for simulations.s
 
 - **sdf files**: SDF files that define the world, objects, and environments used in simulations.
@@ -20,4 +20,4 @@ This folder contains SDF (Simulation Description Format) files used to define ob
 
 - To add a new model, create a new file in the appropriate subdirectory.
 - Update existing models by modifying their respective files.
-- Use SDF files in the `objects&scenes` folder to define new simulation environments.
+- Use SDF files in the `objects_scenes` folder to define new simulation environments.

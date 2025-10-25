@@ -1,7 +1,6 @@
 """
-tutorial_01.py
+Test file for inspecting models
 --------------------
-Minimal Drake intro: visualize the Panda robot in MeshCat.
 """
 
 import os
@@ -17,21 +16,29 @@ from pydrake.systems.analysis import Simulator
 visualize = True  # True = only visualize, False = run full simulation
 meshcat = StartMeshcat()
 # Adjust the path to where the URDF is in your directory
-model_path = os.path.join(
-    "..", "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
-)
+# model_path = os.path.join(
+#     "..", "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm.urdf"
+# )
 
+scene_path = os.path.join(
+    # "..", "models", "project", "project_01_pick_and_place_world.sdf"
+    "..", "models", "project", "project_02_mobile_tracking_world.sdf"
+    # "..", "models", "project", "project_03_navigation_world.sdf"
+    # "..", "models", "project", "project_05_multi_target_world.sdf"    
+    # "..", "models", "project", "project_06_drawing_world.sdf"    
+)
 # ------------------ Functions ------------------
-def create_sim_scene(sim_time_step=0.0):
+def create_sim_scene(sim_time_step):
     """Creates a MultibodyPlant + SceneGraph diagram."""
     meshcat.Delete()
     meshcat.DeleteAddedControls()
 
     builder = DiagramBuilder()
     plant, scene_graph = AddMultibodyPlantSceneGraph(builder, time_step=sim_time_step)
-    Parser(plant).AddModelsFromUrl("file://" + os.path.abspath(model_path))
-    base_link = plant.GetBodyByName("panda_link0")  # replace with your robot’s root link name
-    plant.WeldFrames(plant.world_frame(), base_link.body_frame())
+    Parser(plant).AddModelsFromUrl("file://" + os.path.abspath(scene_path))
+    # Parser(plant).AddModelsFromUrl("file://" + os.path.abspath(model_path))
+    # base_link = plant.GetBodyByName("panda_link0")  # replace with your robot’s root link name
+    # plant.WeldFrames(plant.world_frame(), base_link.body_frame())
     plant.Finalize()
     AddDefaultVisualization(builder, meshcat)
     return builder.Build()
@@ -39,10 +46,11 @@ def create_sim_scene(sim_time_step=0.0):
 def run_visualizer():
     """Minimal visualization using ModelVisualizer."""
     visualizer = ModelVisualizer(meshcat=meshcat)
-    visualizer.parser().AddModelsFromUrl("file://" + os.path.abspath(model_path))
+    visualizer.parser().AddModelsFromUrl("file://" + os.path.abspath(scene_path))
+    # visualizer.parser().AddModelsFromUrl("file://" + os.path.abspath(model_path))
     visualizer.Run()
 
-def run_simulation(sim_time_step=0.001):
+def run_simulation(sim_time_step=0.0005):
     """Run full simulation if visualize=False."""
     diagram = create_sim_scene(sim_time_step)
     simulator = Simulator(diagram)
@@ -52,7 +60,7 @@ def run_simulation(sim_time_step=0.001):
     sim_time = 10.0  # seconds
     simulator.AdvanceTo(sim_time)
 
-    # Save diagram image
+    # Save diagram imageu
     svg_data = diagram.GetGraphvizString(max_depth=2)
     graph = pydot.graph_from_dot_data(svg_data)[0]
     graph.write_png("figures/block_diagram_01.png")

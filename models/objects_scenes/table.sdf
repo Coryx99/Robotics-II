@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-<sdf version="1.9">
-  <world name="scene">
+<sdf version="1.6">
   <model name="table_top">
     <link name="table_top_link">
       <visual name="visual">
@@ -35,6 +34,5 @@
       <pose relative_to="table_top_link">0 0 0.47 0 0 0</pose>
     </frame>
   </model>
-    </world>
 </sdf>
 

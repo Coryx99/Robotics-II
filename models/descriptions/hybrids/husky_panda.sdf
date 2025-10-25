@@ -5,7 +5,7 @@
       <pose>0.4 0 0.01 0 0 0</pose>
       <!-- Include the Husky model -->
       <include>
-        <uri>/add-path-to/husky_description/urdf/husky.urdf</uri>
+        <uri>file://../models/descriptions/husky_description/urdf/husky.urdf</uri>
         <name>husky</name>
       </include>
 

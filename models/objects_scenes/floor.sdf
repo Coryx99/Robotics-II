@@ -1,6 +1,5 @@
-<?xml version="1.0"?>
-<sdf version="1.9">
-  <world name="scene">
+<?xml version="1.0" ?>
+<sdf version="1.6">
     <model name="ground_floor">
       <static>true</static>
       <pose>0 0 0 0 0 0</pose>
@@ -26,5 +25,4 @@
         </visual>
       </link>
     </model>
-    </world>
 </sdf>

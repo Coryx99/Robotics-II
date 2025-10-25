@@ -21,13 +21,6 @@ Each team will design a robotics application that demonstrates:
 
 - **Simulation & Verfication**: testing, validation, and performance analysis.
 
-
-## Possible application examples:
-* Pick-and-place with a manipulator.
-* Mobile robot trajectory tracking and obstacle avoidance.
-* Cooperative transport of an object by multiple robots.
-* Contact-rich interaction such as pushing or grasping.
-
 ## Tutorial content
 | File                                                                                                                | Summary                         |
 | ---                                                                                                                 | ---                             |
