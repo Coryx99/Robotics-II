@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="mobile_tracking_world">
+
+    <!-- Floor -->
+    <include>
+      <uri>file://../models/objects_scenes/floor.sdf</uri>
+    </include>
+
+    <!-- Follower Mobile Robot -->
+    <include>
+      <uri>file://../models/descriptions/robots/mobile/husky_description/urdf/husky.urdf</uri>
+      <!-- <uri>file://../models/descriptions/robots/mobile/diff_drive_robot.urdf</uri> -->
+      <pose>0 0 0.2 0 0 0</pose>
+    </include>
+
+    <!-- Leader Marker Object
+    <model name="leader_marker">
+      <pose>0.5 0 0.05 0 0 0</pose>
+      <link name="marker_link">
+        <inertial>
+          <mass>0.01</mass>
+          <inertia>
+            <ixx>1e-5</ixx>
+            <iyy>1e-5</iyy>
+            <izz>1e-5</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <sphere>
+              <radius>0.05</radius>
+            </sphere>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:mu_dynamic>0.3</drake:mu_dynamic>
+            <drake:mu_static>0.3</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>0.05</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <diffuse>1 0 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model> -->
+
+  </world>
+</sdf>

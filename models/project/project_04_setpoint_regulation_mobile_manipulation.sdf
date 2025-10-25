@@ -1,0 +1,263 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+<world name="assembly_mobile_manipulation">
+
+  <!-- Floor -->
+  <include>
+    <uri>file://../models/objects_scenes/floor.sdf</uri>
+  </include>
+
+  <!-- ============================= -->
+  <!-- Prismatic Mobile Base -->
+  <!-- ============================= -->
+  <model name="mobile_base">
+    <static>false</static>
+    <pose>0 0 0.1 0 0 0</pose>
+
+    <!-- Base link (the moving platform) -->
+    <link name="base_link">
+      <inertial>
+        <mass>5.0</mass>
+        <inertia>
+          <ixx>0.05</ixx>
+          <iyy>0.05</iyy>
+          <izz>0.05</izz>
+        </inertia>
+      </inertial>
+
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.4 0.3 0.1</size>
+          </box>
+        </geometry>
+        <drake:proximity_properties>
+          <drake:mu_dynamic>0.8</drake:mu_dynamic>
+          <drake:mu_static>0.8</drake:mu_static>
+        </drake:proximity_properties>
+      </collision>
+
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.4 0.3 0.1</size>
+          </box>
+        </geometry>
+        <material>
+          <diffuse>0.3 0.3 0.3 1</diffuse>
+        </material>
+      </visual>
+    </link>
+
+    <!-- Prismatic joint along X -->
+    <joint name="base_slide_x" type="prismatic">
+      <parent>world</parent>
+      <child>base_link</child>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-1.5</lower>
+          <upper>1.5</upper>
+          <effort>100.0</effort>
+          <velocity>1.0</velocity>
+        </limit>
+      </axis>
+    </joint>
+  </model>
+
+  <!-- ============================= -->
+  <!-- Robot Manipulator (Franka) -->
+  <!-- ============================= -->
+  <include>
+    <uri>file://../models/descriptions/robots/arms/franka_description/urdf/panda_arm_hand.urdf</uri>
+    <name>panda</name>
+    <pose>0 0 0.15 0 0 1.57</pose>
+  </include>
+
+  <!-- Attach manipulator to base -->
+  <joint name="panda_to_mobile_base" type="fixed">
+    <parent>mobile_base::base_link</parent>
+    <child>panda::panda_link0</child>
+  </joint>
+
+  <!-- ============================= -->
+  <!-- Table -->
+  <!-- ============================= -->
+  <model name="table">
+    <static>true</static>
+    <pose>0 0.5 0.2 0 0 0</pose>
+    <link name="table_link">
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>2 0.5 0.05</size>
+          </box>
+        </geometry>
+        <material>
+          <diffuse>0.9 0.8 0.7 1.0</diffuse>
+        </material>
+      </visual>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>2 0.5 0.05</size>
+          </box>
+        </geometry>
+        <drake:proximity_properties>
+          <drake:mu_dynamic>0.3</drake:mu_dynamic>
+          <drake:mu_static>0.3</drake:mu_static>
+        </drake:proximity_properties>
+      </collision>
+    </link>
+  </model>
+
+  <!-- ============================= -->
+  <!-- Cubes scattered on table -->
+  <!-- ============================= -->
+  <model name="cube_red">
+    <pose>0.2 0.7 0.3 0 0 0</pose>
+    <link name="link">
+      <inertial>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>8.33e-5</ixx>
+          <iyy>8.33e-5</iyy>
+          <izz>8.33e-5</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box><size>0.05 0.05 0.05</size></box>
+        </geometry>
+        <drake:proximity_properties>
+          <drake:mu_dynamic>0.5</drake:mu_dynamic>
+          <drake:mu_static>0.5</drake:mu_static>
+        </drake:proximity_properties>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box><size>0.05 0.05 0.05</size></box>
+        </geometry>
+        <material><diffuse>0.8 0.2 0.2 1.0</diffuse></material>
+      </visual>
+    </link>
+  </model>
+
+  <model name="cube_blue">
+    <pose>0 0.3 0.3 0 0 0</pose>
+    <link name="link">
+      <inertial>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>8.33e-5</ixx>
+          <iyy>8.33e-5</iyy>
+          <izz>8.33e-5</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box><size>0.05 0.05 0.05</size></box>
+        </geometry>
+        <drake:proximity_properties>
+          <drake:mu_dynamic>0.5</drake:mu_dynamic>
+          <drake:mu_static>0.5</drake:mu_static>
+        </drake:proximity_properties>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box><size>0.05 0.05 0.05</size></box>
+        </geometry>
+        <material><diffuse>0.2 0.2 0.8 1.0</diffuse></material>
+      </visual>
+    </link>
+  </model>
+
+  <model name="cube_green">
+    <pose>-0.2 0.6 0.3 0 0 0</pose>
+    <link name="link">
+      <inertial>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>8.33e-5</ixx>
+          <iyy>8.33e-5</iyy>
+          <izz>8.33e-5</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box><size>0.05 0.05 0.05</size></box>
+        </geometry>
+        <drake:proximity_properties>
+          <drake:mu_dynamic>0.5</drake:mu_dynamic>
+          <drake:mu_static>0.5</drake:mu_static>
+        </drake:proximity_properties>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box><size>0.05 0.05 0.05</size></box>
+        </geometry>
+        <material><diffuse>0.2 0.8 0.2 1.0</diffuse></material>
+      </visual>
+    </link>
+  </model>
+
+  <model name="cube_yellow">
+    <pose>-0.75 0.4 0.3 0 0 0</pose>
+    <link name="link">
+      <inertial>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>8.33e-5</ixx>
+          <iyy>8.33e-5</iyy>
+          <izz>8.33e-5</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box><size>0.05 0.05 0.05</size></box>
+        </geometry>
+        <drake:proximity_properties>
+          <drake:mu_dynamic>0.5</drake:mu_dynamic>
+          <drake:mu_static>0.5</drake:mu_static>
+        </drake:proximity_properties>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box><size>0.05 0.05 0.05</size></box>
+        </geometry>
+        <material><diffuse>0.9 0.9 0.1 1.0</diffuse></material>
+      </visual>
+    </link>
+  </model>
+
+  <model name="cube_black">
+    <pose>0.55 0.6 0.3 0 0 0</pose>
+    <link name="link">
+      <inertial>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>8.33e-5</ixx>
+          <iyy>8.33e-5</iyy>
+          <izz>8.33e-5</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box><size>0.05 0.05 0.05</size></box>
+        </geometry>
+        <drake:proximity_properties>
+          <drake:mu_dynamic>0.5</drake:mu_dynamic>
+          <drake:mu_static>0.5</drake:mu_static>
+        </drake:proximity_properties>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box><size>0.05 0.05 0.05</size></box>
+        </geometry>
+        <material><diffuse>0 0 0 1.0</diffuse></material>
+      </visual>
+    </link>
+  </model>
+
+</world>
+</sdf>

@@ -1,0 +1,199 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="conveyor_sorting_world">
+
+    <!-- Floor -->
+    <include>
+      <uri>file://../models/objects_scenes/floor.sdf</uri>
+    </include>
+
+    <!-- ============================= -->
+    <!--      Mobile base (Husky)      -->
+    <!-- ============================= -->
+    <include>
+      <uri>file://../models/descriptions/robots/mobile/husky_description/urdf/husky.urdf</uri>
+      <name>husky</name>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+
+    <!-- ============================= -->
+    <!--   Robot Manipulator (Franka)  -->
+    <!-- ============================= -->
+    <include>
+      <uri>file://../models/descriptions/robots/mobile/tri_homecart/homecart_bimanual.urdf</uri>
+      <name>tri_cart</name>
+      <pose>1 1 2 0 0 3.14/2</pose>
+    </include>
+    <include>
+      <uri>file://../models/descriptions/robots/arms/franka_description/urdf/panda_arm_hand.urdf</uri>
+      <name>panda</name>
+      <pose>1 1 2 0 0 3.14/2</pose>
+    </include>
+
+    <!-- ============================= -->
+    <!--    Fix manipulator to base    -->
+    <!-- ============================= -->  
+    <joint name="panda_base_to_cart" type="fixed">
+      <parent>tri_cart::homecart_baseplate_link</parent>
+      <child>panda::panda_link0</child>
+    </joint>
+
+    <!-- Conveyor Belt -->
+    <model name="conveyor_belt">
+      <static>true</static>
+      <pose>1 0 0.1 0 0 0</pose>
+      <link name="belt_surface">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>1.0 0.5 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.4 0.4 0.4 1.0</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>1.0 0.5 0.02</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- Sorting bins -->
+    <model name="bin_red">
+      <static>true</static>
+      <pose>-0.5 -0.3 0.1 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>1 0 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="bin_blue">
+      <static>true</static>
+      <pose>-0.5 0 0.1 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0 0 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="bin_green">
+      <static>true</static>
+      <pose>-0.5 0.3 0.1 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0 1 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Conveyor Objects (cubes, cylinders, pyramids) -->
+    <model name="object_cube_1">
+      <pose>1 0 0.15 0 0 0</pose>
+      <link name="link">
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>8.33e-5</ixx>
+            <iyy>8.33e-5</iyy>
+            <izz>8.33e-5</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:mu_dynamic>0.5</drake:mu_dynamic>
+            <drake:mu_static>0.5</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>1 0 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="object_cylinder_1">
+      <pose>1 0.1 0.15 0 0 0</pose>
+      <link name="link">
+        <inertial>
+          <mass>0.05</mass>
+          <inertia>
+            <ixx>1.67e-5</ixx>
+            <iyy>1.67e-5</iyy>
+            <izz>3.33e-5</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>0.02</radius>
+              <length>0.04</length>
+            </cylinder>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:mu_dynamic>0.5</drake:mu_dynamic>
+            <drake:mu_static>0.5</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.02</radius>
+              <length>0.04</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <diffuse>0 0 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+  </world>
+</sdf>

@@ -245,7 +245,7 @@
     <parent link="right_arm_mount_stack_link"/>
     <child link="right_arm_base_link"/>
   </joint>
-  <joint name="homecart_base_link" type="fixed">
+  <joint name="homecart_base_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0.2775 0 0"/>
     <parent link="homecart_base_link"/>
     <child link="homecart_baseplate_link"/>

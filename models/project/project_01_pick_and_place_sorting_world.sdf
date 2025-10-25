@@ -1,0 +1,378 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="pick_and_place_sorting_world">
+    <!-- Floor -->
+    <include>
+      <uri>file://../models/objects_scenes/floor.sdf</uri>
+    </include>
+
+    <!-- Fixed based Manipulator -->
+    <include>
+      <uri>file://../models/descriptions/robots/arms/jaco_description/urdf/j2s7s300.urdf</uri>
+      <pose>0 0 0.1 0 0 0</pose> <!-- Adjust the Z value to place the robot on top of the Husky -->
+    </include>
+    <joint name="world_to_robot" type="fixed">
+        <parent>world</parent>
+        <child>j2s7s300::base</child>
+    </joint>
+
+    <!-- Tables -->
+    <model name="table_source">
+      <static>true</static>
+      <pose>0.6 0 0.2 0 0 0</pose>
+      <link name="table_source_top_link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.4 1.1 0.05</size>
+            </box>
+          </geometry>
+            <material>
+              <diffuse>0.82 0.71 0.55 1.0</diffuse> <!-- light wood -->
+              <specular>0.2 0.2 0.2 1.0</specular>
+            </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.4 1.1 0.05</size>
+            </box>
+          </geometry>
+            <drake:proximity_properties>
+              <drake:mu_dynamic>0.3</drake:mu_dynamic>
+              <drake:mu_static>0.3</drake:mu_static>
+            </drake:proximity_properties>
+        </collision>
+      </link>
+    </model>
+
+    <!-- Sorting bins -->
+    <model name="bin_red">
+      <static>true</static>
+      <pose>-0.5 -0.3 0.1 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+            <material>
+              <diffuse>1 0 0 1</diffuse>
+              <specular>0.3 0.3 0.3 1.0</specular>
+            </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="bin_blue">
+      <static>true</static>
+      <pose>-0.5 0 0.1 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0.3 0.3 0.3 1.0</specular>  
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="bin_green">
+      <static>true</static>
+      <pose>-0.5 0.3 0.1 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0 1 0 1</diffuse>
+            <specular>0.3 0.3 0.3 1.0</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Movable Objects (Randomly placed cubes, cylinder, pyramid) -->
+    <model name="object_cube_1">
+      <pose>0.5 0.2 0.3 0 0 0</pose>
+      <link name="link">
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>8.33e-5</ixx>
+            <iyy>8.33e-5</iyy>
+            <izz>8.33e-5</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:mu_dynamic>0.5</drake:mu_dynamic>
+            <drake:mu_static>0.5</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.8 0.2 0.2 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="object_cube_2">
+      <pose>0.5 -0.2 0.3 0 0 0</pose>
+      <link name="link">
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>8.33e-5</ixx>
+            <iyy>8.33e-5</iyy>
+            <izz>8.33e-5</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:mu_dynamic>0.5</drake:mu_dynamic>
+            <drake:mu_static>0.5</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.8 0.2 0.2 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="object_cube_3">
+      <pose>0.5 0 0.3 0 0 0</pose>
+      <link name="link">
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>8.33e-5</ixx>
+            <iyy>8.33e-5</iyy>
+            <izz>8.33e-5</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:mu_dynamic>0.5</drake:mu_dynamic>
+            <drake:mu_static>0.5</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.8 0.2 0.2 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="cylinder_1">
+      <pose>0.5 -0.1 0.3 0 0 0</pose>
+      <link name="link">
+        <inertial>
+          <mass>0.05</mass>
+          <inertia>
+            <ixx>1.67e-5</ixx>
+            <iyy>1.67e-5</iyy>
+            <izz>3.33e-5</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>0.02</radius>
+              <length>0.04</length>
+            </cylinder>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:mu_dynamic>0.5</drake:mu_dynamic>
+            <drake:mu_static>0.5</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.02</radius>
+              <length>0.04</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <diffuse>0.2 0.2 0.8 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+    <model name="cylinder_2">
+      <pose>0.5 0.1 0.3 0 0 0</pose>
+      <link name="link">
+        <inertial>
+          <mass>0.05</mass>
+          <inertia>
+            <ixx>1.67e-5</ixx>
+            <iyy>1.67e-5</iyy>
+            <izz>3.33e-5</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>0.02</radius>
+              <length>0.04</length>
+            </cylinder>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:mu_dynamic>0.5</drake:mu_dynamic>
+            <drake:mu_static>0.5</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.02</radius>
+              <length>0.04</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <diffuse>0.2 0.2 0.8 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Green Capsule -->
+    <model name="object_capsule_1">
+      <pose>0.6 0.05 0.3 0 1.57 0</pose>
+      <link name="link">
+        <inertial>
+          <mass>0.06</mass>
+          <inertia>
+            <ixx>2.0e-5</ixx>
+            <iyy>2.0e-5</iyy>
+            <izz>3.0e-5</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <capsule>
+              <radius>0.02</radius>
+              <length>0.08</length>
+            </capsule>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:mu_dynamic>0.5</drake:mu_dynamic>
+            <drake:mu_static>0.5</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <capsule>
+              <radius>0.02</radius>
+              <length>0.08</length>
+            </capsule>
+          </geometry>
+          <material>
+            <diffuse>0 1 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="object_capsule_2">
+      <pose>0.6 -0.05 0.3 0 1.57 0</pose>
+      <link name="link">
+        <inertial>
+          <mass>0.06</mass>
+          <inertia>
+            <ixx>2.0e-5</ixx>
+            <iyy>2.0e-5</iyy>
+            <izz>3.0e-5</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <capsule>
+              <radius>0.02</radius>
+              <length>0.08</length>
+            </capsule>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:mu_dynamic>0.5</drake:mu_dynamic>
+            <drake:mu_static>0.5</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <capsule>
+              <radius>0.02</radius>
+              <length>0.08</length>
+            </capsule>
+          </geometry>
+          <material>
+            <diffuse>0 1 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>
+
+

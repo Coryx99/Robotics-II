@@ -20,13 +20,6 @@ model_path = os.path.join(
     "..", "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm.urdf"
 )
 
-# scene_path = os.path.join(
-#     # "..", "models", "project", "project_01_pick_and_place_world.sdf"
-#     "..", "models", "project", "project_02_mobile_tracking_world.sdf"
-#     # "..", "models", "project", "project_03_navigation_world.sdf"
-#     # "..", "models", "project", "project_05_multi_target_world.sdf"    
-#     # "..", "models", "project", "project_06_drawing_world.sdf"    
-# )
 # ------------------ Functions ------------------
 def create_sim_scene(sim_time_step):
     """Creates a MultibodyPlant + SceneGraph diagram."""
@@ -35,8 +28,6 @@ def create_sim_scene(sim_time_step):
 
     builder = DiagramBuilder()
     plant, scene_graph = AddMultibodyPlantSceneGraph(builder, time_step=sim_time_step)
-    
-    # Parser(plant).AddModelsFromUrl("file://" + os.path.abspath(scene_path))
     
     Parser(plant).AddModelsFromUrl("file://" + os.path.abspath(model_path))
     base_link = plant.GetBodyByName("panda_link0")  # replace with your robot’s root link name
@@ -48,7 +39,6 @@ def create_sim_scene(sim_time_step):
 def run_visualizer():
     """Minimal visualization using ModelVisualizer."""
     visualizer = ModelVisualizer(meshcat=meshcat)
-    # visualizer.parser().AddModelsFromUrl("file://" + os.path.abspath(scene_path))
     visualizer.parser().AddModelsFromUrl("file://" + os.path.abspath(model_path))
     visualizer.Run()
 
