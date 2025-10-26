@@ -70,11 +70,13 @@ def create_multibody_plant(time_step):
 
     # Parse the URDF model of the robot
     model_path = os.path.join(
-        "..", "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
+        "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm_hand.urdf"
     )
     Parser(plant).AddModelsFromUrl("file://" + os.path.abspath(model_path))
     
     # Finalize the plant (required before simulation)
+    base_link = plant.GetBodyByName("panda_link0")
+    plant.WeldFrames(plant.world_frame(), base_link.body_frame())
     plant.Finalize()
 
     # Set the initial joint position of the robot otherwise it will correspond to zero positions
@@ -277,11 +279,11 @@ def main():
     sim_time = 10.0  # Simulation time
     time_step = 0.0  # Time step for simulation (0 == continuous, else == Discrete) 
     realtime_factor = 1.0 
-    do_forward = True
+    do_forward_command = True
     # Create the plant and diagram and run the simulation
     plant, diagram, meshcat = create_multibody_plant(time_step=time_step)
 
-    if do_forward:
+    if do_forward_command:
         do_forward(plant, diagram, meshcat, sim_time, time_step, realtime_factor)
     else:
         run_simulation(plant, diagram, meshcat, sim_time, time_step, realtime_factor)
