@@ -13,7 +13,7 @@ from pydrake.visualization import AddDefaultVisualization, ModelVisualizer
 from pydrake.systems.analysis import Simulator  
 
 # ------------------ Settings ------------------
-visualize = False  # True = only visualize, False = run full simulation
+visualize = True  # True = only visualize, False = run full simulation
 meshcat = StartMeshcat()
 
 # Adjust the path to where the SDF is in your directory
@@ -24,6 +24,9 @@ scene_path = os.path.join(
     # "..", "models", "project", "project_04_setpoint_regulation_mobile_manipulation.sdf"    
     # "..", "models", "project", "project_05_navigation_world.sdf" ## ---> Remove or change mobilel robot to omnidirectional
     # "..", "models", "project", "project_xx_multirobot_cooperation_world.sdf"    
+    # "..", "models", "project", "project_07_two_panda_cooperation_world.sdf"
+    # "..", "models", "project", "project_08_task_and_motion_planning.sdf"
+    "..", "models", "project", "project_09_two_panda_handover.sdf"
 )
 
 # ------------------ Functions ------------------
