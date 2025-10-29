@@ -17,7 +17,7 @@ Right-click PowerShell → Run as administrator. Then run:
    ```powershell
    wsl --install Ubuntu-22.04
    ``` 
-   This installs WSL and sets up Ubuntu 22.04 as your Linux environment.
+   <!-- This installs WSL and sets up Ubuntu 22.04 as your Linux environment. -->
    If WSL doesn’t recognize the distro, try:
 
    ```powershell
@@ -65,15 +65,29 @@ Right-click PowerShell → Run as administrator. Then run:
    ```bash
    source ~/.bashrc
    ```
+
+## Install Required Python Packages
+Install additional Python dependencies:
+```ssh
+sudo apt-get install python3-pip
+pip install opml numpy matplotlib
+```
+
 ## Install Git and Clone the Repo
-Install Git:
+1. INTALL GIT :
 ```bash
 sudo apt-get install git
 ```
-Clone this repository   
+2. Set up SSH access to GitHub
+
+   Since this repository is private, you need to configure SSH access with your GitHub account.
+   Follow this step-by-step guide: 
+   [👉 How to stup SSH keys for github cloning](https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/github-clone-with-ssh-keys).
+
+3. Clone this repository   
 ```sh
 cd 
-git clone https://github.com/Coryx99/RoboticsII.git
+git clone git@github.com:Coryx99/Robotics-II.git
 ```
 <!-- for more details in case the previous is not enough::::
 https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-git -->
@@ -84,7 +98,7 @@ Navigate to the `tutorial_scripts/` folder.
 
 - Run the sanity check script:
 ```sh 
-cd ~/RoboticsII/tutorial_scripts 
+cd ~/Robotics-II/tutorial_scripts 
 python3 tutorial_sanity_check.py
 ```
 Drake uses MeshCat for 3D visualization, therefore, when you run a script, you will see output like:
