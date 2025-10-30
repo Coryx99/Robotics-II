@@ -70,7 +70,7 @@ Right-click PowerShell → Run as administrator. Then run:
 Install additional Python dependencies:
 ```ssh
 sudo apt-get install python3-pip
-pip install opml numpy matplotlib
+pip install ompl numpy matplotlib
 ```
 
 ## Install Git and Clone the Repo
