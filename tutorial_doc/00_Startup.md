@@ -87,7 +87,7 @@ sudo apt-get install git
 3. Clone this repository   
 ```sh
 cd 
-git clone git@github.com:Coryx99/Robotics-II.git
+git clone https://github.com/Coryx99/Robotics-II.git
 ```
 <!-- for more details in case the previous is not enough::::
 https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-git -->
