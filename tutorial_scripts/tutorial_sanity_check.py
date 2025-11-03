@@ -13,11 +13,11 @@ from pydrake.visualization import AddDefaultVisualization, ModelVisualizer
 from pydrake.systems.analysis import Simulator  
 
 # ------------------ Settings ------------------
-visualize = True  # True = only visualize, False = run full simulation
+visualize = False  # True = only visualize, False = run full simulation
 meshcat = StartMeshcat()
 # Adjust the path to where the URDF is in your directory
 model_path = os.path.join(
-    "..", "models", "descriptions", "robots", "arms", "franka_description", "urdf", "panda_arm.urdf"
+    "..", "models", "descriptions", "robots", "humanoids", "pr2_description", "urdf", "pr2_simplified.urdf"
 )
 
 # ------------------ Functions ------------------
@@ -30,8 +30,6 @@ def create_sim_scene(sim_time_step):
     plant, scene_graph = AddMultibodyPlantSceneGraph(builder, time_step=sim_time_step)
     
     Parser(plant).AddModelsFromUrl("file://" + os.path.abspath(model_path))
-    base_link = plant.GetBodyByName("panda_link0")  # replace with your robot’s root link name
-    plant.WeldFrames(plant.world_frame(), base_link.body_frame())
     plant.Finalize()
     AddDefaultVisualization(builder, meshcat)
     return builder.Build()

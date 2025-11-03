@@ -23,10 +23,11 @@ scene_path = os.path.join(
     # "..", "models", "project", "project_03_diffrentialdrive_robot_tracking_world.sdf"     
     # "..", "models", "project", "project_04_setpoint_regulation_mobile_manipulation.sdf"    
     # "..", "models", "project", "project_05_navigation_world.sdf" ## ---> Remove or change mobilel robot to omnidirectional
-    # "..", "models", "project", "project_xx_multirobot_cooperation_world.sdf"    
+    "..", "models", "project", "project_06_open_door.sdf"
     # "..", "models", "project", "project_07_two_panda_cooperation_world.sdf"
     # "..", "models", "project", "project_08_task_and_motion_planning.sdf"
-    "..", "models", "project", "project_09_two_panda_handover.sdf"
+    # "..", "models", "project", "project_09_two_panda_handover.sdf"
+    # "..", "models", "project", "project_xx_multirobot_cooperation_world.sdf"    
 )
 
 # ------------------ Functions ------------------
