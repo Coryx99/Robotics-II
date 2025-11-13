@@ -74,17 +74,17 @@ pip install ompl numpy matplotlib
 ```
 
 ## Install Git and Clone the Repo
-1. INTALL GIT :
+1. Install GIT :
 ```bash
 sudo apt-get install git
 ```
-2. Set up SSH access to GitHub
+<!-- 2. Set up SSH access to GitHub
 
    Since this repository is private, you need to configure SSH access with your GitHub account.
    Follow this step-by-step guide: 
-   [👉 How to stup SSH keys for github cloning](https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/github-clone-with-ssh-keys).
+   [👉 How to stup SSH keys for github cloning](https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/github-clone-with-ssh-keys). -->
 
-3. Clone this repository   
+2. Clone this repository   
 ```sh
 cd 
 git clone https://github.com/Coryx99/Robotics-II.git
