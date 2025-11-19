@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="drawing_world">
+
+    <!-- Ground plane -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="ground_link">
+        <collision name="ground_collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>10 10</size>
+            </plane>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>1e8</drake:hydroelastic_modulus>
+            <drake:mu_dynamic>0.5</drake:mu_dynamic>
+            <drake:mu_static>0.7</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="ground_visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>10 10</size>
+            </plane>
+          </geometry>
+          <material>
+            <diffuse>0.8 0.8 0.8 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Vertical drawing surface (whiteboard/canvas) -->
+    <model name="drawing_surface">
+      <pose>0.6 0 0.5 0 1.5708 0</pose>  <!-- rotated vertical, 0.6m away from robot -->
+      <static>true</static>
+      <link name="surface_link">
+        <inertial>
+          <mass>5.0</mass>
+          <inertia>
+            <ixx>0.5</ixx>
+            <iyy>0.3</iyy>
+            <izz>0.2</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+        <collision name="surface_collision">
+          <geometry>
+            <box>
+              <size>0.8 0.6 0.02</size>  <!-- 80cm x 60cm drawing area, 2cm thick -->
+            </box>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>5e7</drake:hydroelastic_modulus>
+            <drake:mu_dynamic>0.3</drake:mu_dynamic>
+            <drake:mu_static>0.4</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="surface_visual">
+          <geometry>
+            <box>
+              <size>0.8 0.6 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.95 0.95 0.95 1.0</diffuse>  <!-- white surface -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Support stand for drawing surface -->
+    <model name="support_stand">
+      <pose>0.6 0 0.0 0 0 0</pose>
+      <static>true</static>
+      <link name="stand_link">
+        <inertial>
+          <mass>10.0</mass>
+          <inertia>
+            <ixx>1.0</ixx>
+            <iyy>1.0</iyy>
+            <izz>0.5</izz>
+          </inertia>
+        </inertial>
+        <collision name="stand_collision">
+          <geometry>
+            <box>
+              <size>0.1 0.7 1.0</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="stand_visual">
+          <geometry>
+            <box>
+              <size>0.1 0.7 1.0</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.4 0.4 0.4 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Load iiwa robot with custom pen end-effector -->
+    <model name="iiwa_robot">
+      <include>
+        <uri>file://../models/descriptions/robots/arms/iiwa_description/urdf/iiwa14_no_collision.urdf</uri>
+      </include>
+      <pose>0 0 0.8 0 0 0</pose>
+    </model>
+
+    <!-- Weld robot base to world -->
+    <joint name="world_to_robot" type="fixed">
+      <parent>world</parent>
+      <child>iiwa_robot::iiwa_link_0</child>
+    </joint>
+
+    <!-- Custom pen end-effector -->
+    <model name="pen_tool">
+      <pose>0 0 1.5 0 0 0</pose>  <!-- Will be attached to robot end-effector -->
+      <link name="pen_body">
+        <inertial>
+          <mass>0.05</mass>  <!-- 50 grams -->
+          <inertia>
+            <ixx>0.0001</ixx>
+            <iyy>0.0001</iyy>
+            <izz>0.00001</izz>
+          </inertia>
+        </inertial>
+        <collision name="pen_collision">
+          <geometry>
+            <cylinder>
+              <radius>0.008</radius>  <!-- 8mm diameter pen -->
+              <length>0.15</length>   <!-- 15cm long -->
+            </cylinder>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>1e6</drake:hydroelastic_modulus>
+            <drake:mu_dynamic>0.4</drake:mu_dynamic>
+            <drake:mu_static>0.5</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="pen_visual">
+          <geometry>
+            <cylinder>
+              <radius>0.008</radius>
+              <length>0.15</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <diffuse>0.2 0.2 0.8 1.0</diffuse>  <!-- blue pen -->
+          </material>
+        </visual>
+      </link>
+
+      <!-- Pen tip (contact point) -->
+      <link name="pen_tip">
+        <pose>0 0 -0.08 0 0 0</pose>  <!-- 8cm below pen center -->
+        <inertial>
+          <mass>0.002</mass>
+          <inertia>
+            <ixx>0.000001</ixx>
+            <iyy>0.000001</iyy>
+            <izz>0.000001</izz>
+          </inertia>
+        </inertial>
+        <collision name="tip_collision">
+          <geometry>
+            <sphere>
+              <radius>0.002</radius>  <!-- 2mm tip -->
+            </sphere>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>1e7</drake:hydroelastic_modulus>
+            <drake:mu_dynamic>0.6</drake:mu_dynamic>
+            <drake:mu_static>0.8</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="tip_visual">
+          <geometry>
+            <sphere>
+              <radius>0.002</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <diffuse>0.1 0.1 0.1 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+
+      <joint name="pen_body_to_tip" type="fixed">
+        <parent>pen_body</parent>
+        <child>pen_tip</child>
+      </joint>
+    </model>
+
+  </world>
+</sdf>

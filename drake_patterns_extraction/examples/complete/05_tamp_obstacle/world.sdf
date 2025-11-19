@@ -1,0 +1,305 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="tamp_obstacle_world">
+
+    <!-- Ground plane -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="ground_link">
+        <collision name="ground_collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>10 10</size>
+            </plane>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>1e8</drake:hydroelastic_modulus>
+            <drake:mu_dynamic>0.5</drake:mu_dynamic>
+            <drake:mu_static>0.7</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="ground_visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>10 10</size>
+            </plane>
+          </geometry>
+          <material>
+            <diffuse>0.75 0.75 0.75 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Table for manipulation -->
+    <model name="table">
+      <pose>0.6 0 0.0 0 0 0</pose>
+      <static>true</static>
+      <link name="table_link">
+        <!-- Table top -->
+        <collision name="table_top_collision">
+          <pose>0 0 0.4 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.2 1.0 0.02</size>
+            </box>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>1e8</drake:hydroelastic_modulus>
+            <drake:mu_dynamic>0.4</drake:mu_dynamic>
+            <drake:mu_static>0.6</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="table_top_visual">
+          <pose>0 0 0.4 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.2 1.0 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.6 0.4 0.2 1.0</diffuse>
+          </material>
+        </visual>
+
+        <!-- Table legs (simplified as single column) -->
+        <collision name="table_leg_collision">
+          <pose>0 0 0.2 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.1 0.1 0.4</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="table_leg_visual">
+          <pose>0 0 0.2 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.1 0.1 0.4</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.5 0.3 0.1 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Load iiwa robot -->
+    <model name="iiwa_robot">
+      <include>
+        <uri>file://../models/descriptions/robots/arms/iiwa_description/urdf/iiwa14_no_collision.urdf</uri>
+      </include>
+      <pose>0 0 0.4 0 0 0</pose>
+    </model>
+
+    <!-- Weld robot base to table -->
+    <joint name="table_to_robot" type="fixed">
+      <parent>table::table_link</parent>
+      <child>iiwa_robot::iiwa_link_0</child>
+    </joint>
+
+    <!-- Vertical wall obstacle (divides workspace) -->
+    <model name="wall_obstacle">
+      <pose>0.6 0.25 0.4 0 0 0</pose>
+      <static>true</static>
+      <link name="wall_link">
+        <collision name="wall_collision">
+          <geometry>
+            <box>
+              <size>0.6 0.02 0.4</size>
+            </box>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>1e8</drake:hydroelastic_modulus>
+            <drake:mu_dynamic>0.3</drake:mu_dynamic>
+            <drake:mu_static>0.5</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="wall_visual">
+          <geometry>
+            <box>
+              <size>0.6 0.02 0.4</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.8 0.2 0.2 0.7</diffuse>  <!-- Semi-transparent red -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Gap in wall (opening for robot to reach through) -->
+    <!-- Note: Wall extends from X: 0.3 to 0.9, Y: 0.25, creating barrier -->
+    <!-- Left side of workspace: Y < 0.25 -->
+    <!-- Right side of workspace: Y > 0.25 -->
+    <!-- Gap: Need to reach around wall edges at X < 0.3 or X > 0.9 -->
+
+    <!-- Stackable blocks on right side of wall (Y > 0.25) -->
+    <model name="block_red">
+      <pose>0.8 0.4 0.435 0 0 0</pose>
+      <link name="block_link">
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.00013</ixx>
+            <iyy>0.00013</iyy>
+            <izz>0.00013</izz>
+          </inertia>
+        </inertial>
+        <collision name="block_collision">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>1e7</drake:hydroelastic_modulus>
+            <drake:mu_dynamic>0.5</drake:mu_dynamic>
+            <drake:mu_static>0.7</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="block_visual">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>1.0 0.0 0.0 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="block_green">
+      <pose>0.5 0.4 0.435 0 0 0</pose>
+      <link name="block_link">
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.00013</ixx>
+            <iyy>0.00013</iyy>
+            <izz>0.00013</izz>
+          </inertia>
+        </inertial>
+        <collision name="block_collision">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>1e7</drake:hydroelastic_modulus>
+            <drake:mu_dynamic>0.5</drake:mu_dynamic>
+            <drake:mu_static>0.7</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="block_visual">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.0 1.0 0.0 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="block_blue">
+      <pose>0.65 0.4 0.435 0 0 0</pose>
+      <link name="block_link">
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.00013</ixx>
+            <iyy>0.00013</iyy>
+            <izz>0.00013</izz>
+          </inertia>
+        </inertial>
+        <collision name="block_collision">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>1e7</drake:hydroelastic_modulus>
+            <drake:mu_dynamic>0.5</drake:mu_dynamic>
+            <drake:mu_static>0.7</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="block_visual">
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.0 0.0 1.0 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Stacking zone on left side of wall (Y < 0.25) -->
+    <model name="stacking_zone_marker">
+      <pose>0.6 0.0 0.41 0 0 0</pose>
+      <static>true</static>
+      <link name="marker_link">
+        <visual name="marker_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.0 1.0 0.0 0.5</diffuse>  <!-- Semi-transparent green -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Additional cylindrical obstacle (column) -->
+    <model name="column_obstacle">
+      <pose>0.4 -0.15 0.4 0 0 0</pose>
+      <static>true</static>
+      <link name="column_link">
+        <collision name="column_collision">
+          <geometry>
+            <cylinder>
+              <radius>0.08</radius>
+              <length>0.4</length>
+            </cylinder>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>1e8</drake:hydroelastic_modulus>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="column_visual">
+          <geometry>
+            <cylinder>
+              <radius>0.08</radius>
+              <length>0.4</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <diffuse>0.3 0.3 0.3 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>

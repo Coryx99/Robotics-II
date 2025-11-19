@@ -1,0 +1,345 @@
+{
+  "example_name": "Door Opening with Planar Mobile Base",
+  "difficulty": "very_advanced",
+  "estimated_time": "90 minutes to understand and implement",
+
+  "user_request_examples": [
+    "Create a mobile robot that can open a hinged door",
+    "Set up a simulation with a robot navigating through a doorway",
+    "Build a mobile manipulator that interacts with articulated objects",
+    "Make a robot push or pull a door open"
+  ],
+
+  "scenario_description": "A UR5e arm mounted on a 3-DOF planar mobile base approaches a hinged door, grasps the handle, pulls the door open while coordinating base motion to follow the door arc, then navigates through the doorway. This is one of the most complex manipulation scenarios, combining mobile manipulation, contact-rich interaction, and articulated environment dynamics.",
+
+  "components": {
+    "mobile_base": {
+      "type": "3-DOF planar base (SE(2))",
+      "dof": 3,
+      "joint_chain": ["base_x (prismatic)", "base_y (prismatic)", "base_yaw (revolute)"],
+      "virtual_links": ["world_link", "virtual_x", "virtual_y"],
+      "mass": 50.0,
+      "dimensions": [0.8, 0.6, 0.4],
+      "limits": {
+        "x": [-2.0, 2.0],
+        "y": [-2.0, 2.0],
+        "yaw": [-3.14159, 3.14159],
+        "effort": [300, 300, 100],
+        "velocity": [0.5, 0.5, 1.0]
+      },
+      "reason": "Full planar mobility required to follow door arc and navigate through"
+    },
+
+    "robot_arm": {
+      "type": "Universal Robots UR5e - 6 DOF",
+      "urdf": "../../../models/descriptions/robots/arms/ur_description/urdf/ur5e.urdf",
+      "total_dof": "3 (base) + 6 (arm) = 9 DOF",
+      "mounting": "Fixed to arm_mount on mobile base",
+      "base_height": 0.5
+    },
+
+    "kinematic_structure": {
+      "chain": "world → world_link → virtual_x → virtual_y → mobile_base → arm_mount → ur5e_base_link → ... → ur5e_tool0",
+      "virtual_links_purpose": "Create serial kinematic chain for 3-DOF planar motion",
+      "total_actuated_dof": 9,
+      "reason": "Drake requires serial kinematic trees; virtual links enable planar base"
+    },
+
+    "articulated_environment": {
+      "door_frame": {
+        "components": ["wall_left", "wall_right", "lintel", "hinge_post"],
+        "doorway_width": 1.0,
+        "doorway_height": 2.0,
+        "wall_thickness": 0.1,
+        "static": true
+      },
+      "door": {
+        "type": "hinged_door",
+        "dimensions": [0.05, 0.9, 2.0],
+        "mass": 15.0,
+        "hinge_axis": "Z (vertical)",
+        "hinge_position": [1.5, -0.5, 0],
+        "swing_range": [0, 1.5708],
+        "swing_angle": "0° to 90°",
+        "damping": 2.0,
+        "friction": 1.0,
+        "articulated": true
+      },
+      "door_handle": {
+        "type": "cylindrical lever",
+        "radius": 0.02,
+        "length": 0.15,
+        "position_on_door": [0.05, 0.8, 1.0],
+        "mass": 0.5,
+        "purpose": "Grasp point for robot"
+      }
+    }
+  },
+
+  "patterns_used": [
+    "mobile_base_3dof",
+    "planar_base_virtual_links",
+    "articulated_environment",
+    "hinged_door",
+    "contact_rich_manipulation",
+    "coordinated_mobile_manipulation",
+    "constraint_following"
+  ],
+
+  "complexity_factors": {
+    "planar_base_modeling": "3 virtual links to create X-Y-Yaw kinematic chain",
+    "articulated_object": "Door has its own DOF; joint state includes door angle",
+    "contact_rich": "Must maintain contact with handle while moving",
+    "coordinated_motion": "Base must follow circular arc as door opens",
+    "constraint_following": "End-effector constrained to door handle trajectory",
+    "high_dimensional": "9-DOF robot + 1-DOF door = 10-dimensional state space",
+    "collision_avoidance": "Avoid base-door, arm-door, arm-wall collisions"
+  },
+
+  "implementation_approach": {
+    "step1_scene_modeling": {
+      "door_frame_setup": "Static walls and hinge post defining doorway",
+      "door_modeling": "Door panel as rigid body with revolute joint to hinge post",
+      "mobile_base_setup": "3-DOF base using virtual link pattern",
+      "arm_mounting": "UR5e fixed to base arm_mount"
+    },
+
+    "step2_task_phases": {
+      "phase_1_approach": {
+        "description": "Navigate to door handle",
+        "base_motion": "Move to position [1.0, 0, 0] facing door",
+        "arm_motion": "Reach toward handle at [1.55, 0.3, 1.0]",
+        "duration": "5 seconds"
+      },
+      "phase_2_grasp": {
+        "description": "Grasp door handle",
+        "gripper": "Close on handle cylinder",
+        "constraint": "End-effector fixed to handle in world frame (before door moves)",
+        "duration": "2 seconds"
+      },
+      "phase_3_pull_open": {
+        "description": "Pull door open while following arc",
+        "door_motion": "0° → 90° over 8 seconds",
+        "base_motion": "Follow circular arc (radius ~0.9m, center at hinge)",
+        "arm_motion": "Maintain grasp on handle as it moves",
+        "constraint": "End-effector follows handle trajectory: r(t) = hinge + R(θ(t)) * handle_offset",
+        "coordination": "Base XY position and yaw must track handle arc",
+        "duration": "8 seconds"
+      },
+      "phase_4_release": {
+        "description": "Release handle when door is open",
+        "door_angle": "90°",
+        "gripper": "Open",
+        "duration": "1 second"
+      },
+      "phase_5_navigate": {
+        "description": "Navigate through open doorway",
+        "base_motion": "Move forward through doorway",
+        "collision_avoidance": "Stay clear of door and frame",
+        "duration": "5 seconds"
+      }
+    },
+
+    "step3_constraint_following": {
+      "approach_1_position_control": {
+        "description": "Track handle position with IK at each timestep",
+        "method": "Given door_angle(t), compute handle_pos(t), solve IK for base+arm",
+        "pros": "Simple to implement",
+        "cons": "May lose contact, doesn't enforce physical constraint"
+      },
+      "approach_2_closed_loop_constraint": {
+        "description": "Use Drake constraint solver",
+        "method": "Add position constraint between end-effector and handle",
+        "implementation": "plant.AddDistanceConstraint() or custom constraint",
+        "pros": "Physically accurate, maintains contact",
+        "cons": "Complex, may be numerically challenging"
+      }
+    },
+
+    "step4_motion_planning": {
+      "strategy": "Trajectory optimization with constraints",
+      "variables": ["base_x(t)", "base_y(t)", "base_yaw(t)", "q_arm(t)", "door_angle(t)"],
+      "constraints": [
+        "End-effector on handle (during grasp phase)",
+        "Door angle increasing 0 → π/2",
+        "Base-door clearance > 0.1m",
+        "Arm-wall clearance > 0.05m",
+        "Joint limits",
+        "Velocity limits"
+      ],
+      "costs": [
+        "Minimize base motion energy",
+        "Minimize arm motion energy",
+        "Smooth door opening",
+        "Stay near nominal arm configuration"
+      ]
+    },
+
+    "step5_controller": {
+      "type": "Hybrid position-force control",
+      "base_control": {
+        "type": "Trajectory tracking PD",
+        "kp": [100, 100, 50],
+        "kd": [20, 20, 10]
+      },
+      "arm_control": {
+        "type": "PD+G with task-space constraint",
+        "kp": [150, 150, 120, 100, 80, 50],
+        "kd": [10, 10, 8, 5, 4, 2]
+      },
+      "door_actuation": {
+        "type": "Passive (driven by robot pulling)",
+        "damping": 2.0,
+        "friction": 1.0
+      }
+    }
+  },
+
+  "drake_specific_features": {
+    "planar_base_pattern": {
+      "virtual_links": ["world_link", "virtual_x", "virtual_y"],
+      "joints": ["prismatic X", "prismatic Y", "revolute Yaw"],
+      "all_virtual_links_mass": 0.001,
+      "reason": "Drake requires bodies at both ends of each joint"
+    },
+    "articulated_environment": {
+      "door_as_model": "Door is a separate model, not static",
+      "door_joint": "Revolute joint between door_frame and door",
+      "joint_state": "Door angle is part of plant state",
+      "controllable": false
+    },
+    "contact_modeling": {
+      "handle_contact": "Compliant hydroelastic for grasp",
+      "door_panel_contact": "For collisions with base/arm",
+      "friction": "High friction (0.8) on handle for secure grasp"
+    },
+    "inverse_kinematics_9dof": {
+      "includes_base": "3 base DOF + 6 arm DOF",
+      "handle_tracking": "Position constraint on end-effector",
+      "orientation": "Grasp orientation aligned with handle axis"
+    }
+  },
+
+  "key_parameters": {
+    "door_geometry": {
+      "hinge_position": [1.5, -0.5, 0],
+      "door_width": 0.9,
+      "handle_offset_from_hinge": [0.05, 0.8, 1.0],
+      "swing_radius": 0.9,
+      "swing_angle_max": 1.5708
+    },
+    "base_trajectory": {
+      "arc_center": [1.5, -0.5, 0],
+      "arc_radius": 0.9,
+      "start_angle": 0.0,
+      "end_angle": 1.5708,
+      "angular_velocity": 0.19635
+    },
+    "grasp_parameters": {
+      "approach_clearance": 0.1,
+      "grasp_force": "15-20 N",
+      "handle_grasp_offset": [0, 0, 0]
+    },
+    "timing": {
+      "approach_time": 5.0,
+      "grasp_time": 2.0,
+      "pull_time": 8.0,
+      "release_time": 1.0,
+      "navigate_time": 5.0,
+      "total_time": 21.0
+    }
+  },
+
+  "expected_behavior": {
+    "phase_1": "Robot approaches door from [0,0,0] to [1.0, 0, 0]",
+    "phase_2": "Arm extends, end-effector grasps handle",
+    "phase_3": "Robot pulls door open: base moves in arc (backward and leftward), door swings 0→90°",
+    "phase_4": "Robot releases handle",
+    "phase_5": "Base navigates forward through open doorway",
+    "final_state": "Robot beyond door at [2.0, 0.5, 0], door open at 90°"
+  },
+
+  "validation_criteria": {
+    "door_opens": "Door angle reaches 90° ± 5°",
+    "contact_maintained": "End-effector stays on handle during pull (phase 3)",
+    "no_collisions": "No base-door, arm-door, or arm-wall collisions",
+    "smooth_base_motion": "Base follows arc smoothly (jerk < 2 m/s³)",
+    "successful_navigation": "Base passes through doorway without collision"
+  },
+
+  "common_challenges": {
+    "ik_fails_9dof": {
+      "symptom": "Cannot find configuration to grasp handle",
+      "solutions": [
+        "Position base closer to door (1.0m instead of 1.5m)",
+        "Adjust arm mount height for better reach",
+        "Provide good initial guess",
+        "Use sequential IK (base first, then arm)"
+      ]
+    },
+    "contact_loss": {
+      "symptom": "End-effector slips off handle during pull",
+      "solutions": [
+        "Increase handle friction (μ=0.8)",
+        "Use tighter grasp force",
+        "Add position constraint in simulation",
+        "Reduce door opening speed"
+      ]
+    },
+    "base_door_collision": {
+      "symptom": "Mobile base collides with door panel as it opens",
+      "solutions": [
+        "Start base further back",
+        "Add collision avoidance constraints",
+        "Increase arc radius (move base in larger circle)",
+        "Coordinate base motion with door angle"
+      ]
+    },
+    "constraint_solver_failure": {
+      "symptom": "Simulation crashes or becomes unstable",
+      "solutions": [
+        "Reduce time_step to 0.0005",
+        "Increase constraint solver iterations",
+        "Use compliant contact (hydroelastic)",
+        "Add damping to door hinge"
+      ]
+    },
+    "circular_arc_tracking": {
+      "symptom": "Base doesn't follow door handle properly",
+      "solutions": [
+        "Precompute base trajectory: x(t) = hinge_x + r*cos(θ(t)), y(t) = hinge_y + r*sin(θ(t))",
+        "Use feedback control to correct tracking errors",
+        "Coordinate base yaw with door angle: yaw(t) = θ(t)"
+      ]
+    }
+  },
+
+  "extensions": {
+    "push_door": "Robot pushes door instead of pulling",
+    "lever_handle": "Handle rotates; robot must turn it first",
+    "two_doors": "Navigate through double doors",
+    "vision_guided": "Use camera to detect handle pose",
+    "dual_arm": "One arm opens door, other carries object through"
+  },
+
+  "learning_outcomes": {
+    "planar_base_modeling": "How to model SE(2) mobile bases with virtual links",
+    "articulated_objects": "Simulating doors, drawers, and other movable environment objects",
+    "contact_rich_manipulation": "Maintaining contact during motion",
+    "coordinated_mobile_manipulation": "Coupling base and arm motion for constraint following",
+    "high_dof_planning": "Planning for 9-DOF systems with constraints"
+  },
+
+  "code_snippets": {
+    "planar_base_joints": "3 joints in series: prismatic(X) → prismatic(Y) → revolute(Yaw)",
+    "door_hinge": "<joint type='revolute'><axis><xyz>0 0 1</xyz></axis></joint>",
+    "handle_tracking_ik": "ik.AddPositionConstraint(end_effector_frame, p_handle, world_frame, p_handle, p_handle)",
+    "arc_trajectory": "x = hinge_x + r*cos(theta), y = hinge_y + r*sin(theta), yaw = theta"
+  },
+
+  "references": {
+    "mobile_manipulation": "http://manipulation.csail.mit.edu/mobile.html",
+    "drake_constraints": "https://drake.mit.edu/doxygen_cxx/group__solver__evaluators.html",
+    "contact_modeling": "https://drake.mit.edu/doxygen_cxx/group__hydroelastic__user__guide.html"
+  }
+}

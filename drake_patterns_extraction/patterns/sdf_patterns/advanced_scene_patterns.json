@@ -1,0 +1,144 @@
+{
+  "mobile_base_patterns": {
+    "1dof_prismatic": {
+      "description": "Single axis linear motion for extended reach",
+      "examples": [
+        "03_mobile_stacking"
+      ],
+      "joint_type": "prismatic",
+      "typical_limits": [
+        -1.5,
+        1.5
+      ],
+      "typical_effort": 100.0,
+      "typical_velocity": 1.0,
+      "use_cases": [
+        "warehouse",
+        "extended-workspace",
+        "assembly-line"
+      ]
+    },
+    "3dof_planar": {
+      "description": "Planar mobility (x, y, yaw) using chained joints",
+      "examples": [
+        "04_door_opening"
+      ],
+      "joint_chain": [
+        "prismatic_x",
+        "prismatic_y",
+        "revolute_yaw"
+      ],
+      "requires_virtual_links": true,
+      "use_cases": [
+        "indoor-navigation",
+        "door-opening",
+        "mobile-manipulation"
+      ]
+    }
+  },
+  "end_effector_patterns": {
+    "pen_tool": {
+      "description": "Cylindrical pen for drawing/writing tasks",
+      "examples": [
+        "02_drawing_robot"
+      ],
+      "geometry": {
+        "type": "cylinder",
+        "radius": 0.005,
+        "length": 0.1
+      },
+      "mass": 0.01,
+      "attachment_frame": "panda_link7",
+      "joint_type": "fixed",
+      "use_cases": [
+        "drawing",
+        "writing",
+        "tracing",
+        "inspection"
+      ]
+    }
+  },
+  "workspace_patterns": {
+    "vertical_whiteboard": {
+      "description": "Vertical surface for contact tasks",
+      "examples": [
+        "02_drawing_robot"
+      ],
+      "orientation": "90deg rotation (vertical)",
+      "typical_size": [
+        1.0,
+        0.02,
+        0.7
+      ],
+      "material": "white with transparency",
+      "positioning": "offset from robot base"
+    }
+  },
+  "articulated_environment_patterns": {
+    "hinged_door": {
+      "description": "Door with revolute joint and surrounding walls",
+      "examples": [
+        "04_door_opening"
+      ],
+      "components": [
+        "door_panel",
+        "wall_left",
+        "wall_right",
+        "wall_top",
+        "handle"
+      ],
+      "joint_type": "revolute",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "limits": [
+        0,
+        1.57
+      ],
+      "mass": 25.0,
+      "damping": 3.0,
+      "use_cases": [
+        "service-robots",
+        "home-automation",
+        "access-control"
+      ]
+    }
+  },
+  "multi_robot_patterns": {
+    "elevated_dual_setup": {
+      "description": "Two robots on elevated pedestals for handover",
+      "examples": [
+        "06_object_handover"
+      ],
+      "configuration": "mirrored with handover zone",
+      "pedestal_height": 0.4,
+      "robot_separation": 1.0,
+      "use_cases": [
+        "handover",
+        "collaborative-assembly",
+        "parts-transfer"
+      ]
+    }
+  },
+  "obstacle_patterns": {
+    "vertical_wall": {
+      "description": "Wall obstacle bisecting workspace",
+      "examples": [
+        "05_tamp_obstacle"
+      ],
+      "typical_size": [
+        0.35,
+        0.02,
+        0.3
+      ],
+      "placement": "between pick and place zones",
+      "use_cases": [
+        "constrained-planning",
+        "obstacle-avoidance",
+        "TAMP"
+      ]
+    }
+  }
+}

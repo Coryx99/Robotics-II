@@ -1,0 +1,97 @@
+{
+  "mappings": [
+    {
+      "user_phrases": [
+        "robot on wheels",
+        "mobile robot",
+        "robot that moves",
+        "extend reach"
+      ],
+      "pattern": "mobile_base",
+      "examples": [
+        "03_mobile_stacking",
+        "04_door_opening"
+      ],
+      "disambiguation": "1-DOF for linear motion, 3-DOF for planar motion"
+    },
+    {
+      "user_phrases": [
+        "open a door",
+        "interact with door",
+        "push door",
+        "pull door"
+      ],
+      "pattern": "articulated_environment",
+      "examples": [
+        "04_door_opening"
+      ],
+      "confidence": "high"
+    },
+    {
+      "user_phrases": [
+        "draw",
+        "write",
+        "trace",
+        "pen",
+        "marker"
+      ],
+      "pattern": "custom_end_effector",
+      "examples": [
+        "02_drawing_robot"
+      ],
+      "confidence": "high"
+    },
+    {
+      "user_phrases": [
+        "two robots",
+        "multiple robots",
+        "robots working together",
+        "handover"
+      ],
+      "pattern": "multi_robot",
+      "examples": [
+        "01_pick_and_place_sorting",
+        "06_object_handover"
+      ],
+      "disambiguation": "shared workspace vs handover zone"
+    },
+    {
+      "user_phrases": [
+        "avoid obstacles",
+        "wall in way",
+        "constrained space",
+        "blocked path"
+      ],
+      "pattern": "obstacle_avoidance",
+      "examples": [
+        "05_tamp_obstacle"
+      ],
+      "confidence": "high"
+    },
+    {
+      "user_phrases": [
+        "stack blocks",
+        "pile cubes",
+        "vertical arrangement"
+      ],
+      "pattern": "stacking_task",
+      "examples": [
+        "03_mobile_stacking",
+        "05_tamp_obstacle"
+      ],
+      "confidence": "high"
+    },
+    {
+      "user_phrases": [
+        "sort by color",
+        "colored bins",
+        "categorize objects"
+      ],
+      "pattern": "sorting_system",
+      "examples": [
+        "01_pick_and_place_sorting"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

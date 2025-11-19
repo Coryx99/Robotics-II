@@ -1,0 +1,338 @@
+{
+  "example_name": "Task and Motion Planning with Obstacles",
+  "difficulty": "intermediate-advanced",
+  "estimated_time": "50 minutes to understand and implement",
+
+  "user_request_examples": [
+    "Create a robot that picks blocks while avoiding obstacles",
+    "Set up a manipulation scene with walls that block direct paths",
+    "Build a task planner that works around obstacles",
+    "Make a robot stack blocks in constrained space"
+  ],
+
+  "scenario_description": "An iiwa14 robot must pick three blocks from the right side of a vertical wall obstacle and stack them in a designated zone on the left side. The wall divides the workspace, forcing the robot to plan trajectories that go over or around the obstacle. This demonstrates Task and Motion Planning (TAMP) where high-level task sequencing combines with low-level collision-free motion planning.",
+
+  "components": {
+    "robot": {
+      "type": "KUKA iiwa14 - 7 DOF manipulator",
+      "urdf": "../../../models/descriptions/robots/arms/iiwa_description/urdf/iiwa14_no_collision.urdf",
+      "dof": 7,
+      "base_position": [0, 0, 0.4],
+      "base_fixed_to": "table",
+      "reason": "7 DOF provides redundancy to navigate around obstacles"
+    },
+
+    "environment": {
+      "table": {
+        "position": [0.6, 0, 0],
+        "dimensions": [1.2, 1.0, 0.02],
+        "height": 0.4,
+        "static": true,
+        "purpose": "Manipulation surface"
+      },
+      "workspace_dimensions": {
+        "x_range": [0.0, 1.2],
+        "y_range": [-0.5, 0.5],
+        "z_range": [0.41, 0.8]
+      }
+    },
+
+    "obstacles": {
+      "wall_obstacle": {
+        "type": "vertical wall",
+        "position": [0.6, 0.25, 0.4],
+        "dimensions": [0.6, 0.02, 0.4],
+        "orientation": "perpendicular to Y-axis",
+        "x_extent": [0.3, 0.9],
+        "divides_workspace": true,
+        "static": true,
+        "color": "red (0.8, 0.2, 0.2, 0.7)",
+        "purpose": "Forces robot to plan around obstacle"
+      },
+      "column_obstacle": {
+        "type": "cylindrical column",
+        "position": [0.4, -0.15, 0.4],
+        "radius": 0.08,
+        "height": 0.4,
+        "static": true,
+        "purpose": "Additional obstacle for path planning complexity"
+      },
+      "workspace_division": {
+        "left_zone": "Y < 0.25 (stacking target)",
+        "right_zone": "Y > 0.25 (block source)",
+        "barrier": "Wall at Y = 0.25",
+        "access_paths": [
+          "Over wall (Z > 0.8)",
+          "Around left edge (X < 0.3)",
+          "Around right edge (X > 0.9)"
+        ]
+      }
+    },
+
+    "objects": {
+      "block_red": {
+        "initial_position": [0.8, 0.4, 0.435],
+        "size": [0.05, 0.05, 0.05],
+        "mass": 0.2,
+        "zone": "right (source)"
+      },
+      "block_green": {
+        "initial_position": [0.5, 0.4, 0.435],
+        "size": [0.05, 0.05, 0.05],
+        "mass": 0.2,
+        "zone": "right (source)"
+      },
+      "block_blue": {
+        "initial_position": [0.65, 0.4, 0.435],
+        "size": [0.05, 0.05, 0.05],
+        "mass": 0.2,
+        "zone": "right (source)"
+      },
+      "stacking_zone": {
+        "position": [0.6, 0.0, 0.41],
+        "dimensions": [0.2, 0.2, 0.001],
+        "marker_color": "green (0.0, 1.0, 0.0, 0.5)",
+        "zone": "left (target)"
+      }
+    }
+  },
+
+  "patterns_used": [
+    "obstacle_avoidance",
+    "constrained_workspace",
+    "wall_obstacle",
+    "stacking_task",
+    "tamp",
+    "motion_planning"
+  ],
+
+  "complexity_factors": {
+    "task_planning": "Determine sequence: which block to pick first, optimal stacking order",
+    "motion_planning": "Find collision-free paths around/over obstacles",
+    "workspace_constraints": "Limited space due to wall and column",
+    "stacking_precision": "Blocks must be accurately stacked despite constrained approach",
+    "redundancy_resolution": "7-DOF arm has multiple solutions; choose collision-free ones"
+  },
+
+  "implementation_approach": {
+    "step1_obstacle_modeling": {
+      "wall": "Static box blocking direct Y-axis motion",
+      "column": "Static cylinder creating additional constraint",
+      "collision_geometry": "Both obstacles have collision properties for contact detection",
+      "visualization": "Semi-transparent for seeing robot motion"
+    },
+
+    "step2_task_planning": {
+      "approach": "Decide pick order and stacking sequence",
+      "considerations": [
+        "Which block is easiest to reach?",
+        "Stack bottom-to-top: red → green → blue",
+        "Plan paths before execution"
+      ],
+      "task_sequence": [
+        "Pick green block (easiest access at X=0.5, left edge)",
+        "Place green in stacking zone [0.6, 0.0, 0.435]",
+        "Pick blue block (middle position)",
+        "Stack blue on green [0.6, 0.0, 0.485]",
+        "Pick red block (right position)",
+        "Stack red on tower [0.6, 0.0, 0.535]"
+      ]
+    },
+
+    "step3_motion_planning": {
+      "collision_free_ik": {
+        "description": "Inverse kinematics with collision avoidance",
+        "method": "InverseKinematics with MinimumDistanceConstraint",
+        "min_clearance": 0.05,
+        "implementation": "ik.AddMinimumDistanceConstraint(min_distance=0.05)"
+      },
+      "path_strategies": {
+        "strategy_1_over_wall": {
+          "description": "Lift block high and move over wall",
+          "waypoints": [
+            "Grasp at source height (0.435)",
+            "Lift to clearance height (0.85)",
+            "Move over wall",
+            "Descend to stacking zone (0.435+)"
+          ],
+          "pros": "Shortest horizontal distance",
+          "cons": "Requires high reach, may exceed workspace"
+        },
+        "strategy_2_around_left": {
+          "description": "Move around left edge of wall (X < 0.3)",
+          "waypoints": [
+            "Grasp at source",
+            "Move to X < 0.3 (clear left edge)",
+            "Move to Y = 0.0",
+            "Move to stacking zone"
+          ],
+          "pros": "Stays within comfortable workspace",
+          "cons": "Longer path, must avoid column at [0.4, -0.15]"
+        },
+        "strategy_3_around_right": {
+          "description": "Move around right edge of wall (X > 0.9)",
+          "waypoints": [
+            "Grasp at source",
+            "Move to X > 0.9 (clear right edge)",
+            "Move to Y = 0.0",
+            "Move to stacking zone"
+          ],
+          "pros": "No column interference",
+          "cons": "Longest path, near workspace boundary"
+        },
+        "recommended": "Strategy 2 (around left) with collision checking"
+      }
+    },
+
+    "step4_trajectory_generation": {
+      "method": "Waypoint-based with interpolation",
+      "for_each_block": [
+        "Compute grasp configuration with collision-free IK",
+        "Compute via-points around obstacle",
+        "Compute place configuration with collision-free IK",
+        "Interpolate between configurations",
+        "Check path for collisions"
+      ],
+      "collision_checking": "Sample trajectory and check plant.GetCollisionGeometries()"
+    },
+
+    "step5_controller": {
+      "type": "PD+G trajectory tracking",
+      "gains": {
+        "kp": [120, 120, 120, 100, 50, 45, 15],
+        "kd": [8, 8, 8, 5, 2, 2, 2]
+      },
+      "waypoint_tracking": "Switch target configuration when close to current waypoint"
+    }
+  },
+
+  "drake_specific_features": {
+    "collision_avoidance_ik": {
+      "class": "InverseKinematics",
+      "constraint": "AddMinimumDistanceConstraint",
+      "syntax": "ik.AddMinimumDistanceConstraint(minimum_distance=0.05, threshold_distance=0.1)",
+      "purpose": "Find configurations that maintain clearance from obstacles"
+    },
+    "collision_checking": {
+      "method": "plant.GetCollisionGeometries() or SceneGraph queries",
+      "purpose": "Verify planned trajectories are collision-free",
+      "sampling": "Check at 0.1s intervals along trajectory"
+    },
+    "redundancy_resolution": {
+      "description": "7-DOF arm has infinite IK solutions",
+      "resolution": "Use posture cost to prefer configurations away from obstacles",
+      "cost": "Quadratic cost on joint angles: minimize ||q - q_nominal||²"
+    }
+  },
+
+  "key_parameters": {
+    "workspace_geometry": {
+      "wall_position_y": 0.25,
+      "wall_x_extent": [0.3, 0.9],
+      "wall_height": 0.4,
+      "column_position": [0.4, -0.15],
+      "column_radius": 0.08
+    },
+    "clearance": {
+      "minimum_distance": 0.05,
+      "threshold_distance": 0.1,
+      "over_wall_height": 0.85
+    },
+    "stacking": {
+      "zone_center": [0.6, 0.0],
+      "first_block_height": 0.435,
+      "height_increment": 0.05,
+      "alignment_tolerance": 0.005
+    },
+    "blocks": {
+      "size": 0.05,
+      "mass": 0.2,
+      "friction": 0.7,
+      "initial_y": 0.4
+    }
+  },
+
+  "expected_behavior": {
+    "phase_1": "Pick green block from [0.5, 0.4], path goes around left edge (X < 0.3)",
+    "phase_2": "Place green block in stacking zone [0.6, 0.0, 0.435]",
+    "phase_3": "Pick blue block from [0.65, 0.4], similar path around obstacle",
+    "phase_4": "Stack blue on green [0.6, 0.0, 0.485]",
+    "phase_5": "Pick red block from [0.8, 0.4]",
+    "phase_6": "Stack red on tower [0.6, 0.0, 0.535]",
+    "result": "Three blocks stacked in left zone, no collisions with obstacles"
+  },
+
+  "validation_criteria": {
+    "collision_free": "No collisions between robot and obstacles throughout execution",
+    "obstacle_clearance": "Minimum distance > 5cm maintained",
+    "successful_stacking": "All three blocks stacked in target zone",
+    "stack_alignment": "Blocks centered within 5mm",
+    "path_efficiency": "Uses shortest collision-free path (around left edge)"
+  },
+
+  "common_challenges": {
+    "ik_fails_near_obstacles": {
+      "symptom": "No IK solution found for grasp or place",
+      "solutions": [
+        "Adjust grasp approach angle",
+        "Relax orientation constraints",
+        "Move stacking zone away from obstacles",
+        "Use smaller minimum distance threshold initially"
+      ]
+    },
+    "collision_during_motion": {
+      "symptom": "Robot hits wall or column during trajectory",
+      "solutions": [
+        "Add more via-points around obstacle",
+        "Increase minimum distance constraint",
+        "Sample trajectory more finely for collision checking",
+        "Use RRT or optimization-based planning"
+      ]
+    },
+    "path_too_long": {
+      "symptom": "Robot takes very indirect path",
+      "solutions": [
+        "Choose better via-points",
+        "Use optimization to shorten path",
+        "Trade off between clearance and path length"
+      ]
+    },
+    "workspace_limits": {
+      "symptom": "Cannot reach around obstacles within workspace",
+      "solutions": [
+        "Reposition robot base closer to center",
+        "Make wall shorter",
+        "Use over-wall strategy instead of around"
+      ]
+    }
+  },
+
+  "extensions": {
+    "dynamic_obstacles": "Moving obstacles that robot must avoid",
+    "narrow_gap": "Door opening that robot must navigate through",
+    "multi_obstacle_types": "Combination of walls, boxes, spheres",
+    "optimization_based_planning": "Use Drake trajectory optimization instead of waypoints",
+    "sensor_based": "Use depth camera to detect obstacles at runtime"
+  },
+
+  "learning_outcomes": {
+    "obstacle_modeling": "How to add static obstacles to Drake scenes",
+    "collision_free_ik": "Using Drake's collision avoidance in IK",
+    "task_planning": "High-level sequencing for manipulation tasks",
+    "motion_planning": "Finding collision-free paths in constrained spaces",
+    "tamp_basics": "Integrating task and motion planning"
+  },
+
+  "code_snippets": {
+    "minimum_distance_constraint": "ik.AddMinimumDistanceConstraint(minimum_distance=0.05, threshold_distance=0.1)",
+    "collision_check": "collision_pairs = scene_graph.GetCollisionCandidates()",
+    "via_point_ik": "Solve IK for intermediate configuration with obstacle avoidance",
+    "path_interpolation": "q_path = np.linspace(q_start, q_end, num_points)"
+  },
+
+  "references": {
+    "drake_ik": "https://drake.mit.edu/doxygen_cxx/classdrake_1_1multibody_1_1_inverse_kinematics.html",
+    "collision_avoidance": "https://drake.mit.edu/doxygen_cxx/classdrake_1_1multibody_1_1_minimum_distance_constraint.html",
+    "manipulation_course": "http://manipulation.csail.mit.edu/pick.html#tamp"
+  }
+}

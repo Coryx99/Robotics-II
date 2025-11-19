@@ -1,0 +1,211 @@
+{
+  "id": "01_pick_and_place_sorting",
+  "name": "Pick and Place with Sorting Bins",
+  "difficulty": "intermediate",
+  "complexity_level": 2,
+
+  "user_request_examples": [
+    "Create a robot that sorts colored objects into bins",
+    "Set up a manipulation scene with sorting bins",
+    "I need a robot to pick objects and sort them by color into different bins"
+  ],
+
+  "scenario_description": "Single Jaco arm manipulator positioned to pick objects from a table and sort them into color-coded bins. Features multiple object types (cubes, cylinders, capsules) and visual bin markers.",
+
+  "components": {
+    "robot": {
+      "type": "Kinova Jaco j2s7s300",
+      "urdf": "file://../models/descriptions/robots/arms/jaco_description/urdf/j2s7s300.urdf",
+      "dof": 7,
+      "base_pose": [0, 0, 0.1, 0, 0, 0],
+      "base_fixed": true,
+      "fixed_to": "world"
+    },
+
+    "workspace": {
+      "table": {
+        "type": "static_box",
+        "dimensions": [0.4, 1.1, 0.05],
+        "pose": [0.6, 0, 0.2, 0, 0, 0],
+        "material": "light_wood",
+        "color": [0.82, 0.71, 0.55, 1.0],
+        "friction": {"mu_static": 0.3, "mu_dynamic": 0.3}
+      },
+
+      "sorting_bins": [
+        {
+          "name": "bin_red",
+          "pose": [-0.5, -0.3, 0.1, 0, 0, 0],
+          "size": [0.2, 0.2, 0.2],
+          "color": [1, 0, 0, 1],
+          "purpose": "red objects"
+        },
+        {
+          "name": "bin_blue",
+          "pose": [-0.5, 0, 0.1, 0, 0, 0],
+          "size": [0.2, 0.2, 0.2],
+          "color": [0, 0, 1, 1],
+          "purpose": "blue objects"
+        },
+        {
+          "name": "bin_green",
+          "pose": [-0.5, 0.3, 0.1, 0, 0, 0],
+          "size": [0.2, 0.2, 0.2],
+          "color": [0, 1, 0, 1],
+          "purpose": "green objects"
+        }
+      ],
+
+      "floor": {
+        "type": "included_model",
+        "uri": "file://../models/objects_scenes/floor.sdf"
+      }
+    },
+
+    "objects": [
+      {
+        "name": "object_cube_1",
+        "type": "box",
+        "size": [0.05, 0.05, 0.05],
+        "mass": 0.1,
+        "inertia": {"ixx": 8.33e-5, "iyy": 8.33e-5, "izz": 8.33e-5},
+        "pose": [0.5, 0.2, 0.3, 0, 0, 0],
+        "color": [0.8, 0.2, 0.2, 1.0],
+        "target_bin": "bin_red"
+      },
+      {
+        "name": "object_cube_2",
+        "type": "box",
+        "size": [0.05, 0.05, 0.05],
+        "mass": 0.1,
+        "pose": [0.5, -0.2, 0.3, 0, 0, 0],
+        "color": [0.8, 0.2, 0.2, 1.0],
+        "target_bin": "bin_red"
+      },
+      {
+        "name": "object_cube_3",
+        "type": "box",
+        "size": [0.05, 0.05, 0.05],
+        "mass": 0.1,
+        "pose": [0.5, 0, 0.3, 0, 0, 0],
+        "color": [0.8, 0.2, 0.2, 1.0],
+        "target_bin": "bin_red"
+      },
+      {
+        "name": "cylinder_1",
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.04,
+        "mass": 0.05,
+        "inertia": {"ixx": 1.67e-5, "iyy": 1.67e-5, "izz": 3.33e-5},
+        "pose": [0.5, -0.1, 0.3, 0, 0, 0],
+        "color": [0.2, 0.2, 0.8, 1.0],
+        "target_bin": "bin_blue"
+      },
+      {
+        "name": "cylinder_2",
+        "type": "cylinder",
+        "radius": 0.02,
+        "length": 0.04,
+        "mass": 0.05,
+        "pose": [0.5, 0.1, 0.3, 0, 0, 0],
+        "color": [0.2, 0.2, 0.8, 1.0],
+        "target_bin": "bin_blue"
+      },
+      {
+        "name": "object_capsule_1",
+        "type": "capsule",
+        "radius": 0.02,
+        "length": 0.08,
+        "mass": 0.06,
+        "inertia": {"ixx": 2.0e-5, "iyy": 2.0e-5, "izz": 3.0e-5},
+        "pose": [0.6, 0.05, 0.3, 0, 1.57, 0],
+        "color": [0, 1, 0, 1],
+        "target_bin": "bin_green"
+      },
+      {
+        "name": "object_capsule_2",
+        "type": "capsule",
+        "radius": 0.02,
+        "length": 0.08,
+        "mass": 0.06,
+        "pose": [0.6, -0.05, 0.3, 0, 1.57, 0],
+        "color": [0, 1, 0, 1],
+        "target_bin": "bin_green"
+      }
+    ]
+  },
+
+  "key_features": [
+    "Color-coded sorting bins",
+    "Multiple object types (boxes, cylinders, capsules)",
+    "Static workspace with large table",
+    "Single manipulator with fixed base",
+    "Visual bin markers for target locations"
+  ],
+
+  "patterns_used": [
+    "single_robot_fixed_base",
+    "sorting_bins_array",
+    "mixed_object_types",
+    "static_workspace",
+    "color_coded_system"
+  ],
+
+  "natural_language_tags": [
+    "sorting",
+    "color-coded bins",
+    "pick and place",
+    "multiple objects",
+    "single robot",
+    "manipulation table"
+  ],
+
+  "implementation_steps": {
+    "step1_scene_setup": "Load floor, position table, create sorting bins",
+    "step2_robot_setup": "Load Jaco arm, weld base to world at (0, 0, 0.1)",
+    "step3_objects": "Create 7 manipulable objects of different types and colors",
+    "step4_controller": "Implement inverse kinematics for each object",
+    "step5_sorting_logic": "Match object color to bin color, generate waypoints",
+    "step6_execution": "Execute pick-place sequence for each object"
+  },
+
+  "expected_behavior": {
+    "timeline": "Robot picks each object and places it in the corresponding colored bin",
+    "success_criteria": [
+      "Red cubes placed in red bin",
+      "Blue cylinders placed in blue bin",
+      "Green capsules placed in green bin",
+      "No collisions during sorting",
+      "Objects remain stable in bins"
+    ]
+  },
+
+  "challenges": {
+    "object_variety": "Different geometries require different grasp approaches",
+    "bin_placement": "Precise placement to avoid objects falling out",
+    "workspace_reach": "Ensure all objects and bins are within manipulator reach"
+  },
+
+  "extensions": {
+    "advanced_sorting": "Sort by size or shape instead of color",
+    "perception": "Add camera for automatic object detection",
+    "stacking": "Stack objects within bins",
+    "multi_bin": "Add more bins with different criteria"
+  },
+
+  "related_examples": [],
+
+  "difficulty_metrics": {
+    "kinematics": "medium",
+    "planning": "medium",
+    "control": "medium",
+    "perception": "low"
+  },
+
+  "estimated_simulation_time": "30-60 seconds",
+  "file_references": {
+    "world_sdf": "world.sdf",
+    "patterns_used_json": "patterns_used.json"
+  }
+}

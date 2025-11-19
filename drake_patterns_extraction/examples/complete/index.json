@@ -1,0 +1,186 @@
+{
+  "_comment": "Complete examples index - maps scenarios to patterns and use cases",
+
+  "examples": [
+    {
+      "id": "01_pick_and_place_sorting",
+      "name": "Pick and Place with Sorting Bins",
+      "complexity": 2,
+      "primary_patterns": ["single_robot_fixed_base", "sorting_bins", "mixed_objects"],
+      "tags": ["sorting", "pick-place", "color-coded", "single-robot"],
+      "robot_count": 1,
+      "mobile": false,
+      "custom_tools": false,
+      "articulated_env": false
+    },
+    {
+      "id": "02_drawing_robot",
+      "name": "Drawing Robot with Custom End-Effector",
+      "complexity": 3,
+      "primary_patterns": ["custom_end_effector", "vertical_workspace", "pen_tool"],
+      "tags": ["drawing", "custom-tool", "precision", "contact-task"],
+      "robot_count": 1,
+      "mobile": false,
+      "custom_tools": true,
+      "articulated_env": false
+    },
+    {
+      "id": "03_mobile_stacking",
+      "name": "Mobile Manipulation - Stacking",
+      "complexity": 4,
+      "primary_patterns": ["mobile_base_1dof", "base_mounted_arm", "stacking"],
+      "tags": ["mobile", "stacking", "prismatic-base", "extended-reach"],
+      "robot_count": 1,
+      "mobile": true,
+      "mobile_dof": 1,
+      "custom_tools": false,
+      "articulated_env": false
+    },
+    {
+      "id": "04_door_opening",
+      "name": "Door Opening with Planar Mobile Base",
+      "complexity": 5,
+      "primary_patterns": ["mobile_base_3dof", "articulated_environment", "hinged_door"],
+      "tags": ["mobile", "door", "planar-base", "contact-rich", "articulated-object"],
+      "robot_count": 1,
+      "mobile": true,
+      "mobile_dof": 3,
+      "custom_tools": false,
+      "articulated_env": true
+    },
+    {
+      "id": "05_tamp_obstacle",
+      "name": "Task and Motion Planning with Obstacles",
+      "complexity": 3,
+      "primary_patterns": ["obstacle_avoidance", "constrained_workspace", "wall_obstacle"],
+      "tags": ["planning", "obstacles", "stacking", "constrained-space"],
+      "robot_count": 1,
+      "mobile": false,
+      "custom_tools": false,
+      "articulated_env": false,
+      "has_obstacles": true
+    },
+    {
+      "id": "06_object_handover",
+      "name": "Multi-Robot Object Handover",
+      "complexity": 3,
+      "primary_patterns": ["multi_robot_elevated", "handover_zone", "coordinated_manipulation"],
+      "tags": ["multi-robot", "handover", "coordination", "elevated-base"],
+      "robot_count": 2,
+      "mobile": false,
+      "custom_tools": false,
+      "articulated_env": false
+    }
+  ],
+
+  "pattern_to_examples_map": {
+    "single_robot": ["01_pick_and_place_sorting", "02_drawing_robot", "03_mobile_stacking", "04_door_opening", "05_tamp_obstacle"],
+    "multi_robot": ["06_object_handover"],
+    "mobile_base": ["03_mobile_stacking", "04_door_opening"],
+    "mobile_1dof": ["03_mobile_stacking"],
+    "mobile_3dof": ["04_door_opening"],
+    "custom_end_effector": ["02_drawing_robot"],
+    "articulated_environment": ["04_door_opening"],
+    "obstacles": ["05_tamp_obstacle"],
+    "sorting": ["01_pick_and_place_sorting"],
+    "stacking": ["03_mobile_stacking", "05_tamp_obstacle"],
+    "handover": ["06_object_handover"]
+  },
+
+  "complexity_distribution": {
+    "level_2": {
+      "examples": ["01_pick_and_place_sorting"],
+      "description": "Basic manipulation with single robot"
+    },
+    "level_3": {
+      "examples": ["02_drawing_robot", "05_tamp_obstacle", "06_object_handover"],
+      "description": "Intermediate scenarios with custom tools, obstacles, or coordination"
+    },
+    "level_4": {
+      "examples": ["03_mobile_stacking"],
+      "description": "Advanced mobile manipulation"
+    },
+    "level_5": {
+      "examples": ["04_door_opening"],
+      "description": "Complex mobile manipulation with articulated environment"
+    }
+  },
+
+  "use_case_categories": {
+    "warehouse_logistics": ["03_mobile_stacking", "01_pick_and_place_sorting"],
+    "service_robotics": ["04_door_opening", "06_object_handover"],
+    "precision_tasks": ["02_drawing_robot"],
+    "planning_research": ["05_tamp_obstacle"],
+    "collaborative_robotics": ["06_object_handover"]
+  },
+
+  "recommended_learning_path": [
+    {
+      "step": 1,
+      "example": "01_pick_and_place_sorting",
+      "learn": "Basic manipulation and sorting"
+    },
+    {
+      "step": 2,
+      "example": "02_drawing_robot",
+      "learn": "Custom end-effectors and precision"
+    },
+    {
+      "step": 3,
+      "example": "05_tamp_obstacle",
+      "learn": "Constrained planning and obstacles"
+    },
+    {
+      "step": 4,
+      "example": "03_mobile_stacking",
+      "learn": "Mobile manipulation basics"
+    },
+    {
+      "step": 5,
+      "example": "06_object_handover",
+      "learn": "Multi-robot coordination"
+    },
+    {
+      "step": 6,
+      "example": "04_door_opening",
+      "learn": "Advanced mobile manipulation with contact"
+    }
+  ],
+
+  "natural_language_intent_examples": {
+    "sorting": {
+      "phrases": ["sort objects", "organize by color", "categorize items"],
+      "maps_to": "01_pick_and_place_sorting"
+    },
+    "drawing": {
+      "phrases": ["draw a shape", "write text", "trace a path"],
+      "maps_to": "02_drawing_robot"
+    },
+    "mobile_manipulation": {
+      "phrases": ["robot on wheels", "extend reach", "move between locations"],
+      "maps_to": ["03_mobile_stacking", "04_door_opening"]
+    },
+    "door_interaction": {
+      "phrases": ["open door", "push/pull door", "go through doorway"],
+      "maps_to": "04_door_opening"
+    },
+    "obstacle_avoidance": {
+      "phrases": ["avoid obstacle", "plan around wall", "constrained space"],
+      "maps_to": "05_tamp_obstacle"
+    },
+    "multi_robot": {
+      "phrases": ["two robots", "handover", "coordinate", "pass object"],
+      "maps_to": "06_object_handover"
+    }
+  },
+
+  "statistics": {
+    "total_examples": 6,
+    "with_mobile_base": 2,
+    "with_custom_tools": 1,
+    "with_articulated_env": 1,
+    "with_obstacles": 1,
+    "multi_robot": 1,
+    "single_robot": 5
+  }
+}

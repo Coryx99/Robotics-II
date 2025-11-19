@@ -1,0 +1,262 @@
+{
+  "example_name": "Drawing Robot with Custom Pen Tool",
+  "difficulty": "intermediate-advanced",
+  "estimated_time": "45 minutes to understand and implement",
+
+  "user_request_examples": [
+    "Create a robot that can draw shapes on a vertical surface",
+    "Set up a simulation with a pen tool for writing",
+    "Make a robot trace a path on a whiteboard",
+    "Build a precision drawing system with contact control"
+  ],
+
+  "scenario_description": "A 7-DOF IIWA robot equipped with a custom pen end-effector draws shapes on a vertical whiteboard. This scenario demonstrates precision contact control, custom tool attachment, and trajectory planning for artistic or writing tasks.",
+
+  "components": {
+    "robot": {
+      "type": "KUKA iiwa14 - 7 DOF manipulator",
+      "urdf": "../../../models/descriptions/robots/arms/iiwa_description/urdf/iiwa14_no_collision.urdf",
+      "dof": 7,
+      "base_fixed": true,
+      "base_height": 0.8,
+      "reason": "7-DOF provides redundancy for vertical workspace orientation control"
+    },
+
+    "custom_end_effector": {
+      "type": "pen_tool",
+      "pen_body": {
+        "mass": 0.05,
+        "dimensions": "0.008m radius × 0.15m length",
+        "material": "blue (0.2, 0.2, 0.8, 1.0)"
+      },
+      "pen_tip": {
+        "radius": 0.002,
+        "offset_from_body": -0.08,
+        "contact_properties": {
+          "mu_static": 0.8,
+          "mu_dynamic": 0.6,
+          "hydroelastic_modulus": 1e7
+        }
+      },
+      "attachment": "Fixed to robot end-effector (iiwa_link_7)",
+      "purpose": "Precise contact point for drawing/writing"
+    },
+
+    "environment": {
+      "drawing_surface": {
+        "type": "vertical whiteboard",
+        "dimensions": [0.8, 0.6, 0.02],
+        "position": [0.6, 0, 0.5],
+        "orientation": "vertical (rotated 90° about Y-axis)",
+        "material": "white (0.95, 0.95, 0.95, 1.0)",
+        "static": true,
+        "contact_friction": {
+          "mu_static": 0.4,
+          "mu_dynamic": 0.3
+        }
+      },
+      "support_stand": {
+        "type": "box",
+        "dimensions": [0.1, 0.7, 1.0],
+        "position": [0.6, 0, 0.0],
+        "static": true,
+        "purpose": "Holds drawing surface"
+      },
+      "ground": {
+        "type": "plane",
+        "static": true
+      }
+    }
+  },
+
+  "patterns_used": [
+    "single_robot_fixed_base",
+    "custom_end_effector",
+    "vertical_workspace",
+    "pen_tool",
+    "contact_task",
+    "precision_trajectory"
+  ],
+
+  "complexity_factors": {
+    "custom_tool_attachment": "Requires modeling pen as separate body with fixed joint",
+    "contact_control": "Must maintain light contact force with surface",
+    "vertical_orientation": "End-effector orientation constrained to approach perpendicular to surface",
+    "precision_trajectory": "Sub-millimeter accuracy required for clean lines",
+    "redundancy_resolution": "7-DOF robot requires null-space control or cost function"
+  },
+
+  "implementation_approach": {
+    "step1_scene_setup": {
+      "tasks": [
+        "Load iiwa14 robot URDF",
+        "Weld robot base at height 0.8m",
+        "Create vertical whiteboard at (0.6, 0, 0.5)",
+        "Add support stand",
+        "Model pen tool as separate body",
+        "Attach pen to robot end-effector with fixed joint"
+      ]
+    },
+
+    "step2_trajectory_planning": {
+      "approach": "Inverse kinematics with orientation constraints",
+      "constraints": {
+        "position": "Pen tip follows 2D path projected onto surface",
+        "orientation": "Pen axis perpendicular to surface (normal contact)",
+        "contact_depth": "0.001-0.002m penetration for contact",
+        "velocity": "0.05-0.1 m/s for smooth drawing"
+      },
+      "shapes": {
+        "circle": "Parametric: (r*cos(θ), r*sin(θ)) on surface",
+        "square": "4 straight line segments",
+        "star": "5-point star with geometric waypoints",
+        "text": "SVG path converted to waypoints"
+      }
+    },
+
+    "step3_contact_control": {
+      "type": "Hybrid position-force control",
+      "position_control": "Tangential to surface (XY)",
+      "force_control": "Normal to surface (Z)",
+      "target_contact_force": "0.5-1.0 N",
+      "implementation_options": [
+        "Admittance control with force feedback",
+        "Compliant contact model with hydroelastic",
+        "Pure position control with small penetration"
+      ]
+    },
+
+    "step4_pen_attachment": {
+      "method_1_fixed_joint": {
+        "description": "Model pen as rigid body, fixed joint to iiwa_link_7",
+        "pros": "Simple, no additional DOF",
+        "cons": "No compliance"
+      },
+      "method_2_drake_attachment": {
+        "description": "Use plant.WeldFrames() to attach pen frame to robot",
+        "implementation": "plant.WeldFrames(robot_end_frame, pen_base_frame, X_offset)"
+      }
+    }
+  },
+
+  "drake_specific_features": {
+    "hydroelastic_contact": {
+      "pen_tip_modulus": 1e7,
+      "surface_modulus": 5e7,
+      "reason": "Soft pen tip, stiffer surface for realistic contact"
+    },
+    "inverse_kinematics": {
+      "position_constraint": "Pen tip on surface path",
+      "orientation_constraint": "Pen axis aligned with surface normal",
+      "posture_cost": "Stay close to nominal configuration"
+    },
+    "visualization": {
+      "trace_drawing": "Log pen tip trajectory and visualize as line strip",
+      "force_display": "Show contact force as arrow in Meshcat"
+    }
+  },
+
+  "key_parameters": {
+    "drawing_workspace": {
+      "surface_center": [0.6, 0, 0.5],
+      "usable_area": [0.6, 0.4],
+      "margin": 0.1
+    },
+    "contact": {
+      "target_force": 0.8,
+      "force_tolerance": 0.3,
+      "penetration_depth": 0.0015
+    },
+    "trajectory": {
+      "drawing_speed": 0.08,
+      "transition_speed": 0.15,
+      "waypoint_spacing": 0.005
+    },
+    "pen_properties": {
+      "length": 0.15,
+      "tip_radius": 0.002,
+      "mass": 0.05,
+      "offset_from_robot": [0, 0, -0.1]
+    }
+  },
+
+  "expected_behavior": {
+    "initialization": "Robot moves to home position above workspace",
+    "approach": "Robot moves pen to start position with light contact",
+    "drawing": "Robot traces path while maintaining contact force",
+    "transitions": "Pen lifts slightly between disconnected shapes",
+    "completion": "Robot returns to home position, pen lifted"
+  },
+
+  "validation_criteria": {
+    "path_accuracy": "Drawn path within 2mm of desired path",
+    "contact_maintenance": "Contact force 0.5-1.5N for >95% of drawing time",
+    "smooth_motion": "No oscillations or jerky movements",
+    "orientation_accuracy": "Pen angle within 5° of surface normal"
+  },
+
+  "common_challenges": {
+    "contact_instability": {
+      "symptom": "Pen bounces or chatters on surface",
+      "solutions": [
+        "Reduce time_step to 0.0005",
+        "Increase hydroelastic dissipation",
+        "Add damping to pen tip",
+        "Use admittance control"
+      ]
+    },
+    "ik_singularities": {
+      "symptom": "IK fails near workspace edges",
+      "solutions": [
+        "Reduce workspace size",
+        "Add posture cost to avoid singularities",
+        "Use sequential IK with intermediate waypoints"
+      ]
+    },
+    "pen_orientation_drift": {
+      "symptom": "Pen not perpendicular to surface",
+      "solutions": [
+        "Tighten orientation constraint tolerance",
+        "Add orientation cost to IK",
+        "Use orientation feedback in controller"
+      ]
+    },
+    "drawing_artifacts": {
+      "symptom": "Lines wavy or inconsistent",
+      "solutions": [
+        "Reduce waypoint spacing",
+        "Smooth trajectory with splines",
+        "Ensure constant drawing speed"
+      ]
+    }
+  },
+
+  "extensions": {
+    "force_feedback": "Use contact force sensor for adaptive pressure",
+    "multi_color": "Tool changer for switching pens",
+    "3d_surface": "Draw on curved surfaces with normal estimation",
+    "vision_guided": "Camera feedback to trace existing patterns",
+    "dual_arm": "One arm holds object, other draws on it"
+  },
+
+  "learning_outcomes": {
+    "custom_end_effector_modeling": "How to add custom tools to standard robots",
+    "vertical_workspace": "Working in non-horizontal planes",
+    "contact_control": "Managing contact forces for precision tasks",
+    "ik_with_orientation": "Constraining both position and orientation",
+    "trajectory_generation": "Converting geometric shapes to robot paths"
+  },
+
+  "code_snippets": {
+    "attach_pen": "plant.WeldFrames(robot_end_frame, pen_frame, RigidTransform([0, 0, -0.1]))",
+    "vertical_surface_normal": "[1, 0, 0]  # Normal pointing toward robot",
+    "pen_perpendicular_orientation": "RotationMatrix(RollPitchYaw([0, np.pi/2, 0]))",
+    "contact_force_constraint": "ik.AddMinimumDistanceConstraint(min_distance=-0.002)"
+  },
+
+  "references": {
+    "drake_ik": "https://drake.mit.edu/doxygen_cxx/classdrake_1_1multibody_1_1_inverse_kinematics.html",
+    "hydroelastic_contact": "https://drake.mit.edu/doxygen_cxx/group__hydroelastic__user__guide.html",
+    "manipulation_course": "http://manipulation.csail.mit.edu/clutter.html"
+  }
+}

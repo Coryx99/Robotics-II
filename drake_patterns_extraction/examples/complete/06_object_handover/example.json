@@ -1,0 +1,377 @@
+{
+  "example_name": "Multi-Robot Object Handover",
+  "difficulty": "intermediate-advanced",
+  "estimated_time": "60 minutes to understand and implement",
+
+  "user_request_examples": [
+    "Create two robots that pass an object between them",
+    "Set up a multi-robot scene with coordinated manipulation",
+    "Build a handover system where robots exchange objects",
+    "Make two arms work together to transfer an item"
+  ],
+
+  "scenario_description": "Two Franka Panda robots mounted on elevated platforms (1.6m apart) coordinate to hand over a cylindrical object. Robot 1 picks the object from a source table, moves to a handover zone, and holds it steady. Robot 2 reaches to the handover zone, grasps the object, and both release/grasp in coordination. Robot 2 then places the object on a target table. This demonstrates multi-robot coordination, synchronized motion, and shared object manipulation.",
+
+  "components": {
+    "robot_1": {
+      "type": "Franka Emika Panda (left robot)",
+      "urdf": "../../../models/descriptions/robots/arms/franka_description/urdf/panda_arm_hand.urdf",
+      "dof": 9,
+      "base_position": [-0.8, 0, 0.6],
+      "base_orientation": "0° (facing forward)",
+      "base_fixed_to": "platform_left",
+      "role": "Picker and giver",
+      "workspace": "Left side, source table"
+    },
+
+    "robot_2": {
+      "type": "Franka Emika Panda (right robot)",
+      "urdf": "../../../models/descriptions/robots/arms/franka_description/urdf/panda_arm_hand.urdf",
+      "dof": 9,
+      "base_position": [0.8, 0, 0.6],
+      "base_orientation": "180° (facing robot 1)",
+      "base_fixed_to": "platform_right",
+      "role": "Receiver and placer",
+      "workspace": "Right side, target table"
+    },
+
+    "total_system_dof": 18,
+
+    "environment": {
+      "platform_left": {
+        "position": [-0.8, 0, 0],
+        "dimensions": [0.6, 0.6, 0.6],
+        "height": 0.6,
+        "static": true,
+        "purpose": "Elevates robot 1"
+      },
+      "platform_right": {
+        "position": [0.8, 0, 0],
+        "dimensions": [0.6, 0.6, 0.6],
+        "height": 0.6,
+        "static": true,
+        "purpose": "Elevates robot 2"
+      },
+      "separation": "1.6m center-to-center",
+      "handover_zone": {
+        "position": [0, 0, 0.8],
+        "description": "Mid-air point equidistant from both robots",
+        "marker": "Cyan sphere (visualization only)"
+      }
+    },
+
+    "tables": {
+      "source_table": {
+        "position": [-1.0, -0.4, 0],
+        "dimensions": [0.4, 0.3, 0.02],
+        "height": 0.3,
+        "purpose": "Initial object location",
+        "static": true
+      },
+      "target_table": {
+        "position": [1.0, -0.4, 0],
+        "dimensions": [0.4, 0.3, 0.02],
+        "height": 0.3,
+        "purpose": "Final object location",
+        "static": true
+      }
+    },
+
+    "object": {
+      "type": "cylindrical handover object",
+      "dimensions": "0.03m radius × 0.15m length",
+      "mass": 0.3,
+      "initial_position": [-1.0, -0.4, 0.35],
+      "color": "orange (1.0, 0.5, 0.0, 1.0)",
+      "graspable": "Both robots can grasp along cylinder axis",
+      "material": {
+        "friction_static": 0.8,
+        "friction_dynamic": 0.6,
+        "hydroelastic_modulus": 5e6
+      }
+    }
+  },
+
+  "patterns_used": [
+    "multi_robot_elevated",
+    "handover_zone",
+    "coordinated_manipulation",
+    "synchronized_timing",
+    "shared_workspace",
+    "dual_grasp"
+  ],
+
+  "complexity_factors": {
+    "multi_robot_system": "18-DOF combined system (9 per robot)",
+    "coordination": "Robots must synchronize motion and grasp timing",
+    "shared_object": "Both robots manipulate same object during handover",
+    "elevated_bases": "Robots on platforms, different from typical table-mounted setup",
+    "timing_critical": "Handover requires precise coordination: robot 1 holds, robot 2 grasps, robot 1 releases",
+    "collision_avoidance": "Robots must not collide during approach to handover zone"
+  },
+
+  "implementation_approach": {
+    "step1_multi_robot_setup": {
+      "description": "Create scene with two robots and elevated platforms",
+      "tasks": [
+        "Load two instances of Panda robot",
+        "Create platforms and weld robots to them",
+        "Orient robot 2 to face robot 1 (180° rotation)",
+        "Define handover zone coordinates"
+      ],
+      "drake_detail": "Use unique names for all components (panda_robot_1, panda_robot_2)"
+    },
+
+    "step2_task_phases": {
+      "phase_1_pick": {
+        "robot": "Robot 1",
+        "action": "Pick object from source table",
+        "ik_target": "Object at [-1.0, -0.4, 0.35]",
+        "duration": "3 seconds",
+        "gripper": "Close"
+      },
+      "phase_2_move_to_handover": {
+        "robot": "Robot 1",
+        "action": "Move object to handover zone",
+        "ik_target": "Handover zone at [0, 0, 0.8]",
+        "duration": "4 seconds",
+        "gripper": "Close (holding object)"
+      },
+      "phase_3_reach_for_handover": {
+        "robot": "Robot 2",
+        "action": "Reach to handover zone",
+        "ik_target": "Handover zone at [0, 0, 0.8]",
+        "duration": "4 seconds (simultaneous with phase 2)",
+        "gripper": "Open"
+      },
+      "phase_4_dual_grasp": {
+        "robots": "Both",
+        "action": "Robot 2 closes gripper while robot 1 still holding",
+        "duration": "1 second",
+        "state": "Both robots holding object"
+      },
+      "phase_5_release_handover": {
+        "robot": "Robot 1",
+        "action": "Open gripper to release object",
+        "duration": "1 second",
+        "state": "Only robot 2 holding object"
+      },
+      "phase_6_retreat": {
+        "robot": "Robot 1",
+        "action": "Return to home position",
+        "duration": "3 seconds"
+      },
+      "phase_7_place": {
+        "robot": "Robot 2",
+        "action": "Move object to target table and release",
+        "ik_target": "Target table at [1.0, -0.4, 0.35]",
+        "duration": "4 seconds",
+        "gripper": "Open"
+      }
+    },
+
+    "step3_coordination_strategy": {
+      "approach_1_time_based": {
+        "description": "Pre-planned timeline with fixed times for each phase",
+        "pros": "Simple to implement",
+        "cons": "Not robust to timing variations",
+        "implementation": "Use time-based state machine"
+      },
+      "approach_2_event_based": {
+        "description": "Robots signal when reaching waypoints",
+        "pros": "More robust, handles variations",
+        "cons": "Requires communication layer",
+        "implementation": "State machine with event triggers"
+      },
+      "approach_3_centralized": {
+        "description": "Single controller for both robots",
+        "pros": "Full coordination, optimal",
+        "cons": "18-DOF IK can be challenging",
+        "implementation": "Combined plant, single controller"
+      },
+      "recommended": "Approach 1 (time-based) for simplicity"
+    },
+
+    "step4_handover_mechanics": {
+      "dual_grasp_handling": {
+        "description": "Both robots grasp object simultaneously",
+        "physics": "Object has forces from both grippers",
+        "requirement": "Grippers must not fight each other",
+        "solution": "One robot holds steady (robot 1), other approaches gently (robot 2)"
+      },
+      "grasp_transition": {
+        "sequence": [
+          "t=0: Robot 1 grasping, robot 2 approaching",
+          "t=1: Robot 2 closes gripper (dual grasp)",
+          "t=2: Robot 1 opens gripper (handover complete)",
+          "t=3: Robot 2 has sole grasp"
+        ]
+      }
+    },
+
+    "step5_controllers": {
+      "robot_1_controller": {
+        "type": "PD+G trajectory tracking",
+        "gains": {
+          "kp": [120, 120, 120, 100, 50, 45, 15, 120, 120],
+          "kd": [8, 8, 8, 5, 2, 2, 2, 5, 5]
+        },
+        "states": ["home", "grasp_source", "lift", "handover_hold", "release", "home"]
+      },
+      "robot_2_controller": {
+        "type": "PD+G trajectory tracking",
+        "gains": {
+          "kp": [120, 120, 120, 100, 50, 45, 15, 120, 120],
+          "kd": [8, 8, 8, 5, 2, 2, 2, 5, 5]
+        },
+        "states": ["home", "handover_reach", "grasp", "place_target", "release", "home"]
+      }
+    }
+  },
+
+  "drake_specific_features": {
+    "multi_robot_modeling": {
+      "approach": "Load multiple robot instances with unique names",
+      "plant_structure": "Single plant with multiple robot models",
+      "state_vector": "Concatenated: [q_robot1, q_robot2, velocities]",
+      "actuation": "Separate actuators for each robot"
+    },
+    "dual_grasp_contact": {
+      "description": "Object in contact with both grippers",
+      "contact_model": "Hydroelastic compliant contact",
+      "challenge": "Both grippers apply forces; object must remain stable",
+      "solution": "High gripper friction, gentle closing force"
+    },
+    "inverse_kinematics_per_robot": {
+      "robot_1_ik": "Solve IK with plant context set to robot 1 DOF",
+      "robot_2_ik": "Solve IK with plant context set to robot 2 DOF",
+      "frames": "Each robot has distinct end-effector frame"
+    }
+  },
+
+  "key_parameters": {
+    "geometry": {
+      "robot_separation": 1.6,
+      "platform_height": 0.6,
+      "handover_zone": [0, 0, 0.8],
+      "source_table_pos": [-1.0, -0.4, 0.3],
+      "target_table_pos": [1.0, -0.4, 0.3]
+    },
+    "timing": {
+      "phase_1_pick": 3.0,
+      "phase_2_move_to_handover": 4.0,
+      "phase_3_reach_for_handover": 4.0,
+      "phase_4_dual_grasp": 1.0,
+      "phase_5_release": 1.0,
+      "phase_6_retreat": 3.0,
+      "phase_7_place": 4.0,
+      "total_time": 20.0
+    },
+    "object": {
+      "radius": 0.03,
+      "length": 0.15,
+      "mass": 0.3,
+      "friction": 0.8
+    },
+    "grasp": {
+      "gripper_width_open": 0.04,
+      "gripper_width_closed": 0.02,
+      "grasp_force": 20
+    }
+  },
+
+  "expected_behavior": {
+    "0-3s": "Robot 1 picks object from source table",
+    "3-7s": "Robot 1 moves to handover zone; robot 2 simultaneously reaches to handover zone",
+    "7-8s": "Robot 2 closes gripper on object (dual grasp)",
+    "8-9s": "Robot 1 opens gripper (handover complete)",
+    "9-12s": "Robot 1 returns home; robot 2 holds object",
+    "12-16s": "Robot 2 moves object to target table",
+    "16-17s": "Robot 2 opens gripper (object placed)",
+    "17-20s": "Robot 2 returns home",
+    "result": "Object successfully transferred from source to target table via coordinated handover"
+  },
+
+  "validation_criteria": {
+    "successful_pick": "Robot 1 lifts object from source table",
+    "successful_handover": "Object transfers from robot 1 to robot 2 without dropping",
+    "dual_grasp_stable": "Object remains stable when both robots grasp",
+    "successful_place": "Object placed on target table within 1cm of target",
+    "no_collisions": "Robots do not collide during handover",
+    "object_not_dropped": "Object never falls throughout sequence"
+  },
+
+  "common_challenges": {
+    "handover_zone_reachability": {
+      "symptom": "One or both robots cannot reach handover zone",
+      "solutions": [
+        "Adjust handover zone position (try [0, 0, 0.85])",
+        "Move platforms closer (1.4m separation instead of 1.6m)",
+        "Relax IK orientation constraints"
+      ]
+    },
+    "object_drops_during_handover": {
+      "symptom": "Object falls when robot 1 releases",
+      "solutions": [
+        "Ensure robot 2 grasps before robot 1 releases (add 0.5s delay)",
+        "Increase gripper friction",
+        "Verify robot 2 gripper is fully closed",
+        "Add dual-grasp stabilization phase"
+      ]
+    },
+    "robots_collide": {
+      "symptom": "Robot arms collide near handover zone",
+      "solutions": [
+        "Adjust handover zone to avoid robot workspace overlap",
+        "Add collision checking to IK",
+        "Use different approach angles for each robot",
+        "Stagger timing: robot 1 arrives first, robot 2 approaches after"
+      ]
+    },
+    "gripper_fight": {
+      "symptom": "Both grippers apply opposing forces, object unstable",
+      "solutions": [
+        "Robot 1 holds position (stiff), robot 2 applies gentle force",
+        "Use force control instead of position control during dual grasp",
+        "Add compliance in one gripper"
+      ]
+    },
+    "timing_desynchronization": {
+      "symptom": "Robots arrive at handover zone at different times",
+      "solutions": [
+        "Use event-based coordination instead of time-based",
+        "Add synchronization barriers in controller",
+        "Adjust trajectory speeds to match arrival times"
+      ]
+    }
+  },
+
+  "extensions": {
+    "heavy_object": "Require both robots to lift together throughout",
+    "three_robots": "Chain handover through multiple robots",
+    "mobile_bases": "Robots on mobile platforms, navigate to handover",
+    "vision_guided": "Detect handover zone and object pose with cameras",
+    "force_feedback": "Use force sensors to detect successful grasp"
+  },
+
+  "learning_outcomes": {
+    "multi_robot_scenes": "How to create Drake scenes with multiple robots",
+    "coordination": "Synchronizing multiple robots for collaborative tasks",
+    "handover_mechanics": "Physics and timing of object handovers",
+    "dual_grasp": "Managing objects grasped by multiple end-effectors",
+    "elevated_workspaces": "Working with robots on non-standard mounts"
+  },
+
+  "code_snippets": {
+    "load_multiple_robots": "parser.AddModelsFromUrl(...); parser.AddModelsFromUrl(...)",
+    "unique_robot_names": "Use model instance indices to distinguish robots",
+    "handover_zone_ik": "ik.AddPositionConstraint(frame, [0,0,0], world, [0,0,0.8], [0,0,0.8])",
+    "dual_grasp_timing": "if 7.0 <= time <= 8.0: robot2_gripper_command = closed"
+  },
+
+  "references": {
+    "drake_multibody": "https://drake.mit.edu/doxygen_cxx/group__multibody.html",
+    "manipulation_course": "http://manipulation.csail.mit.edu/",
+    "multi_robot_drake": "https://drake.mit.edu/doxygen_cxx/classdrake_1_1multibody_1_1_multibody_plant.html"
+  }
+}

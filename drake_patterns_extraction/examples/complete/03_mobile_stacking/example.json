@@ -1,0 +1,319 @@
+{
+  "example_name": "Mobile Manipulation - Stacking with 1-DOF Base",
+  "difficulty": "advanced",
+  "estimated_time": "60 minutes to understand and implement",
+
+  "user_request_examples": [
+    "Create a robot on a moving base that can stack blocks",
+    "Set up a mobile manipulator to transfer objects between tables",
+    "Build a robot that extends its workspace with linear motion",
+    "Make a robot with a sliding base pick and stack cubes"
+  ],
+
+  "scenario_description": "A Franka Panda arm mounted on a 1-DOF prismatic base moves between two tables (2.4m apart) to pick blocks from the right table and stack them on the left table. This demonstrates coordinated base-arm motion planning and extended workspace manipulation.",
+
+  "components": {
+    "mobile_base": {
+      "type": "1-DOF prismatic base",
+      "mass": 30.0,
+      "dimensions": [0.6, 0.4, 0.3],
+      "joint_type": "prismatic",
+      "axis": "X (linear motion)",
+      "limits": {
+        "lower": -1.5,
+        "upper": 1.5,
+        "range": "3.0m total travel",
+        "effort": 200,
+        "velocity": 0.5
+      },
+      "damping": 5.0,
+      "reason": "Extends robot workspace beyond fixed-base reach"
+    },
+
+    "robot_arm": {
+      "type": "Franka Emika Panda 7-DOF + gripper",
+      "urdf": "../../../models/descriptions/robots/arms/franka_description/urdf/panda_arm_hand.urdf",
+      "total_dof": "1 (base) + 7 (arm) + 2 (gripper) = 10 DOF",
+      "mounting": "Fixed to arm_mount on top of mobile base",
+      "base_height": 0.4
+    },
+
+    "kinematic_chain": {
+      "structure": "world → world_link → mobile_base → arm_mount → panda_link0 → ... → panda_hand",
+      "virtual_link": "world_link (0.001 kg) for kinematic closure",
+      "fixed_joints": ["base_to_mount", "mount_to_arm"],
+      "actuated_joint": "base_prismatic_x",
+      "reason": "Virtual link allows base joint to be part of robot model"
+    },
+
+    "environment": {
+      "table_left": {
+        "position": [-1.2, 0, 0],
+        "dimensions": [0.8, 0.6, 0.02],
+        "height": 0.4,
+        "purpose": "Stacking target",
+        "static": true
+      },
+      "table_right": {
+        "position": [1.2, 0, 0],
+        "dimensions": [0.8, 0.6, 0.02],
+        "height": 0.4,
+        "purpose": "Block source",
+        "static": true
+      },
+      "separation": "2.4m center-to-center (beyond fixed-base reach)"
+    },
+
+    "objects": {
+      "block_red": {
+        "position": [1.2, 0.1, 0.435],
+        "size": [0.05, 0.05, 0.05],
+        "mass": 0.2,
+        "color": "red (1.0, 0.0, 0.0, 1.0)"
+      },
+      "block_green": {
+        "position": [1.2, 0.0, 0.435],
+        "size": [0.05, 0.05, 0.05],
+        "mass": 0.2,
+        "color": "green (0.0, 1.0, 0.0, 1.0)"
+      },
+      "block_blue": {
+        "position": [1.2, -0.1, 0.435],
+        "size": [0.05, 0.05, 0.05],
+        "mass": 0.2,
+        "color": "blue (0.0, 0.0, 1.0, 1.0)"
+      }
+    }
+  },
+
+  "patterns_used": [
+    "mobile_base_1dof",
+    "base_mounted_arm",
+    "virtual_link_pattern",
+    "extended_workspace",
+    "stacking_task",
+    "coordinated_motion"
+  ],
+
+  "complexity_factors": {
+    "mobile_base_modeling": "Requires virtual link for kinematic chain",
+    "coordinated_planning": "Must plan base and arm motion together",
+    "workspace_analysis": "Two distinct workspace regions connected by base motion",
+    "10_dof_system": "High-dimensional configuration space",
+    "task_sequencing": "Pick, transport, place, stack sequence"
+  },
+
+  "implementation_approach": {
+    "step1_mobile_base_setup": {
+      "description": "Create mobile base with 1-DOF prismatic joint",
+      "pattern": "world → world_link → mobile_base (via prismatic joint)",
+      "key_points": [
+        "Virtual world_link with negligible mass (0.001 kg)",
+        "Prismatic joint along X-axis with ±1.5m limits",
+        "Arm mount platform fixed on top of base",
+        "Weld world_link to actual world frame"
+      ]
+    },
+
+    "step2_arm_attachment": {
+      "description": "Mount Panda arm on mobile base",
+      "method": "Fixed joint from arm_mount to panda_link0",
+      "base_offset": 0.4,
+      "total_height": "Base (0.3) + mount (0.1) + offset (0.0) = 0.4m"
+    },
+
+    "step3_motion_planning": {
+      "approach": "Task and Motion Planning (TAMP)",
+      "strategies": {
+        "strategy_1_sequential": {
+          "description": "Move base first, then manipulate with arm",
+          "steps": [
+            "Move base to right table (x=1.2)",
+            "IK to pick block with arm only",
+            "Move base to left table (x=-1.2)",
+            "IK to place/stack with arm only"
+          ],
+          "pros": "Simple, decoupled",
+          "cons": "Not optimal, two base motions per block"
+        },
+        "strategy_2_simultaneous": {
+          "description": "Coordinate base and arm motion",
+          "steps": [
+            "Plan grasp configuration (base + arm IK)",
+            "Plan transit configuration while moving base",
+            "Plan place configuration (base + arm IK)"
+          ],
+          "pros": "More efficient, smoother",
+          "cons": "Complex planning, 10-DOF IK"
+        }
+      }
+    },
+
+    "step4_stacking_logic": {
+      "sequence": [
+        "Pick red block from right table",
+        "Move to left table",
+        "Place red block on left table",
+        "Return to right table",
+        "Pick green block",
+        "Move to left table",
+        "Place green block on top of red block",
+        "Return to right table",
+        "Pick blue block",
+        "Move to left table",
+        "Place blue block on top of stack"
+      ],
+      "z_offsets": {
+        "first_block": 0.435,
+        "second_block": 0.485,
+        "third_block": 0.535
+      }
+    },
+
+    "step5_controller": {
+      "type": "PD+G for combined system",
+      "state_vector": "[base_x, q1..q7, gripper1, gripper2, velocities]",
+      "base_control_gains": {
+        "kp": 100,
+        "kd": 20,
+        "reason": "Higher mass requires higher gains"
+      },
+      "arm_control_gains": {
+        "kp": [120, 120, 120, 100, 50, 45, 15],
+        "kd": [8, 8, 8, 5, 2, 2, 2]
+      }
+    }
+  },
+
+  "drake_specific_features": {
+    "virtual_link_pattern": {
+      "description": "Zero-mass link for kinematic closure",
+      "implementation": "Add world_link with 0.001 kg mass",
+      "reason": "Drake requires all joints to connect two bodies"
+    },
+    "inverse_kinematics_10dof": {
+      "position_constraint": "End-effector position",
+      "orientation_constraint": "Downward grasp",
+      "posture_cost": "Minimize deviation from nominal",
+      "variables": "10 DOF (1 base + 7 arm + 2 gripper)",
+      "challenge": "High-dimensional optimization"
+    },
+    "workspace_reachability": {
+      "fixed_base_reach": "~0.85m radius",
+      "left_table_distance": "1.2m (not reachable without base motion)",
+      "right_table_distance": "1.2m (not reachable without base motion)",
+      "mobile_base_enables": "Full access to both tables"
+    }
+  },
+
+  "key_parameters": {
+    "mobile_base": {
+      "travel_range": 3.0,
+      "max_velocity": 0.5,
+      "max_effort": 200,
+      "damping": 5.0,
+      "mass": 30.0
+    },
+    "workspace_positions": {
+      "left_table_center": [-1.2, 0, 0.4],
+      "right_table_center": [1.2, 0, 0.4],
+      "base_position_left": -0.8,
+      "base_position_right": 0.8
+    },
+    "stacking": {
+      "block_size": 0.05,
+      "block_mass": 0.2,
+      "stack_height_increment": 0.05,
+      "grasp_clearance": 0.1
+    },
+    "timing": {
+      "base_transit_time": 5.0,
+      "arm_motion_time": 3.0,
+      "grasp_time": 2.0,
+      "total_per_block": 15.0
+    }
+  },
+
+  "expected_behavior": {
+    "initialization": "Base at center (x=0), arm at home",
+    "phase_1": "Base moves to right (x=0.8), arm picks red block",
+    "phase_2": "Base transits to left (x=-0.8) with block",
+    "phase_3": "Arm places red block on left table",
+    "repeat": "Same for green and blue blocks with increasing stack height",
+    "completion": "All three blocks stacked on left table, base returns to center"
+  },
+
+  "validation_criteria": {
+    "base_motion": "Base stays within ±1.5m limits",
+    "coordination": "No collisions during coordinated motion",
+    "stacking_accuracy": "Blocks aligned within 5mm horizontally",
+    "stack_stability": "Stack remains stable (no toppling)",
+    "efficiency": "Uses base motion optimally (no unnecessary travels)"
+  },
+
+  "common_challenges": {
+    "ik_fails_10dof": {
+      "symptom": "IK solver doesn't converge",
+      "solutions": [
+        "Fix base position first, solve 7-DOF IK for arm",
+        "Use sequential optimization: base position then arm config",
+        "Provide good initial guess close to solution",
+        "Relax orientation tolerance"
+      ]
+    },
+    "base_arm_collision": {
+      "symptom": "Arm collides with mobile base during motion",
+      "solutions": [
+        "Add collision geometry to base and arm mount",
+        "Add collision avoidance constraints to planner",
+        "Keep arm in safe configuration during base motion"
+      ]
+    },
+    "stack_topples": {
+      "symptom": "Blocks fall during stacking",
+      "solutions": [
+        "Reduce placement velocity",
+        "Ensure blocks are centered (±2mm tolerance)",
+        "Increase friction coefficients",
+        "Add stabilization wait time after placement"
+      ]
+    },
+    "slow_simulation": {
+      "symptom": "10-DOF system runs slowly",
+      "solutions": [
+        "Use time_step=0.001 (not smaller)",
+        "Simplify collision geometries (spheres for arm)",
+        "Disable visualization during planning phase"
+      ]
+    }
+  },
+
+  "extensions": {
+    "3dof_planar_base": "Add Y motion and rotation for full planar mobility",
+    "obstacle_avoidance": "Navigate around obstacles between tables",
+    "multi_object_transport": "Carry multiple blocks simultaneously",
+    "dual_arm_mobile": "Two arms on mobile base for bimanual tasks",
+    "dynamic_stacking": "Stack while base is moving"
+  },
+
+  "learning_outcomes": {
+    "mobile_base_modeling": "How to add prismatic bases to manipulators",
+    "virtual_links": "Using zero-mass links for kinematic closure",
+    "high_dof_ik": "Solving IK for combined base-arm systems",
+    "workspace_extension": "How mobility increases manipulation workspace",
+    "coordinated_planning": "Planning for coupled base-arm motion"
+  },
+
+  "code_snippets": {
+    "create_virtual_link": "world_link with mass=0.001 for kinematic chain",
+    "prismatic_joint": "<joint type='prismatic'><axis><xyz>1 0 0</xyz></axis></joint>",
+    "weld_arm_to_base": "plant.WeldFrames(base_mount_frame, panda_link0_frame)",
+    "10dof_ik": "ik = InverseKinematics(plant, context)  # Includes base joint"
+  },
+
+  "references": {
+    "mobile_manipulation": "http://manipulation.csail.mit.edu/mobile.html",
+    "drake_multibody": "https://drake.mit.edu/doxygen_cxx/group__multibody.html",
+    "tamp": "https://arxiv.org/abs/2010.01083"
+  }
+}

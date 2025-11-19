@@ -1,0 +1,290 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="object_handover_world">
+
+    <!-- Ground plane -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="ground_link">
+        <collision name="ground_collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>10 10</size>
+            </plane>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>1e8</drake:hydroelastic_modulus>
+            <drake:mu_dynamic>0.5</drake:mu_dynamic>
+            <drake:mu_static>0.7</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="ground_visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>10 10</size>
+            </plane>
+          </geometry>
+          <material>
+            <diffuse>0.7 0.7 0.7 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Elevated platform for robot 1 (left) -->
+    <model name="platform_left">
+      <pose>-0.8 0 0.0 0 0 0</pose>
+      <static>true</static>
+      <link name="platform_link">
+        <collision name="platform_collision">
+          <pose>0 0 0.3 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.6 0.6 0.6</size>
+            </box>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>1e8</drake:hydroelastic_modulus>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="platform_visual">
+          <pose>0 0 0.3 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.6 0.6 0.6</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.5 0.5 0.6 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Elevated platform for robot 2 (right) -->
+    <model name="platform_right">
+      <pose>0.8 0 0.0 0 0 0</pose>
+      <static>true</static>
+      <link name="platform_link">
+        <collision name="platform_collision">
+          <pose>0 0 0.3 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.6 0.6 0.6</size>
+            </box>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>1e8</drake:hydroelastic_modulus>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="platform_visual">
+          <pose>0 0 0.3 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.6 0.6 0.6</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.6 0.5 0.5 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Handover zone marker (mid-air between robots) -->
+    <model name="handover_zone_marker">
+      <pose>0 0 0.8 0 0 0</pose>
+      <static>true</static>
+      <link name="marker_link">
+        <visual name="marker_visual">
+          <geometry>
+            <sphere>
+              <radius>0.05</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <diffuse>0.0 1.0 1.0 0.5</diffuse>  <!-- Cyan, semi-transparent -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Load first robot (Panda) on left platform -->
+    <model name="panda_robot_1">
+      <include>
+        <uri>file://../models/descriptions/robots/arms/franka_description/urdf/panda_arm_hand.urdf</uri>
+      </include>
+      <pose>-0.8 0 0.6 0 0 0</pose>
+    </model>
+
+    <!-- Weld robot 1 to left platform -->
+    <joint name="platform_left_to_robot1" type="fixed">
+      <parent>platform_left::platform_link</parent>
+      <child>panda_robot_1::panda_link0</child>
+    </joint>
+
+    <!-- Load second robot (Panda) on right platform -->
+    <model name="panda_robot_2">
+      <include>
+        <uri>file://../models/descriptions/robots/arms/franka_description/urdf/panda_arm_hand.urdf</uri>
+      </include>
+      <pose>0.8 0 0.6 0 0 3.14159</pose>  <!-- Rotated 180° to face robot 1 -->
+    </model>
+
+    <!-- Weld robot 2 to right platform -->
+    <joint name="platform_right_to_robot2" type="fixed">
+      <parent>platform_right::platform_link</parent>
+      <child>panda_robot_2::panda_link0</child>
+    </joint>
+
+    <!-- Source table for object (near robot 1) -->
+    <model name="source_table">
+      <pose>-1.0 -0.4 0.0 0 0 0</pose>
+      <static>true</static>
+      <link name="table_link">
+        <collision name="table_collision">
+          <pose>0 0 0.3 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.4 0.3 0.02</size>
+            </box>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>1e8</drake:hydroelastic_modulus>
+            <drake:mu_dynamic>0.4</drake:mu_dynamic>
+            <drake:mu_static>0.6</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="table_visual">
+          <pose>0 0 0.3 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.4 0.3 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.6 0.4 0.2 1.0</diffuse>
+          </material>
+        </visual>
+        <collision name="leg_collision">
+          <pose>0 0 0.15 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.3</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="leg_visual">
+          <pose>0 0 0.15 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.3</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.5 0.3 0.1 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Target table for object (near robot 2) -->
+    <model name="target_table">
+      <pose>1.0 -0.4 0.0 0 0 0</pose>
+      <static>true</static>
+      <link name="table_link">
+        <collision name="table_collision">
+          <pose>0 0 0.3 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.4 0.3 0.02</size>
+            </box>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>1e8</drake:hydroelastic_modulus>
+            <drake:mu_dynamic>0.4</drake:mu_dynamic>
+            <drake:mu_static>0.6</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="table_visual">
+          <pose>0 0 0.3 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.4 0.3 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.6 0.4 0.2 1.0</diffuse>
+          </material>
+        </visual>
+        <collision name="leg_collision">
+          <pose>0 0 0.15 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.3</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="leg_visual">
+          <pose>0 0 0.15 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.3</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.5 0.3 0.1 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Object to handover (cylinder for easy grasping) -->
+    <model name="handover_object">
+      <pose>-1.0 -0.4 0.35 0 0 0</pose>
+      <link name="object_link">
+        <inertial>
+          <mass>0.3</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <iyy>0.0005</iyy>
+            <izz>0.0002</izz>
+          </inertia>
+        </inertial>
+        <collision name="object_collision">
+          <geometry>
+            <cylinder>
+              <radius>0.03</radius>
+              <length>0.15</length>
+            </cylinder>
+          </geometry>
+          <drake:proximity_properties>
+            <drake:compliant_hydroelastic/>
+            <drake:hydroelastic_modulus>5e6</drake:hydroelastic_modulus>
+            <drake:mu_dynamic>0.6</drake:mu_dynamic>
+            <drake:mu_static>0.8</drake:mu_static>
+          </drake:proximity_properties>
+        </collision>
+        <visual name="object_visual">
+          <geometry>
+            <cylinder>
+              <radius>0.03</radius>
+              <length>0.15</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <diffuse>1.0 0.5 0.0 1.0</diffuse>  <!-- Orange -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>
