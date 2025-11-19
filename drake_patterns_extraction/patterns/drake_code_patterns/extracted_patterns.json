@@ -1,0 +1,159 @@
+{
+    "total_analyzed": 6,
+    "scripts": [
+        {
+            "name": "tutorial_04_ik.py",
+            "imports": [
+                "import os",
+                "import numpy",
+                "import pydot",
+                "from IPython.display",
+                "import matplotlib.pyplot",
+                "from pydrake.common",
+                "from pydrake.geometry",
+                "from pydrake.math",
+                "from pydrake.multibody.parsing",
+                "from pydrake.multibody.plant"
+            ],
+            "drake_components": [
+                "DiagramBuilder",
+                "MultibodyPlant",
+                "SceneGraph",
+                "Meshcat",
+                "Simulator"
+            ],
+            "has_controller": true,
+            "has_ik": true,
+            "has_trajectory": false,
+            "has_logging": true
+        },
+        {
+            "name": "tutorial_04_traj.py",
+            "imports": [
+                "import os",
+                "import numpy",
+                "import pydot",
+                "from IPython.display",
+                "import matplotlib.pyplot",
+                "from pydrake.common",
+                "from pydrake.geometry",
+                "from pydrake.math",
+                "from pydrake.multibody.parsing",
+                "from pydrake.multibody.plant"
+            ],
+            "drake_components": [
+                "DiagramBuilder",
+                "MultibodyPlant",
+                "SceneGraph",
+                "Meshcat",
+                "Simulator"
+            ],
+            "has_controller": true,
+            "has_ik": true,
+            "has_trajectory": true,
+            "has_logging": true
+        },
+        {
+            "name": "tutorial_02.py",
+            "imports": [
+                "import os",
+                "import numpy",
+                "import pydot",
+                "from IPython.display",
+                "from pydrake.geometry",
+                "from pydrake.math",
+                "from pydrake.multibody.parsing",
+                "from pydrake.multibody.plant",
+                "from pydrake.multibody.tree",
+                "from pydrake.systems.analysis"
+            ],
+            "drake_components": [
+                "DiagramBuilder",
+                "MultibodyPlant",
+                "SceneGraph",
+                "Meshcat",
+                "Simulator"
+            ],
+            "has_controller": false,
+            "has_ik": false,
+            "has_trajectory": false,
+            "has_logging": false
+        },
+        {
+            "name": "tutorial_04_path_planner.py",
+            "imports": [
+                "import os",
+                "import numpy",
+                "from ompl",
+                "from ompl",
+                "from ompl",
+                "import pydot",
+                "from IPython.display",
+                "import matplotlib.pyplot",
+                "from pydrake.common",
+                "from pydrake.geometry"
+            ],
+            "drake_components": [
+                "DiagramBuilder",
+                "MultibodyPlant",
+                "SceneGraph",
+                "Meshcat",
+                "Simulator"
+            ],
+            "has_controller": true,
+            "has_ik": true,
+            "has_trajectory": true,
+            "has_logging": true
+        },
+        {
+            "name": "tutorial_sanity_check.py",
+            "imports": [
+                "import os",
+                "import pydot",
+                "from pydrake.geometry",
+                "from pydrake.multibody.parsing",
+                "from pydrake.multibody.plant",
+                "from pydrake.systems.framework",
+                "from pydrake.visualization",
+                "from pydrake.systems.analysis"
+            ],
+            "drake_components": [
+                "DiagramBuilder",
+                "MultibodyPlant",
+                "SceneGraph",
+                "Meshcat",
+                "Simulator"
+            ],
+            "has_controller": false,
+            "has_ik": false,
+            "has_trajectory": false,
+            "has_logging": false
+        },
+        {
+            "name": "tutorial_03.py",
+            "imports": [
+                "import os",
+                "import numpy",
+                "import pydot",
+                "from IPython.display",
+                "import matplotlib.pyplot",
+                "from pydrake.common",
+                "from pydrake.geometry",
+                "from pydrake.math",
+                "from pydrake.multibody.parsing",
+                "from pydrake.multibody.plant"
+            ],
+            "drake_components": [
+                "DiagramBuilder",
+                "MultibodyPlant",
+                "SceneGraph",
+                "Meshcat",
+                "Simulator"
+            ],
+            "has_controller": true,
+            "has_ik": false,
+            "has_trajectory": false,
+            "has_logging": true
+        }
+    ]
+}

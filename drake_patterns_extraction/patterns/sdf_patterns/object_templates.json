@@ -1,0 +1,229 @@
+{
+  "_comment": "SDF object templates for common manipulation objects and scene elements",
+
+  "box_object": {
+    "description": "Rectangular box for manipulation tasks",
+    "template_file": "Based on models/objects_scenes/box.sdf",
+
+    "required_properties": ["size", "mass", "inertia", "pose"],
+
+    "size_categories": {
+      "small": {
+        "dimensions": [0.02, 0.05],
+        "examples": ["Dice", "Small block"],
+        "mass_range": [0.01, 0.1]
+      },
+      "medium": {
+        "dimensions": [0.05, 0.15],
+        "examples": ["Cube toy", "Box"],
+        "mass_range": [0.1, 0.5]
+      },
+      "large": {
+        "dimensions": [0.15, 0.5],
+        "examples": ["Shipping box", "Container"],
+        "mass_range": [0.5, 5.0]
+      }
+    },
+
+    "mass_calculation": {
+      "formula": "mass = length * width * height * density",
+      "typical_densities": {
+        "wood": 600,
+        "plastic": 950,
+        "cardboard": 250,
+        "metal": 2700
+      }
+    },
+
+    "inertia_for_cube": {
+      "_comment": "For a cube of side length L and mass m",
+      "formula": "I = m * L² / 6",
+      "example_0.08m_cube": {
+        "size": [0.08, 0.08, 0.08],
+        "mass": 0.12,
+        "ixx": 0.000128,
+        "iyy": 0.000128,
+        "izz": 0.000128
+      }
+    },
+
+    "color_options": {
+      "red": "1.0 0.0 0.0 1.0",
+      "green": "0.0 1.0 0.0 1.0",
+      "blue": "0.0 0.0 1.0 1.0",
+      "orange": "1.0 0.55 0.0 0.5",
+      "yellow": "1.0 1.0 0.0 1.0",
+      "gray": "0.5 0.5 0.5 1.0"
+    },
+
+    "drake_proximity_properties": {
+      "compliant_hydroelastic": "Enables soft contact",
+      "hydroelastic_modulus": "1e7 (Pa) - stiffness",
+      "mu_dynamic": "0.3-0.7 - friction coefficient",
+      "mu_static": "0.3-0.8 - static friction",
+      "hunt_crossley_dissipation": "5-20 - damping"
+    },
+
+    "sdf_template": "<?xml version='1.0'?>\n<sdf version='1.6'>\n  <model name='box'>\n    <pose>0 0 0.04 0 0 0</pose>\n    <link name='box_link'>\n      <inertial>\n        <mass>{{MASS}}</mass>\n        <inertia>\n          <ixx>{{IXX}}</ixx>\n          <iyy>{{IYY}}</iyy>\n          <izz>{{IZZ}}</izz>\n        </inertia>\n      </inertial>\n      <visual name='visual'>\n        <geometry>\n          <box><size>{{SIZE_X}} {{SIZE_Y}} {{SIZE_Z}}</size></box>\n        </geometry>\n        <material>\n          <diffuse>{{COLOR_RGBA}}</diffuse>\n        </material>\n      </visual>\n      <collision name='collision'>\n        <geometry>\n          <box><size>{{SIZE_X}} {{SIZE_Y}} {{SIZE_Z}}</size></box>\n        </geometry>\n        <drake:proximity_properties>\n          <drake:compliant_hydroelastic/>\n          <drake:hydroelastic_modulus>1e7</drake:hydroelastic_modulus>\n          <drake:mu_dynamic>0.4</drake:mu_dynamic>\n        </drake:proximity_properties>\n      </collision>\n    </link>\n  </model>\n</sdf>"
+  },
+
+  "cylinder_object": {
+    "description": "Cylindrical object for grasping and manipulation",
+    "template_file": "Based on models/objects_scenes/cylinder.sdf",
+
+    "size_categories": {
+      "can": {
+        "radius": 0.033,
+        "length": 0.12,
+        "mass": 0.15,
+        "example": "Soda can"
+      },
+      "bottle": {
+        "radius": 0.04,
+        "length": 0.25,
+        "mass": 0.5,
+        "example": "Water bottle"
+      },
+      "peg": {
+        "radius": 0.01,
+        "length": 0.1,
+        "mass": 0.05,
+        "example": "Assembly peg"
+      }
+    },
+
+    "inertia_calculation": {
+      "_note": "Cylinder with axis along Z",
+      "ixx": "mass * (3*radius² + length²) / 12",
+      "iyy": "mass * (3*radius² + length²) / 12",
+      "izz": "mass * radius² / 2"
+    },
+
+    "typical_friction": {
+      "metal": {"mu_static": 0.5, "mu_dynamic": 0.4},
+      "plastic": {"mu_static": 0.6, "mu_dynamic": 0.5},
+      "rubber": {"mu_static": 0.9, "mu_dynamic": 0.8}
+    }
+  },
+
+  "sphere_object": {
+    "description": "Spherical object for rolling and manipulation",
+
+    "size_categories": {
+      "marble": {"radius": 0.01, "mass": 0.01},
+      "ball": {"radius": 0.05, "mass": 0.1},
+      "large_ball": {"radius": 0.1, "mass": 0.5}
+    },
+
+    "inertia": {
+      "formula": "(2/5) * mass * radius²",
+      "note": "All three diagonal components are equal for sphere"
+    }
+  },
+
+  "table_surface": {
+    "description": "Static table or work surface",
+    "template_file": "Based on models/objects_scenes/table.sdf",
+
+    "typical_dimensions": {
+      "small_table": {
+        "top": [0.6, 0.4, 0.02],
+        "height": 0.5,
+        "leg_dimensions": [0.05, 0.05, 0.48]
+      },
+      "workbench": {
+        "top": [1.2, 0.8, 0.03],
+        "height": 0.75,
+        "leg_dimensions": [0.08, 0.08, 0.72]
+      }
+    },
+
+    "properties": {
+      "static": true,
+      "material": "wood or metal",
+      "friction": {"mu_static": 0.6, "mu_dynamic": 0.5},
+      "color": "0.8 0.6 0.4 1.0 (wood brown)"
+    },
+
+    "key_features": {
+      "static_model": "Set <static>true</static> to prevent physics simulation",
+      "no_inertia_needed": "Static models don't need inertial properties",
+      "collision_geometry": "Use box primitives for table top and legs"
+    }
+  },
+
+  "ground_plane": {
+    "description": "Infinite ground plane at z=0",
+    "template_file": "Based on models/objects_scenes/floor.sdf",
+
+    "implementation": {
+      "type": "HalfSpace in URDF, infinite plane in SDF",
+      "pose": "Typically at z=0 with normal pointing up +Z",
+      "static": true
+    },
+
+    "appearance": {
+      "visual": "Large box or textured plane",
+      "color": "0.5 0.5 0.5 1.0 (gray)",
+      "texture": "Optional grid or checkerboard pattern"
+    },
+
+    "physics": {
+      "friction": {"mu_static": 0.8, "mu_dynamic": 0.7},
+      "compliance": "Usually rigid (high hydroelastic modulus)"
+    },
+
+    "drake_specific": {
+      "halfspace_urdf": "Use HalfSpace() geometry in Python API",
+      "sdf_plane": "Use <plane><normal>0 0 1</normal></plane>"
+    }
+  },
+
+  "bin_container": {
+    "description": "Rectangular bin for pick-and-place tasks",
+    "template_file": "Based on models/objects_scenes/manipulation_station/bin.sdf",
+
+    "structure": {
+      "bottom": "Flat surface",
+      "walls": "4 vertical walls",
+      "no_top": "Open top for access"
+    },
+
+    "typical_dimensions": {
+      "small_bin": {
+        "interior": [0.2, 0.15, 0.1],
+        "wall_thickness": 0.01
+      },
+      "large_bin": {
+        "interior": [0.5, 0.4, 0.2],
+        "wall_thickness": 0.02
+      }
+    },
+
+    "modeling_approach": {
+      "option_1": "5 separate box geometries (bottom + 4 walls)",
+      "option_2": "Single mesh with hollowed interior",
+      "recommended": "option_1 for simple geometry, option_2 for complex shapes"
+    }
+  },
+
+  "common_patterns": {
+    "pose_specification": {
+      "format": "<pose>x y z roll pitch yaw</pose>",
+      "units": "meters for position, radians for orientation",
+      "example": "<pose>0.5 0.3 0.05 0 0 0</pose>"
+    },
+
+    "material_definition": {
+      "diffuse": "RGBA color (0-1 range)",
+      "specular": "Optional, for shininess",
+      "example": "<material><diffuse>1.0 0.0 0.0 1.0</diffuse></material>"
+    },
+
+    "drake_compliance": {
+      "rigid": "High modulus (1e8-1e10)",
+      "soft": "Low modulus (1e4-1e6)",
+      "typical": "1e7 for general objects"
+    }
+  }
+}

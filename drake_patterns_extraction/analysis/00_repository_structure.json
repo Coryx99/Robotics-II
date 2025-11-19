@@ -1,0 +1,83 @@
+{
+  "repository_name": "Robotics-II-fork",
+  "description": "Drake robotics simulation repository with robot models, scenes, and tutorial scripts",
+  "total_urdf_files": 38,
+  "total_sdf_files": 42,
+  "total_python_scripts": 7,
+  "total_documentation_files": 0,
+
+  "directory_structure": {
+    "models": {
+      "descriptions": {
+        "robots": {
+          "arms": ["franka_description", "iiwa_description", "jaco_description", "kinova_gen3", "ur_description"],
+          "dexterous_hands": ["2f_85_gripper", "allegro_hand_description"],
+          "humanoids": ["atlas", "pr2_description"],
+          "mobile": ["Ridgeback", "husky_description", "tri_homecart"],
+          "quadruped": ["mini_cheetah"]
+        },
+        "sensors": ["fath_pivot_mount", "lms1xx", "velodyne", "flir_camera", "realsense2"]
+      },
+      "objects_scenes": {
+        "basic_objects": ["box.sdf", "cylinder.sdf", "sphere.sdf", "table.sdf", "floor.sdf"],
+        "manipulation_station": ["bin.sdf", "cupboard.sdf", "table_wide.sdf", "thin_box.sdf"],
+        "environment": ["living_room.sdf", "cabinet.sdf", "wooden_table.sdf"]
+      }
+    },
+    "tutorial_scripts": {
+      "files": ["tutorial_02.py", "tutorial_03.py", "tutorial_04_ik.py", "tutorial_04_path_planner.py", "tutorial_04_traj.py", "tutorial_sanity_check.py"],
+      "helper": ["dynamics.py"]
+    },
+    "tutorial_doc": {
+      "description": "Documentation and guides"
+    }
+  },
+
+  "robot_types_summary": {
+    "serial_manipulators": {
+      "count": 8,
+      "examples": ["panda_arm_hand", "iiwa14", "jaco j2s7s300", "kinova gen3", "ur3e"],
+      "typical_dof": [6, 7]
+    },
+    "grippers_hands": {
+      "count": 3,
+      "examples": ["panda_hand", "robotiq_2f_85", "allegro_hand"],
+      "typical_dof": [2, 16]
+    },
+    "mobile_bases": {
+      "count": 3,
+      "examples": ["husky", "ridgeback", "tri_homecart"],
+      "typical_dof": [3, 4]
+    },
+    "humanoids": {
+      "count": 2,
+      "examples": ["atlas", "pr2"],
+      "typical_dof": [30, 40]
+    },
+    "quadrupeds": {
+      "count": 1,
+      "examples": ["mini_cheetah"],
+      "typical_dof": [12]
+    }
+  },
+
+  "object_types_summary": {
+    "primitive_shapes": ["box", "cylinder", "sphere"],
+    "furniture": ["table", "cabinet", "shelf", "stool"],
+    "manipulation_objects": ["bin", "thin_box", "foam_brick"],
+    "environment": ["floor", "living_room", "curtain"]
+  },
+
+  "scene_types": {
+    "manipulation": ["pick_and_place workspace", "manipulation_station"],
+    "navigation": ["living_room", "indoor_environment"],
+    "assembly": ["workbench with bins"]
+  },
+
+  "file_formats": {
+    "robot_descriptions": ["URDF", "SDF"],
+    "mesh_formats": ["gltf", "obj"],
+    "scripts": ["Python"],
+    "data": ["CSV"]
+  }
+}

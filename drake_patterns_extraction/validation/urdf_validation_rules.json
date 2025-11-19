@@ -1,0 +1,305 @@
+{
+  "_comment": "Comprehensive URDF validation rules derived from repository analysis",
+
+  "structural_rules": {
+    "required_root": {
+      "element": "<robot>",
+      "attributes": ["name"],
+      "description": "Root element must be <robot> with a name attribute",
+      "example": "<robot xmlns:drake='http://drake.mit.edu' name='my_robot'>",
+      "violation_error": "XML must have <robot> as root element"
+    },
+
+    "minimum_components": {
+      "at_least_one_link": true,
+      "description": "Robot must have at least one <link> element",
+      "violation_error": "No links found in URDF"
+    },
+
+    "link_uniqueness": {
+      "rule": "All link names must be unique",
+      "check": "Count of unique link names == count of all links",
+      "violation_error": "Duplicate link name: {link_name}"
+    },
+
+    "joint_uniqueness": {
+      "rule": "All joint names must be unique",
+      "check": "Count of unique joint names == count of all joints",
+      "violation_error": "Duplicate joint name: {joint_name}"
+    },
+
+    "joint_connectivity": {
+      "parent_exists": "Joint parent link must be defined",
+      "child_exists": "Joint child link must be defined",
+      "parent_child_different": "Parent and child links must be different",
+      "violation_errors": {
+        "parent_missing": "Joint '{joint_name}' references undefined parent link '{link_name}'",
+        "child_missing": "Joint '{joint_name}' references undefined child link '{link_name}'",
+        "self_loop": "Joint '{joint_name}' has same parent and child link"
+      }
+    },
+
+    "tree_structure": {
+      "no_cycles": "Kinematic tree must be acyclic (no loops)",
+      "single_root": "Tree should have one root link (or explicitly defined base)",
+      "description": "URDF represents a kinematic tree, not a graph with cycles",
+      "violation_error": "Cycle detected in kinematic chain"
+    }
+  },
+
+  "physical_constraints": {
+    "mass": {
+      "must_be_positive": true,
+      "minimum": 1e-6,
+      "maximum": 1e6,
+      "typical_range": [0.01, 100],
+      "validation": "0 < mass < 1e6",
+      "warnings": {
+        "too_small": "mass < 0.001 may cause numerical issues",
+        "too_large": "mass > 1000 unusual for most robots, verify value"
+      }
+    },
+
+    "inertia_matrix": {
+      "diagonal_positive": {
+        "rule": "ixx > 0, iyy > 0, izz > 0",
+        "description": "Diagonal elements must be strictly positive",
+        "violation_error": "Inertia diagonal element <= 0"
+      },
+
+      "triangle_inequality": {
+        "rules": [
+          "ixx + iyy >= izz",
+          "ixx + izz >= iyy",
+          "iyy + izz >= ixx"
+        ],
+        "description": "Physical validity constraint for rigid body inertia",
+        "violation_error": "Inertia matrix violates triangle inequality - not physically realizable"
+      },
+
+      "off_diagonal_bounded": {
+        "rule": "|ixy|, |ixz|, |iyz| should be <= sqrt(ixx*iyy), sqrt(ixx*izz), sqrt(iyy*izz)",
+        "description": "Off-diagonal elements bounded by diagonal elements",
+        "severity": "warning"
+      },
+
+      "typical_values": {
+        "small_link": [1e-6, 1e-3],
+        "medium_link": [1e-3, 1],
+        "large_link": [1, 100]
+      }
+    },
+
+    "joint_limits": {
+      "revolute": {
+        "lower": {
+          "typical_range": [-6.28, 0],
+          "absolute_limits": [-2*Math.PI, 2*Math.PI],
+          "validation": "lower < upper"
+        },
+        "upper": {
+          "typical_range": [0, 6.28],
+          "absolute_limits": [-2*Math.PI, 2*Math.PI],
+          "validation": "upper > lower"
+        },
+        "effort": {
+          "minimum": 0.1,
+          "typical_range": [1, 320],
+          "validation": "effort > 0"
+        },
+        "velocity": {
+          "minimum": 0.01,
+          "typical_range": [0.5, 10],
+          "validation": "velocity > 0"
+        }
+      },
+
+      "prismatic": {
+        "lower": {
+          "typical_range": [-2, 0],
+          "validation": "lower < upper"
+        },
+        "upper": {
+          "typical_range": [0, 2],
+          "validation": "upper > lower"
+        },
+        "effort": {
+          "minimum": 1,
+          "typical_range": [10, 10000],
+          "validation": "effort > 0"
+        },
+        "velocity": {
+          "minimum": 0.01,
+          "typical_range": [0.1, 5],
+          "validation": "velocity > 0"
+        }
+      },
+
+      "continuous": {
+        "no_limits": true,
+        "effort": "Required",
+        "velocity": "Required"
+      }
+    },
+
+    "friction_coefficients": {
+      "mu_static": {
+        "range": [0, 2],
+        "typical": [0.3, 0.8],
+        "description": "Static friction coefficient"
+      },
+      "mu_dynamic": {
+        "range": [0, 2],
+        "typical": [0.2, 0.7],
+        "description": "Dynamic friction coefficient"
+      },
+      "relation": {
+        "rule": "mu_static >= mu_dynamic",
+        "description": "Static friction should be >= dynamic friction",
+        "severity": "warning"
+      }
+    },
+
+    "damping_friction": {
+      "joint_damping": {
+        "range": [0, 100],
+        "typical": [0.1, 10],
+        "description": "Joint damping coefficient"
+      },
+      "joint_friction": {
+        "range": [0, 100],
+        "typical": [0.1, 5],
+        "description": "Joint friction coefficient"
+      }
+    }
+  },
+
+  "geometric_constraints": {
+    "collision_geometry": {
+      "recommended": "Every link with mass should have collision geometry",
+      "primitives": ["box", "cylinder", "sphere", "capsule"],
+      "mesh": ["obj", "stl", "dae"],
+      "best_practice": "Use primitives for faster collision checking when possible"
+    },
+
+    "visual_geometry": {
+      "recommended": "Every link should have visual geometry for visualization",
+      "formats": ["gltf", "obj", "stl", "dae"],
+      "drake_preferred": "gltf for visual meshes"
+    },
+
+    "geometry_scale": {
+      "typical_range": [0.001, 10],
+      "warning": "Geometries larger than 10m or smaller than 1mm may cause issues"
+    }
+  },
+
+  "naming_conventions": {
+    "link_names": {
+      "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$",
+      "no_spaces": true,
+      "no_special_chars": true,
+      "case_convention": "snake_case or camelCase",
+      "examples": {
+        "good": ["base_link", "link_1", "panda_link0"],
+        "bad": ["link 1", "link-1", "1link", "link@1"]
+      }
+    },
+
+    "joint_names": {
+      "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$",
+      "no_spaces": true,
+      "examples": {
+        "good": ["joint_1", "panda_joint1", "shoulder_pan_joint"],
+        "bad": ["joint 1", "1joint", "joint-1"]
+      }
+    },
+
+    "common_patterns": {
+      "serial_manipulator": "{robot_name}_link{number}, {robot_name}_joint{number}",
+      "with_underscores": "{robot_name}_link_{number}, {robot_name}_joint_{number}",
+      "descriptive": "{robot_name}_{body_part}_{side}_{joint_type}"
+    }
+  },
+
+  "drake_specific": {
+    "namespace": {
+      "xmlns_drake": "http://drake.mit.edu",
+      "usage": "<robot xmlns:drake='http://drake.mit.edu' name='robot_name'>"
+    },
+
+    "drake_tags": {
+      "drake_acceleration": {
+        "usage": "<limit ... drake:acceleration='15.0'/>",
+        "description": "Joint acceleration limit (rad/s² or m/s²)"
+      },
+      "drake_gear_ratio": {
+        "usage": "<drake:gear_ratio value='100.0' />",
+        "description": "Gear ratio for reflected rotor inertia"
+      },
+      "drake_rotor_inertia": {
+        "usage": "<drake:rotor_inertia value='0.0001321' />",
+        "description": "Rotor inertia reflected through gear ratio"
+      },
+      "drake_collision_filter_group": {
+        "usage": "<drake:collision_filter_group name='group_name'>",
+        "description": "Define collision filter groups to ignore certain collisions"
+      }
+    },
+
+    "package_urls": {
+      "format": "package://package_name/relative/path",
+      "drake_models": "package://drake_models/...",
+      "file_url": "file:///absolute/path or file://relative/path"
+    }
+  },
+
+  "common_errors": {
+    "missing_inertial": {
+      "symptom": "Link has no <inertial> tag",
+      "consequence": "Drake may use default inertia or throw error",
+      "fix": "Add <inertial> with mass and inertia tensor",
+      "exception": "Static (welded) links without mass are OK"
+    },
+
+    "zero_mass": {
+      "symptom": "<mass value='0'/>",
+      "consequence": "Numerical instability or division by zero",
+      "fix": "Use small positive mass (e.g., 0.001) instead of zero"
+    },
+
+    "invalid_inertia": {
+      "symptom": "Inertia matrix violates physical constraints",
+      "consequence": "Simulation may explode or behave unrealistically",
+      "fix": "Recalculate inertia using proper formulas or CAD export",
+      "tools": "Use Drake's CalcSpatialInertia or MeshLab for mesh inertia"
+    },
+
+    "undefined_parent_child": {
+      "symptom": "Joint references non-existent link",
+      "consequence": "Parser error, URDF fails to load",
+      "fix": "Ensure all <parent> and <child> links are defined"
+    },
+
+    "missing_axis": {
+      "symptom": "Revolute/prismatic joint without <axis> tag",
+      "consequence": "Default axis used (may not be intended)",
+      "fix": "Explicitly specify <axis xyz='0 0 1'/>"
+    }
+  },
+
+  "validation_checklist": [
+    "✓ All link names are unique",
+    "✓ All joint names are unique",
+    "✓ All parent/child links in joints exist",
+    "✓ No kinematic loops (tree structure)",
+    "✓ All masses are positive and reasonable",
+    "✓ All inertia matrices satisfy triangle inequality",
+    "✓ Joint limits: lower < upper",
+    "✓ Effort and velocity limits are positive",
+    "✓ Collision geometries defined for physical links",
+    "✓ Visual geometries defined for visualization",
+    "✓ Mesh file paths are correct and files exist",
+    "✓ Drake-specific tags use correct namespace"
+  ]
+}

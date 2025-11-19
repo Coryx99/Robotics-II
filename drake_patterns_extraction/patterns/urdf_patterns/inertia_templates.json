@@ -1,0 +1,162 @@
+{
+  "_comment": "Inertia calculation formulas and templates for common geometries",
+
+  "formulas": {
+    "box": {
+      "description": "Rectangular box with dimensions [width, height, depth]",
+      "mass_formula": "mass = volume * density = width * height * depth * density",
+      "typical_density": "500-1000 kg/m³ for plastic, 2700 for aluminum, 7800 for steel",
+
+      "inertia_tensor": {
+        "ixx": "mass * (height² + depth²) / 12",
+        "iyy": "mass * (width² + depth²) / 12",
+        "izz": "mass * (width² + height²) / 12",
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+
+      "example": {
+        "dimensions": [0.1, 0.1, 0.1],
+        "mass": 0.5,
+        "density": 5000,
+        "calculated_inertia": {
+          "ixx": 0.000833,
+          "iyy": 0.000833,
+          "izz": 0.000833,
+          "ixy": 0,
+          "ixz": 0,
+          "iyz": 0
+        }
+      },
+
+      "urdf_template": "<inertial>\n  <mass value='0.5'/>\n  <origin xyz='0 0 0' rpy='0 0 0'/>\n  <inertia ixx='0.000833' ixy='0' ixz='0' iyy='0.000833' iyz='0' izz='0.000833'/>\n</inertial>"
+    },
+
+    "cylinder": {
+      "description": "Cylinder with radius r and length (height) h",
+      "mass_formula": "mass = π * r² * h * density",
+
+      "inertia_tensor": {
+        "_note": "Assuming cylinder axis is along Z",
+        "ixx": "mass * (3*r² + h²) / 12",
+        "iyy": "mass * (3*r² + h²) / 12",
+        "izz": "mass * r² / 2",
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+
+      "example": {
+        "radius": 0.05,
+        "height": 0.2,
+        "mass": 1.0,
+        "density": 6366,
+        "calculated_inertia": {
+          "ixx": 0.003542,
+          "iyy": 0.003542,
+          "izz": 0.00125,
+          "ixy": 0,
+          "ixz": 0,
+          "iyz": 0
+        }
+      },
+
+      "urdf_template": "<inertial>\n  <mass value='1.0'/>\n  <origin xyz='0 0 0' rpy='0 0 0'/>\n  <inertia ixx='0.003542' ixy='0' ixz='0' iyy='0.003542' iyz='0' izz='0.00125'/>\n</inertial>"
+    },
+
+    "sphere": {
+      "description": "Sphere with radius r",
+      "mass_formula": "mass = (4/3) * π * r³ * density",
+
+      "inertia_tensor": {
+        "ixx": "(2/5) * mass * r²",
+        "iyy": "(2/5) * mass * r²",
+        "izz": "(2/5) * mass * r²",
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      },
+
+      "example": {
+        "radius": 0.05,
+        "mass": 0.5,
+        "density": 954.93,
+        "calculated_inertia": {
+          "ixx": 0.0005,
+          "iyy": 0.0005,
+          "izz": 0.0005,
+          "ixy": 0,
+          "ixz": 0,
+          "iyz": 0
+        }
+      },
+
+      "urdf_template": "<inertial>\n  <mass value='0.5'/>\n  <origin xyz='0 0 0' rpy='0 0 0'/>\n  <inertia ixx='0.0005' ixy='0' ixz='0' iyy='0.0005' iyz='0' izz='0.0005'/>\n</inertial>"
+    },
+
+    "capsule": {
+      "description": "Cylinder with hemispherical caps (radius r, cylinder length h)",
+      "mass_formula": "mass = π * r² * (h + 4*r/3) * density",
+
+      "inertia_tensor": {
+        "_note": "Approximate for capsule along Z axis",
+        "ixx": "mass * (r² / 4 + h² / 12)",
+        "iyy": "mass * (r² / 4 + h² / 12)",
+        "izz": "mass * r² / 2",
+        "ixy": 0,
+        "ixz": 0,
+        "iyz": 0
+      }
+    }
+  },
+
+  "validation_rules": {
+    "physical_validity": {
+      "mass_positive": "mass > 0 (must be strictly positive)",
+      "diagonal_positive": "ixx > 0, iyy > 0, izz > 0",
+      "triangle_inequality": [
+        "ixx + iyy >= izz",
+        "ixx + izz >= iyy",
+        "iyy + izz >= ixx"
+      ],
+      "off_diagonal_small": "|ixy|, |ixz|, |iyz| typically << diagonal elements for symmetric bodies"
+    },
+
+    "typical_ranges_by_link_size": {
+      "small_link": {
+        "mass": [0.01, 0.5],
+        "inertia": [1e-6, 1e-3]
+      },
+      "medium_link": {
+        "mass": [0.5, 5.0],
+        "inertia": [1e-3, 0.1]
+      },
+      "large_link": {
+        "mass": [5.0, 100.0],
+        "inertia": [0.1, 10.0]
+      }
+    }
+  },
+
+  "practical_tips": {
+    "approximation": "For complex shapes, approximate with combination of primitives",
+    "parallel_axis_theorem": "I_new = I_cm + mass * d², where d is distance from original axis to new axis",
+    "mesh_inertia": "Use CAD software or Drake's CalcSpatialInertia for complex meshes",
+    "debugging": "If simulation explodes or robot vibrates, check inertia values first"
+  },
+
+  "drake_specific": {
+    "SpatialInertia_class": {
+      "usage": "from pydrake.multibody.tree import SpatialInertia, UnitInertia",
+      "creation": "SpatialInertia(mass, p_PScm_E, G_SP_E)",
+      "parameters": {
+        "mass": "Scalar mass value",
+        "p_PScm_E": "Center of mass position [x, y, z]",
+        "G_SP_E": "UnitInertia object (inertia / mass)"
+      }
+    },
+
+    "example_code": "box_inertia = SpatialInertia(\n    mass=0.5,\n    p_PScm_E=np.zeros(3),\n    G_SP_E=UnitInertia(0.00167, 0.00167, 0.00167)\n)"
+  }
+}

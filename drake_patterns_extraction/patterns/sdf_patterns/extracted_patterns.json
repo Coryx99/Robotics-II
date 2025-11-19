@@ -1,0 +1,380 @@
+{
+    "total_analyzed": 43,
+    "object_patterns": [
+        {
+            "name": "allegro_hand_right",
+            "file": "models/descriptions/robots/dextorious-hands/allegro_hand_description/sdf/allegro_hand_description_right.sdf",
+            "static": false,
+            "num_links": 17,
+            "geometries": [
+                "mesh",
+                "sphere",
+                "box"
+            ]
+        },
+        {
+            "name": "allegro_hand_left",
+            "file": "models/descriptions/robots/dextorious-hands/allegro_hand_description/sdf/allegro_hand_description_left.sdf",
+            "static": false,
+            "num_links": 17,
+            "geometries": [
+                "mesh",
+                "sphere",
+                "box"
+            ]
+        },
+        {
+            "name": "Schunk_Gripper",
+            "file": "models/descriptions/robots/dextorious-hands/wsg_50_description/sdf/schunk_wsg_50.sdf",
+            "static": false,
+            "num_links": 3,
+            "geometries": [
+                "box"
+            ]
+        },
+        {
+            "name": "Schunk_Gripper",
+            "file": "models/descriptions/robots/dextorious-hands/wsg_50_description/sdf/schunk_wsg_50_no_tip.sdf",
+            "static": false,
+            "num_links": 3,
+            "geometries": [
+                "mesh",
+                "box"
+            ]
+        },
+        {
+            "name": "Schunk_Gripper",
+            "file": "models/descriptions/robots/dextorious-hands/wsg_50_description/sdf/schunk_wsg_50_welded_fingers.sdf",
+            "static": false,
+            "num_links": 3,
+            "geometries": [
+                "mesh",
+                "box"
+            ]
+        },
+        {
+            "name": "Schunk_Gripper",
+            "file": "models/descriptions/robots/dextorious-hands/wsg_50_description/sdf/schunk_wsg_50_with_tip.sdf",
+            "static": false,
+            "num_links": 3,
+            "geometries": [
+                "mesh",
+                "sphere",
+                "box"
+            ]
+        },
+        {
+            "name": "Schunk_Gripper",
+            "file": "models/descriptions/robots/dextorious-hands/wsg_50_description/sdf/schunk_wsg_50_ball_contact.sdf",
+            "static": false,
+            "num_links": 3,
+            "geometries": [
+                "sphere",
+                "box"
+            ]
+        },
+        {
+            "name": "homecart_collision_walls",
+            "file": "models/descriptions/robots/mobile/tri_homecart/homecart_collision_walls.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "box"
+            ]
+        },
+        {
+            "name": "homecart_cutting_board",
+            "file": "models/descriptions/robots/mobile/tri_homecart/homecart_cutting_board.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "mesh",
+                "box"
+            ]
+        },
+        {
+            "name": "iiwa14",
+            "file": "models/descriptions/robots/arms/iiwa_description/sdf/iiwa14_no_collision.sdf",
+            "static": false,
+            "num_links": 8,
+            "geometries": [
+                "mesh"
+            ]
+        },
+        {
+            "name": "iiwa14",
+            "file": "models/descriptions/robots/arms/iiwa_description/sdf/iiwa14_polytope_collision.sdf",
+            "static": false,
+            "num_links": 8,
+            "geometries": [
+                "mesh"
+            ]
+        }
+    ],
+    "world_patterns": [
+        {
+            "name": "wooden_table",
+            "file": "models/objects_scenes/etc/wooden_table.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "mesh"
+            ]
+        },
+        {
+            "name": "cabinet",
+            "file": "models/objects_scenes/etc/cabinet.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "mesh"
+            ]
+        },
+        {
+            "name": "tall_cabinet",
+            "file": "models/objects_scenes/etc/tall_cabinet.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "mesh"
+            ]
+        },
+        {
+            "name": "living_room",
+            "file": "models/objects_scenes/etc/living_room.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "mesh"
+            ]
+        },
+        {
+            "name": "tea_set",
+            "file": "models/objects_scenes/etc/tea_set.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "mesh"
+            ]
+        },
+        {
+            "name": "stool",
+            "file": "models/objects_scenes/etc/stool.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "mesh"
+            ]
+        },
+        {
+            "name": "sofa",
+            "file": "models/objects_scenes/etc/sofa.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "mesh"
+            ]
+        },
+        {
+            "name": "curtains",
+            "file": "models/objects_scenes/etc/curtain_open.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "mesh"
+            ]
+        },
+        {
+            "name": "bookshelves",
+            "file": "models/objects_scenes/etc/bookshelves.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "mesh"
+            ]
+        },
+        {
+            "name": "sphere",
+            "file": "models/objects_scenes/etc/sphere.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "mesh"
+            ]
+        },
+        {
+            "name": "cupboard",
+            "file": "models/objects_scenes/manipulation_station/cupboard.sdf",
+            "static": false,
+            "num_links": 4,
+            "geometries": [
+                "cylinder",
+                "box"
+            ]
+        },
+        {
+            "name": "bin_model",
+            "file": "models/objects_scenes/manipulation_station/bin.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "box"
+            ]
+        },
+        {
+            "name": "bin_model",
+            "file": "models/objects_scenes/manipulation_station/bin2.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "mesh",
+                "box"
+            ]
+        },
+        {
+            "name": "thin_box",
+            "file": "models/objects_scenes/manipulation_station/thin_box.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "sphere",
+                "box"
+            ]
+        },
+        {
+            "name": "amazon_table",
+            "file": "models/objects_scenes/manipulation_station/amazon_table_simplified.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "box"
+            ]
+        },
+        {
+            "name": "table",
+            "file": "models/objects_scenes/manipulation_station/table_wide.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "mesh",
+                "box"
+            ]
+        },
+        {
+            "name": "foam_brick",
+            "file": "models/objects_scenes/manipulation_station/061_foam_brick.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "sphere",
+                "box"
+            ]
+        },
+        {
+            "name": "cylinder",
+            "file": "models/objects_scenes/manipulation_station/cylinder.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "cylinder",
+                "sphere",
+                "box"
+            ]
+        },
+        {
+            "name": "thin_cylinder",
+            "file": "models/objects_scenes/manipulation_station/thin_cylinder.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "cylinder",
+                "sphere"
+            ]
+        },
+        {
+            "name": "sphere",
+            "file": "models/objects_scenes/manipulation_station/sphere.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "sphere"
+            ]
+        },
+        {
+            "name": "shelves",
+            "file": "models/objects_scenes/manipulation_station/shelves.sdf",
+            "static": false,
+            "num_links": 1,
+            "geometries": [
+                "mesh",
+                "box"
+            ]
+        }
+    ],
+    "material_patterns": {
+        "cupboard": [
+            "0.9 0.9 0.9 1.0",
+            "0.9 0.9 0.9 1.0",
+            "0.9 0.9 0.9 1.0",
+            "0.9 0.9 0.9 1.0",
+            "0.9 0.9 0.9 1.0",
+            "0.9 0.9 0.9 1.0",
+            "0.9 0.9 0.9 1.0",
+            "1 0 0 1.0",
+            "0.9 0.9 0.9 1.0",
+            "1 0 0 1.0"
+        ],
+        "bin_model": [
+            "0.9 0.9 0.9 1.0",
+            "0.9 0.9 0.9 1.0",
+            "0.9 0.9 0.9 1.0",
+            "0.9 0.9 0.9 1.0",
+            "0.9 0.9 0.9 1.0",
+            "0.9 0.9 0.9 1.0"
+        ],
+        "thin_box": [
+            "0 1.00 0 1.0",
+            "0 1.00 0 1.0"
+        ],
+        "amazon_table": [
+            "0.57 0.63 0.67 1.0",
+            "0.57 0.63 0.67 1.0",
+            "0.57 0.63 0.67 1.0",
+            "0.57 0.63 0.67 1.0",
+            "0.57 0.63 0.67 1.0",
+            "0.57 0.63 0.67 1.0",
+            "0.57 0.63 0.67 1.0",
+            "0.57 0.63 0.67 1.0",
+            "0.57 0.63 0.67 1.0",
+            "0.57 0.63 0.67 1.0"
+        ],
+        "foam_brick": [
+            "0.31 0.01 0.13 1.0"
+        ],
+        "cylinder": [
+            "1.0 0 0 1.0",
+            "1.0 0 0 1.0"
+        ],
+        "thin_cylinder": [
+            "0.0 0 1.0 1.0",
+            "0.0 0 1.0 1.0"
+        ],
+        "sphere": [
+            "0.53 0.01 0.53 1.0"
+        ],
+        "Schunk_Gripper": [
+            "0.7 0.7 0.7 1",
+            "0.7 0.7 0.7 1",
+            "0.7 0.7 0.7 1",
+            "0.7 0.7 0.7 1",
+            "0.7 0.7 0.7 1",
+            "0.7 0.7 0.7 1"
+        ],
+        "homecart_collision_walls": [
+            "0 0 0 0",
+            "0 0 0 0",
+            "0 0 0 0",
+            "0 0 0 0"
+        ]
+    }
+}

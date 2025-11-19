@@ -1,0 +1,36 @@
+{
+    "urdf_analysis": {
+        "total_files": 40,
+        "robot_types": {
+            "other": 8,
+            "quadruped": 1,
+            "humanoid": 2,
+            "gripper_hand": 5,
+            "mobile_base": 2,
+            "serial_manipulator": 17
+        },
+        "total_joints_analyzed": 227,
+        "joint_type_distribution": {
+            "revolute": 216,
+            "prismatic": 11
+        },
+        "collision_geometry_distribution": {
+            "box": 63,
+            "cylinder": 65,
+            "sphere": 631,
+            "mesh": 50
+        }
+    },
+    "sdf_analysis": {
+        "total_files": 43,
+        "objects": 11,
+        "worlds": 21
+    },
+    "python_analysis": {
+        "total_scripts": 6,
+        "with_ik": 3,
+        "with_controller": 4,
+        "with_trajectory": 2,
+        "with_logging": 4
+    }
+}

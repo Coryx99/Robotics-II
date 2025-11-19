@@ -1,0 +1,6519 @@
+{
+    "total_analyzed": 40,
+    "robot_patterns": {
+        "other": [
+            {
+                "file": "models/objects_scenes/table_top.urdf",
+                "num_links": 1,
+                "num_joints": 0,
+                "joint_types": {},
+                "collision_geometries": {
+                    "box": 1
+                }
+            },
+            {
+                "file": "models/descriptions/sensors/realsense2_description/urdf/d415.urdf",
+                "num_links": 3,
+                "num_joints": 2,
+                "joint_types": {
+                    "fixed": 2
+                },
+                "collision_geometries": {
+                    "box": 1
+                }
+            },
+            {
+                "file": "models/descriptions/robots/mobile/husky_description/urdf/empty.urdf",
+                "num_links": 0,
+                "num_joints": 0,
+                "joint_types": {},
+                "collision_geometries": {}
+            },
+            {
+                "file": "models/descriptions/robots/mobile/Ridgeback/omni_robot.urdf",
+                "num_links": 4,
+                "num_joints": 3,
+                "joint_types": {
+                    "prismatic": 2,
+                    "revolute": 1
+                },
+                "collision_geometries": {
+                    "box": 1
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/jaco_description/urdf/j2n6s300.urdf",
+                "num_links": 15,
+                "num_joints": 23,
+                "joint_types": {
+                    "fixed": 5,
+                    "continuous": 4,
+                    "null": 9,
+                    "revolute": 5
+                },
+                "collision_geometries": {
+                    "cylinder": 13
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/jaco_description/urdf/j2s7s300.urdf",
+                "num_links": 16,
+                "num_joints": 25,
+                "joint_types": {
+                    "fixed": 5,
+                    "continuous": 4,
+                    "null": 10,
+                    "revolute": 6
+                },
+                "collision_geometries": {
+                    "sphere": 2,
+                    "mesh": 14
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/jaco_description/urdf/j2s7s300_sphere_collision.urdf",
+                "num_links": 16,
+                "num_joints": 25,
+                "joint_types": {
+                    "fixed": 5,
+                    "continuous": 4,
+                    "null": 10,
+                    "revolute": 6
+                },
+                "collision_geometries": {
+                    "sphere": 88
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/jaco_description/urdf/j2n6s300_col.urdf",
+                "num_links": 16,
+                "num_joints": 24,
+                "joint_types": {
+                    "fixed": 6,
+                    "continuous": 4,
+                    "null": 9,
+                    "revolute": 5
+                },
+                "collision_geometries": {
+                    "cylinder": 13
+                }
+            }
+        ],
+        "quadruped": [
+            {
+                "file": "models/descriptions/robots/quadruped/mini_cheetah/mini_cheetah_simple_v2.urdf",
+                "num_links": 17,
+                "num_joints": 28,
+                "joint_types": {
+                    "continuous": 12,
+                    "fixed": 4,
+                    "null": 12
+                },
+                "collision_geometries": {
+                    "box": 1,
+                    "cylinder": 16,
+                    "sphere": 4
+                }
+            }
+        ],
+        "humanoid": [
+            {
+                "file": "models/descriptions/robots/humanoids/atlas/atlas_minimal_contact.urdf",
+                "num_links": 60,
+                "num_joints": 90,
+                "joint_types": {
+                    "revolute": 30,
+                    "fixed": 29,
+                    "null": 31
+                },
+                "collision_geometries": {
+                    "sphere": 16
+                }
+            },
+            {
+                "file": "models/descriptions/robots/humanoids/pr2_description/urdf/pr2_simplified.urdf",
+                "num_links": 83,
+                "num_joints": 105,
+                "joint_types": {
+                    "fixed": 55,
+                    "prismatic": 3,
+                    "continuous": 5,
+                    "null": 22,
+                    "revolute": 20
+                },
+                "collision_geometries": {
+                    "mesh": 16,
+                    "box": 5
+                }
+            }
+        ],
+        "gripper_hand": [
+            {
+                "file": "models/descriptions/robots/dextorious-hands/allegro_hand_description/urdf/allegro_hand_description_left.urdf",
+                "num_links": 22,
+                "num_joints": 37,
+                "joint_types": {
+                    "fixed": 5,
+                    "revolute": 16,
+                    "null": 16
+                },
+                "collision_geometries": {
+                    "box": 17,
+                    "sphere": 4
+                }
+            },
+            {
+                "file": "models/descriptions/robots/dextorious-hands/allegro_hand_description/urdf/allegro_hand_description_right.urdf",
+                "num_links": 22,
+                "num_joints": 37,
+                "joint_types": {
+                    "fixed": 5,
+                    "revolute": 16,
+                    "null": 16
+                },
+                "collision_geometries": {
+                    "box": 17,
+                    "sphere": 4
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/jaco_description/urdf/j2s7s300_hand.urdf",
+                "num_links": 8,
+                "num_joints": 10,
+                "joint_types": {
+                    "fixed": 4,
+                    "revolute": 3,
+                    "null": 3
+                },
+                "collision_geometries": {
+                    "mesh": 7,
+                    "sphere": 1
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/jaco_description/urdf/j2s7s300_hand_sphere_collision.urdf",
+                "num_links": 8,
+                "num_joints": 10,
+                "joint_types": {
+                    "fixed": 4,
+                    "revolute": 3,
+                    "null": 3
+                },
+                "collision_geometries": {
+                    "sphere": 36
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/franka_description/urdf/hand.urdf",
+                "num_links": 3,
+                "num_joints": 4,
+                "joint_types": {
+                    "prismatic": 2,
+                    "null": 2
+                },
+                "collision_geometries": {
+                    "sphere": 8
+                }
+            }
+        ],
+        "mobile_base": [
+            {
+                "file": "models/descriptions/robots/mobile/husky_description/urdf/husky.urdf",
+                "num_links": 15,
+                "num_joints": 18,
+                "joint_types": {
+                    "fixed": 10,
+                    "continuous": 4,
+                    "null": 4
+                },
+                "collision_geometries": {
+                    "box": 2,
+                    "cylinder": 4,
+                    "mesh": 1
+                }
+            },
+            {
+                "file": "models/descriptions/robots/mobile/tri_homecart/homecart_bimanual.urdf",
+                "num_links": 10,
+                "num_joints": 9,
+                "joint_types": {
+                    "fixed": 9
+                },
+                "collision_geometries": {
+                    "box": 18,
+                    "sphere": 8
+                }
+            }
+        ],
+        "serial_manipulator": [
+            {
+                "file": "models/descriptions/robots/arms/jaco_description/urdf/j2s7s300_arm_sphere_collision.urdf",
+                "num_links": 9,
+                "num_joints": 15,
+                "joint_types": {
+                    "fixed": 1,
+                    "continuous": 4,
+                    "null": 7,
+                    "revolute": 3
+                },
+                "collision_geometries": {
+                    "sphere": 52
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/jaco_description/urdf/j2s7s300_arm.urdf",
+                "num_links": 9,
+                "num_joints": 15,
+                "joint_types": {
+                    "fixed": 1,
+                    "continuous": 4,
+                    "null": 7,
+                    "revolute": 3
+                },
+                "collision_geometries": {
+                    "sphere": 1,
+                    "mesh": 7
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/ur_description/urdf/ur3e_cylinders_collision.urdf",
+                "num_links": 10,
+                "num_joints": 15,
+                "joint_types": {
+                    "revolute": 6,
+                    "fixed": 3,
+                    "null": 6
+                },
+                "collision_geometries": {
+                    "sphere": 3,
+                    "cylinder": 10
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/ur_description/urdf/ur3e_spheres_collision.urdf",
+                "num_links": 10,
+                "num_joints": 15,
+                "joint_types": {
+                    "revolute": 6,
+                    "fixed": 3,
+                    "null": 6
+                },
+                "collision_geometries": {
+                    "sphere": 40
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/iiwa_description/urdf/iiwa14_spheres_collision.urdf",
+                "num_links": 11,
+                "num_joints": 17,
+                "joint_types": {
+                    "fixed": 3,
+                    "revolute": 7,
+                    "null": 7
+                },
+                "collision_geometries": {
+                    "cylinder": 1,
+                    "sphere": 12
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/iiwa_description/urdf/iiwa14_polytope_collision.urdf",
+                "num_links": 11,
+                "num_joints": 17,
+                "joint_types": {
+                    "fixed": 3,
+                    "revolute": 7,
+                    "null": 7
+                },
+                "collision_geometries": {
+                    "mesh": 1
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/iiwa_description/urdf/iiwa14_spheres_dense_collision.urdf",
+                "num_links": 11,
+                "num_joints": 17,
+                "joint_types": {
+                    "fixed": 3,
+                    "revolute": 7,
+                    "null": 7
+                },
+                "collision_geometries": {
+                    "sphere": 46
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/iiwa_description/urdf/dual_iiwa14_polytope_collision.urdf",
+                "num_links": 21,
+                "num_joints": 34,
+                "joint_types": {
+                    "fixed": 6,
+                    "revolute": 14,
+                    "null": 14
+                },
+                "collision_geometries": {
+                    "mesh": 2
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/iiwa_description/urdf/iiwa14_no_collision.urdf",
+                "num_links": 11,
+                "num_joints": 17,
+                "joint_types": {
+                    "fixed": 3,
+                    "revolute": 7,
+                    "null": 7
+                },
+                "collision_geometries": {}
+            },
+            {
+                "file": "models/descriptions/robots/arms/iiwa_description/urdf/planar_iiwa14_spheres_dense_elbow_collision.urdf",
+                "num_links": 10,
+                "num_joints": 12,
+                "joint_types": {
+                    "fixed": 6,
+                    "revolute": 3,
+                    "null": 3
+                },
+                "collision_geometries": {
+                    "cylinder": 1,
+                    "sphere": 21
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/iiwa_description/urdf/iiwa14_primitive_collision.urdf",
+                "num_links": 11,
+                "num_joints": 17,
+                "joint_types": {
+                    "fixed": 3,
+                    "revolute": 7,
+                    "null": 7
+                },
+                "collision_geometries": {
+                    "cylinder": 6,
+                    "mesh": 2
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/iiwa_description/urdf/iiwa14_spheres_dense_elbow_collision.urdf",
+                "num_links": 11,
+                "num_joints": 17,
+                "joint_types": {
+                    "fixed": 3,
+                    "revolute": 7,
+                    "null": 7
+                },
+                "collision_geometries": {
+                    "cylinder": 1,
+                    "sphere": 21
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/franka_description/urdf/panda_arm_hand_link5split.urdf",
+                "num_links": 13,
+                "num_joints": 21,
+                "joint_types": {
+                    "revolute": 7,
+                    "fixed": 3,
+                    "null": 9,
+                    "prismatic": 2
+                },
+                "collision_geometries": {
+                    "sphere": 66
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/franka_description/urdf/panda_arm.urdf",
+                "num_links": 9,
+                "num_joints": 15,
+                "joint_types": {
+                    "revolute": 7,
+                    "fixed": 1,
+                    "null": 7
+                },
+                "collision_geometries": {
+                    "sphere": 58
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/franka_description/urdf/panda_arm_hand.urdf",
+                "num_links": 12,
+                "num_joints": 20,
+                "joint_types": {
+                    "revolute": 7,
+                    "fixed": 2,
+                    "null": 9,
+                    "prismatic": 2
+                },
+                "collision_geometries": {
+                    "sphere": 66
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/franka_description/urdf/panda_hand.urdf",
+                "num_links": 4,
+                "num_joints": 5,
+                "joint_types": {
+                    "prismatic": 2,
+                    "fixed": 1,
+                    "null": 2
+                },
+                "collision_geometries": {
+                    "sphere": 16
+                }
+            },
+            {
+                "file": "models/descriptions/robots/arms/franka_description/urdf/panda_arm_link5split.urdf",
+                "num_links": 10,
+                "num_joints": 16,
+                "joint_types": {
+                    "revolute": 7,
+                    "fixed": 2,
+                    "null": 7
+                },
+                "collision_geometries": {
+                    "sphere": 58
+                }
+            }
+        ]
+    },
+    "joint_patterns": {
+        "revolute": [
+            {
+                "name": "back_bkx",
+                "type": "revolute",
+                "lower": -0.523599,
+                "upper": 0.523599,
+                "effort": 300.0,
+                "velocity": 12.0,
+                "axis": "1 0 0"
+            },
+            {
+                "name": "back_bky",
+                "type": "revolute",
+                "lower": -0.219388,
+                "upper": 0.538783,
+                "effort": 445.0,
+                "velocity": 9.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "back_bkz",
+                "type": "revolute",
+                "lower": -0.663225,
+                "upper": 0.663225,
+                "effort": 106.0,
+                "velocity": 12.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "l_arm_elx",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.35619,
+                "effort": 112.0,
+                "velocity": 12.0,
+                "axis": "-1.0 -0.0 -0.0"
+            },
+            {
+                "name": "l_arm_ely",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 3.14159,
+                "effort": 63.0,
+                "velocity": 12.0,
+                "axis": "-0.0 -1.0 -0.0"
+            },
+            {
+                "name": "l_arm_shx",
+                "type": "revolute",
+                "lower": -1.5708,
+                "upper": 1.5708,
+                "effort": 99.0,
+                "velocity": 12.0,
+                "axis": "-1.0 -0.0 -0.0"
+            },
+            {
+                "name": "l_arm_shz",
+                "type": "revolute",
+                "lower": -1.5708,
+                "upper": 0.785398,
+                "effort": 87.0,
+                "velocity": 12.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "l_arm_mwx",
+                "type": "revolute",
+                "lower": -1.7628,
+                "upper": 1.7628,
+                "effort": 25.0,
+                "velocity": 10.0,
+                "axis": "1 0 0"
+            },
+            {
+                "name": "l_arm_uwy",
+                "type": "revolute",
+                "lower": -3.011,
+                "upper": 3.011,
+                "effort": 25.0,
+                "velocity": 10.0,
+                "axis": "-0.0 -1.0 -0.0"
+            },
+            {
+                "name": "l_arm_lwy",
+                "type": "revolute",
+                "lower": -2.9671,
+                "upper": 2.9671,
+                "effort": 25.0,
+                "velocity": 10.0,
+                "axis": "-0.0 -1.0 -0.0"
+            },
+            {
+                "name": "l_leg_akx",
+                "type": "revolute",
+                "lower": -0.8,
+                "upper": 0.8,
+                "effort": 360.0,
+                "velocity": 12.0,
+                "axis": "1 0 0"
+            },
+            {
+                "name": "l_leg_aky",
+                "type": "revolute",
+                "lower": -1.0,
+                "upper": 0.7,
+                "effort": 740.0,
+                "velocity": 12.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "l_leg_hpx",
+                "type": "revolute",
+                "lower": -0.523599,
+                "upper": 0.523599,
+                "effort": 530.0,
+                "velocity": 12.0,
+                "axis": "1 0 0"
+            },
+            {
+                "name": "l_leg_hpy",
+                "type": "revolute",
+                "lower": -1.61234,
+                "upper": 0.65764,
+                "effort": 840.0,
+                "velocity": 12.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "l_leg_hpz",
+                "type": "revolute",
+                "lower": -0.174358,
+                "upper": 0.786794,
+                "effort": 275.0,
+                "velocity": 12.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "l_leg_kny",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.35637,
+                "effort": 890.0,
+                "velocity": 12.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "neck_ay",
+                "type": "revolute",
+                "lower": -0.602139,
+                "upper": 1.14319,
+                "effort": 25.0,
+                "velocity": 6.28,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "r_arm_elx",
+                "type": "revolute",
+                "lower": -2.35619,
+                "upper": 0.0,
+                "effort": 112.0,
+                "velocity": 12.0,
+                "axis": "1 0 0"
+            },
+            {
+                "name": "r_arm_ely",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 3.14159,
+                "effort": 63.0,
+                "velocity": 12.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "r_arm_shx",
+                "type": "revolute",
+                "lower": -1.5708,
+                "upper": 1.5708,
+                "effort": 99.0,
+                "velocity": 12.0,
+                "axis": "1 0 0"
+            },
+            {
+                "name": "r_arm_shz",
+                "type": "revolute",
+                "lower": -0.785398,
+                "upper": 1.5708,
+                "effort": 87.0,
+                "velocity": 12.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "r_arm_mwx",
+                "type": "revolute",
+                "lower": -1.7628,
+                "upper": 1.7628,
+                "effort": 25.0,
+                "velocity": 10.0,
+                "axis": "1 0 0"
+            },
+            {
+                "name": "r_arm_uwy",
+                "type": "revolute",
+                "lower": -3.011,
+                "upper": 3.011,
+                "effort": 25.0,
+                "velocity": 10.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "r_arm_lwy",
+                "type": "revolute",
+                "lower": -2.9671,
+                "upper": 2.9671,
+                "effort": 25.0,
+                "velocity": 10.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "r_leg_akx",
+                "type": "revolute",
+                "lower": -0.8,
+                "upper": 0.8,
+                "effort": 360.0,
+                "velocity": 12.0,
+                "axis": "1 0 0"
+            },
+            {
+                "name": "r_leg_aky",
+                "type": "revolute",
+                "lower": -1.0,
+                "upper": 0.7,
+                "effort": 740.0,
+                "velocity": 12.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "r_leg_hpx",
+                "type": "revolute",
+                "lower": -0.523599,
+                "upper": 0.523599,
+                "effort": 530.0,
+                "velocity": 12.0,
+                "axis": "1 0 0"
+            },
+            {
+                "name": "r_leg_hpy",
+                "type": "revolute",
+                "lower": -1.61234,
+                "upper": 0.65764,
+                "effort": 840.0,
+                "velocity": 12.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "r_leg_hpz",
+                "type": "revolute",
+                "lower": -0.786794,
+                "upper": 0.174358,
+                "effort": 275.0,
+                "velocity": 12.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "r_leg_kny",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.35637,
+                "effort": 890.0,
+                "velocity": 12.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "head_pan_joint",
+                "type": "revolute",
+                "lower": -3.007,
+                "upper": 3.007,
+                "effort": 2.645,
+                "velocity": 6.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "head_tilt_joint",
+                "type": "revolute",
+                "lower": -0.471238,
+                "upper": 1.39626,
+                "effort": 15.0,
+                "velocity": 5.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "r_shoulder_pan_joint",
+                "type": "revolute",
+                "lower": -2.2853981634,
+                "upper": 0.714601836603,
+                "effort": 30.0,
+                "velocity": 2.088,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "r_shoulder_lift_joint",
+                "type": "revolute",
+                "lower": -0.5236,
+                "upper": 1.3963,
+                "effort": 30.0,
+                "velocity": 2.082,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "r_upper_arm_roll_joint",
+                "type": "revolute",
+                "lower": -3.9,
+                "upper": 0.8,
+                "effort": 30.0,
+                "velocity": 3.27,
+                "axis": "1 0 0"
+            },
+            {
+                "name": "r_elbow_flex_joint",
+                "type": "revolute",
+                "lower": -2.3213,
+                "upper": 0.0,
+                "effort": 30.0,
+                "velocity": 3.3,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "r_wrist_flex_joint",
+                "type": "revolute",
+                "lower": -2.094,
+                "upper": 0.0,
+                "effort": 10.0,
+                "velocity": 3.078,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "r_gripper_l_finger_joint",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 0.548,
+                "effort": 1000.0,
+                "velocity": 0.5,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "r_gripper_r_finger_joint",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 0.548,
+                "effort": 1000.0,
+                "velocity": 0.5,
+                "axis": "0 0 -1"
+            },
+            {
+                "name": "r_gripper_l_finger_tip_joint",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 0.548,
+                "effort": 1000.0,
+                "velocity": 0.5,
+                "axis": "0 0 -1"
+            },
+            {
+                "name": "r_gripper_r_finger_tip_joint",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 0.548,
+                "effort": 1000.0,
+                "velocity": 0.5,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "l_shoulder_pan_joint",
+                "type": "revolute",
+                "lower": -0.714601836603,
+                "upper": 2.2853981634,
+                "effort": 30.0,
+                "velocity": 2.088,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "l_shoulder_lift_joint",
+                "type": "revolute",
+                "lower": -0.5236,
+                "upper": 1.3963,
+                "effort": 30.0,
+                "velocity": 2.082,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "l_upper_arm_roll_joint",
+                "type": "revolute",
+                "lower": -0.8,
+                "upper": 3.9,
+                "effort": 30.0,
+                "velocity": 3.27,
+                "axis": "1 0 0"
+            },
+            {
+                "name": "l_elbow_flex_joint",
+                "type": "revolute",
+                "lower": -2.3213,
+                "upper": 0.0,
+                "effort": 30.0,
+                "velocity": 3.3,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "l_wrist_flex_joint",
+                "type": "revolute",
+                "lower": -2.094,
+                "upper": 0.0,
+                "effort": 10.0,
+                "velocity": 3.078,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "l_gripper_l_finger_joint",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 0.548,
+                "effort": 1000.0,
+                "velocity": 0.5,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "l_gripper_r_finger_joint",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 0.548,
+                "effort": 1000.0,
+                "velocity": 0.5,
+                "axis": "0 0 -1"
+            },
+            {
+                "name": "l_gripper_l_finger_tip_joint",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 0.548,
+                "effort": 1000.0,
+                "velocity": 0.5,
+                "axis": "0 0 -1"
+            },
+            {
+                "name": "l_gripper_r_finger_tip_joint",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 0.548,
+                "effort": 1000.0,
+                "velocity": 0.5,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "joint_8",
+                "type": "revolute",
+                "lower": -0.47,
+                "upper": 0.47,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 0 -1"
+            },
+            {
+                "name": "joint_9",
+                "type": "revolute",
+                "lower": -0.196,
+                "upper": 1.61,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_10",
+                "type": "revolute",
+                "lower": -0.174,
+                "upper": 1.709,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_11",
+                "type": "revolute",
+                "lower": -0.227,
+                "upper": 1.618,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_4",
+                "type": "revolute",
+                "lower": -0.47,
+                "upper": 0.47,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 0 -1"
+            },
+            {
+                "name": "joint_5",
+                "type": "revolute",
+                "lower": -0.196,
+                "upper": 1.61,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_6",
+                "type": "revolute",
+                "lower": -0.174,
+                "upper": 1.709,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_7",
+                "type": "revolute",
+                "lower": -0.227,
+                "upper": 1.618,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_0",
+                "type": "revolute",
+                "lower": -0.47,
+                "upper": 0.47,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 0 -1"
+            },
+            {
+                "name": "joint_1",
+                "type": "revolute",
+                "lower": -0.196,
+                "upper": 1.61,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_2",
+                "type": "revolute",
+                "lower": -0.174,
+                "upper": 1.709,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_3",
+                "type": "revolute",
+                "lower": -0.227,
+                "upper": 1.618,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_12",
+                "type": "revolute",
+                "lower": 0.263,
+                "upper": 1.396,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "1 0 0"
+            },
+            {
+                "name": "joint_13",
+                "type": "revolute",
+                "lower": -0.105,
+                "upper": 1.163,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 0 -1"
+            },
+            {
+                "name": "joint_14",
+                "type": "revolute",
+                "lower": -0.189,
+                "upper": 1.644,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_15",
+                "type": "revolute",
+                "lower": -0.162,
+                "upper": 1.719,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_0",
+                "type": "revolute",
+                "lower": -0.47,
+                "upper": 0.47,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "joint_1",
+                "type": "revolute",
+                "lower": -0.196,
+                "upper": 1.61,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_2",
+                "type": "revolute",
+                "lower": -0.174,
+                "upper": 1.709,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_3",
+                "type": "revolute",
+                "lower": -0.227,
+                "upper": 1.618,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_4",
+                "type": "revolute",
+                "lower": -0.47,
+                "upper": 0.47,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "joint_5",
+                "type": "revolute",
+                "lower": -0.196,
+                "upper": 1.61,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_6",
+                "type": "revolute",
+                "lower": -0.174,
+                "upper": 1.709,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_7",
+                "type": "revolute",
+                "lower": -0.227,
+                "upper": 1.618,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_8",
+                "type": "revolute",
+                "lower": -0.47,
+                "upper": 0.47,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "joint_9",
+                "type": "revolute",
+                "lower": -0.196,
+                "upper": 1.61,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_10",
+                "type": "revolute",
+                "lower": -0.174,
+                "upper": 1.709,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_11",
+                "type": "revolute",
+                "lower": -0.227,
+                "upper": 1.618,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_12",
+                "type": "revolute",
+                "lower": 0.263,
+                "upper": 1.396,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "-1 0 0"
+            },
+            {
+                "name": "joint_13",
+                "type": "revolute",
+                "lower": -0.105,
+                "upper": 1.163,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "joint_14",
+                "type": "revolute",
+                "lower": -0.189,
+                "upper": 1.644,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_15",
+                "type": "revolute",
+                "lower": -0.162,
+                "upper": 1.719,
+                "effort": 0.7,
+                "velocity": 7.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "joint_z",
+                "type": "revolute",
+                "lower": -3.14,
+                "upper": 3.14,
+                "effort": 100.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2n6s300_joint_2",
+                "type": "revolute",
+                "lower": -2.618,
+                "upper": 2.613,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2n6s300_joint_3",
+                "type": "revolute",
+                "lower": -2.618,
+                "upper": 2.613,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2n6s300_joint_finger_1",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2n6s300_joint_finger_2",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2n6s300_joint_finger_3",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_2",
+                "type": "revolute",
+                "lower": 0.523598775598,
+                "upper": 5.75958653158,
+                "effort": 2000.0,
+                "velocity": 0.63,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_4",
+                "type": "revolute",
+                "lower": 0.523598775598,
+                "upper": 5.75958653158,
+                "effort": 2000.0,
+                "velocity": 0.63,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_6",
+                "type": "revolute",
+                "lower": 0.523598775598,
+                "upper": 5.75958653158,
+                "effort": 2000.0,
+                "velocity": 0.85,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_2",
+                "type": "revolute",
+                "lower": 0.523598775598,
+                "upper": 5.75958653158,
+                "effort": 2000.0,
+                "velocity": 0.63,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_4",
+                "type": "revolute",
+                "lower": 0.523598775598,
+                "upper": 5.75958653158,
+                "effort": 2000.0,
+                "velocity": 0.63,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_6",
+                "type": "revolute",
+                "lower": 0.523598775598,
+                "upper": 5.75958653158,
+                "effort": 2000.0,
+                "velocity": 0.85,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_finger_1",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_finger_2",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_finger_3",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_finger_1",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_finger_2",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_finger_3",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_2",
+                "type": "revolute",
+                "lower": 0.523598775598,
+                "upper": 5.75958653158,
+                "effort": 2000.0,
+                "velocity": 0.63,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_4",
+                "type": "revolute",
+                "lower": 0.523598775598,
+                "upper": 5.75958653158,
+                "effort": 2000.0,
+                "velocity": 0.63,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_6",
+                "type": "revolute",
+                "lower": 0.523598775598,
+                "upper": 5.75958653158,
+                "effort": 2000.0,
+                "velocity": 0.85,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_finger_1",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_finger_2",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_finger_3",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_finger_1",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_finger_2",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_finger_3",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_2",
+                "type": "revolute",
+                "lower": 0.523598775598,
+                "upper": 5.75958653158,
+                "effort": 2000.0,
+                "velocity": 0.63,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_4",
+                "type": "revolute",
+                "lower": 0.523598775598,
+                "upper": 5.75958653158,
+                "effort": 2000.0,
+                "velocity": 0.63,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2s7s300_joint_6",
+                "type": "revolute",
+                "lower": 0.523598775598,
+                "upper": 5.75958653158,
+                "effort": 2000.0,
+                "velocity": 0.85,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2n6s300_joint_2",
+                "type": "revolute",
+                "lower": -2.618,
+                "upper": 2.613,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2n6s300_joint_3",
+                "type": "revolute",
+                "lower": -2.618,
+                "upper": 2.613,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2n6s300_joint_finger_1",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2n6s300_joint_finger_2",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "j2n6s300_joint_finger_3",
+                "type": "revolute",
+                "lower": 0.0,
+                "upper": 2.0,
+                "effort": 2000.0,
+                "velocity": 1.0,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "ur_shoulder_pan_joint",
+                "type": "revolute",
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793,
+                "effort": 330.0,
+                "velocity": 3.14,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "ur_shoulder_lift_joint",
+                "type": "revolute",
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793,
+                "effort": 330.0,
+                "velocity": 3.14,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "ur_elbow_joint",
+                "type": "revolute",
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793,
+                "effort": 150.0,
+                "velocity": 3.14,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "ur_wrist_1_joint",
+                "type": "revolute",
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793,
+                "effort": 54.0,
+                "velocity": 6.28,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "ur_wrist_2_joint",
+                "type": "revolute",
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793,
+                "effort": 54.0,
+                "velocity": 6.28,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "ur_wrist_3_joint",
+                "type": "revolute",
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793,
+                "effort": 54.0,
+                "velocity": 6.28,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "ur_shoulder_pan_joint",
+                "type": "revolute",
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793,
+                "effort": 330.0,
+                "velocity": 3.14,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "ur_shoulder_lift_joint",
+                "type": "revolute",
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793,
+                "effort": 330.0,
+                "velocity": 3.14,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "ur_elbow_joint",
+                "type": "revolute",
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793,
+                "effort": 150.0,
+                "velocity": 3.14,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "ur_wrist_1_joint",
+                "type": "revolute",
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793,
+                "effort": 54.0,
+                "velocity": 6.28,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "ur_wrist_2_joint",
+                "type": "revolute",
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793,
+                "effort": 54.0,
+                "velocity": 6.28,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "ur_wrist_3_joint",
+                "type": "revolute",
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793,
+                "effort": 54.0,
+                "velocity": 6.28,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "iiwa_joint_1",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_2",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_3",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 176.0,
+                "velocity": 1.7453292519943295,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_4",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 176.0,
+                "velocity": 1.3089969389957472,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_5",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 110.0,
+                "velocity": 2.2689280275926285,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_6",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_7",
+                "type": "revolute",
+                "lower": -3.05432619099,
+                "upper": 3.05432619099,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_1",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_2",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_3",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 176.0,
+                "velocity": 1.7453292519943295,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_4",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 176.0,
+                "velocity": 1.3089969389957472,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_5",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 110.0,
+                "velocity": 2.2689280275926285,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_6",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_7",
+                "type": "revolute",
+                "lower": -3.05432619099,
+                "upper": 3.05432619099,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_1",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_2",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_3",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 176.0,
+                "velocity": 1.7453292519943295,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_4",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 176.0,
+                "velocity": 1.3089969389957472,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_5",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 110.0,
+                "velocity": 2.2689280275926285,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_6",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_7",
+                "type": "revolute",
+                "lower": -3.05432619099,
+                "upper": 3.05432619099,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "left_iiwa_joint_1",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "left_iiwa_joint_2",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "left_iiwa_joint_3",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 176.0,
+                "velocity": 1.7453292519943295,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "left_iiwa_joint_4",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 176.0,
+                "velocity": 1.3089969389957472,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "left_iiwa_joint_5",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 110.0,
+                "velocity": 2.2689280275926285,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "left_iiwa_joint_6",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "left_iiwa_joint_7",
+                "type": "revolute",
+                "lower": -3.05432619099,
+                "upper": 3.05432619099,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "right_iiwa_joint_1",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "right_iiwa_joint_2",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "right_iiwa_joint_3",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 176.0,
+                "velocity": 1.7453292519943295,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "right_iiwa_joint_4",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 176.0,
+                "velocity": 1.3089969389957472,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "right_iiwa_joint_5",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 110.0,
+                "velocity": 2.2689280275926285,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "right_iiwa_joint_6",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "right_iiwa_joint_7",
+                "type": "revolute",
+                "lower": -3.05432619099,
+                "upper": 3.05432619099,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_1",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_2",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_3",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 176.0,
+                "velocity": 1.7453292519943295,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_4",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 176.0,
+                "velocity": 1.3089969389957472,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_5",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 110.0,
+                "velocity": 2.2689280275926285,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_6",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_7",
+                "type": "revolute",
+                "lower": -3.05432619099,
+                "upper": 3.05432619099,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_2",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_4",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 176.0,
+                "velocity": 1.3089969389957472,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_6",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_1",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_2",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_3",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 176.0,
+                "velocity": 1.7453292519943295,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_4",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 176.0,
+                "velocity": 1.3089969389957472,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_5",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 110.0,
+                "velocity": 2.2689280275926285,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_6",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_7",
+                "type": "revolute",
+                "lower": -3.05432619099,
+                "upper": 3.05432619099,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_1",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_2",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 320.0,
+                "velocity": 1.4835298641951802,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_3",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 176.0,
+                "velocity": 1.7453292519943295,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_4",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 176.0,
+                "velocity": 1.3089969389957472,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_5",
+                "type": "revolute",
+                "lower": -2.96705972839,
+                "upper": 2.96705972839,
+                "effort": 110.0,
+                "velocity": 2.2689280275926285,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_6",
+                "type": "revolute",
+                "lower": -2.09439510239,
+                "upper": 2.09439510239,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "iiwa_joint_7",
+                "type": "revolute",
+                "lower": -3.05432619099,
+                "upper": 3.05432619099,
+                "effort": 40.0,
+                "velocity": 2.356194490192345,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint1",
+                "type": "revolute",
+                "lower": -2.8973,
+                "upper": 2.8973,
+                "effort": 87.0,
+                "velocity": 2.175,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint2",
+                "type": "revolute",
+                "lower": -1.7628,
+                "upper": 1.7628,
+                "effort": 87.0,
+                "velocity": 2.175,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint3",
+                "type": "revolute",
+                "lower": -2.8973,
+                "upper": 2.8973,
+                "effort": 87.0,
+                "velocity": 2.175,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint4",
+                "type": "revolute",
+                "lower": -3.0718,
+                "upper": -0.0698,
+                "effort": 87.0,
+                "velocity": 2.175,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint5",
+                "type": "revolute",
+                "lower": -2.8973,
+                "upper": 2.8973,
+                "effort": 12.0,
+                "velocity": 2.61,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint6",
+                "type": "revolute",
+                "lower": -0.0175,
+                "upper": 3.7525,
+                "effort": 12.0,
+                "velocity": 2.61,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint7",
+                "type": "revolute",
+                "lower": -2.8973,
+                "upper": 2.8973,
+                "effort": 12.0,
+                "velocity": 2.61,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint1",
+                "type": "revolute",
+                "lower": -2.8973,
+                "upper": 2.8973,
+                "effort": 87.0,
+                "velocity": 2.175,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint2",
+                "type": "revolute",
+                "lower": -1.7628,
+                "upper": 1.7628,
+                "effort": 87.0,
+                "velocity": 2.175,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint3",
+                "type": "revolute",
+                "lower": -2.8973,
+                "upper": 2.8973,
+                "effort": 87.0,
+                "velocity": 2.175,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint4",
+                "type": "revolute",
+                "lower": -3.0718,
+                "upper": -0.0698,
+                "effort": 87.0,
+                "velocity": 2.175,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint5",
+                "type": "revolute",
+                "lower": -2.8973,
+                "upper": 2.8973,
+                "effort": 12.0,
+                "velocity": 2.61,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint6",
+                "type": "revolute",
+                "lower": -0.0175,
+                "upper": 3.7525,
+                "effort": 12.0,
+                "velocity": 2.61,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint7",
+                "type": "revolute",
+                "lower": -2.8973,
+                "upper": 2.8973,
+                "effort": 12.0,
+                "velocity": 2.61,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint1",
+                "type": "revolute",
+                "lower": -2.8973,
+                "upper": 2.8973,
+                "effort": 87.0,
+                "velocity": 2.175,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint2",
+                "type": "revolute",
+                "lower": -1.7628,
+                "upper": 1.7628,
+                "effort": 87.0,
+                "velocity": 2.175,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint3",
+                "type": "revolute",
+                "lower": -2.8973,
+                "upper": 2.8973,
+                "effort": 87.0,
+                "velocity": 2.175,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint4",
+                "type": "revolute",
+                "lower": -3.0718,
+                "upper": -0.0698,
+                "effort": 87.0,
+                "velocity": 2.175,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint5",
+                "type": "revolute",
+                "lower": -2.8973,
+                "upper": 2.8973,
+                "effort": 12.0,
+                "velocity": 2.61,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint6",
+                "type": "revolute",
+                "lower": -0.0175,
+                "upper": 3.7525,
+                "effort": 12.0,
+                "velocity": 2.61,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint7",
+                "type": "revolute",
+                "lower": -2.8973,
+                "upper": 2.8973,
+                "effort": 12.0,
+                "velocity": 2.61,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint1",
+                "type": "revolute",
+                "lower": -2.8973,
+                "upper": 2.8973,
+                "effort": 87.0,
+                "velocity": 2.175,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint2",
+                "type": "revolute",
+                "lower": -1.7628,
+                "upper": 1.7628,
+                "effort": 87.0,
+                "velocity": 2.175,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint3",
+                "type": "revolute",
+                "lower": -2.8973,
+                "upper": 2.8973,
+                "effort": 87.0,
+                "velocity": 2.175,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint4",
+                "type": "revolute",
+                "lower": -3.0718,
+                "upper": -0.0698,
+                "effort": 87.0,
+                "velocity": 2.175,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint5",
+                "type": "revolute",
+                "lower": -2.8973,
+                "upper": 2.8973,
+                "effort": 12.0,
+                "velocity": 2.61,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint6",
+                "type": "revolute",
+                "lower": -0.0175,
+                "upper": 3.7525,
+                "effort": 12.0,
+                "velocity": 2.61,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "panda_joint7",
+                "type": "revolute",
+                "lower": -2.8973,
+                "upper": 2.8973,
+                "effort": 12.0,
+                "velocity": 2.61,
+                "axis": "0 0 1"
+            }
+        ],
+        "prismatic": [
+            {
+                "name": "torso_lift_joint",
+                "type": "prismatic",
+                "lower": 0.0,
+                "upper": 0.31,
+                "effort": 10000.0,
+                "velocity": 0.013,
+                "axis": "0 0 1"
+            },
+            {
+                "name": "joint_x",
+                "type": "prismatic",
+                "lower": -1.5,
+                "upper": 1.5,
+                "effort": 100.0,
+                "velocity": 1.0,
+                "axis": "1 0 0"
+            },
+            {
+                "name": "joint_y",
+                "type": "prismatic",
+                "lower": -1.5,
+                "upper": 1.5,
+                "effort": 100.0,
+                "velocity": 1.0,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "panda_finger_joint1",
+                "type": "prismatic",
+                "lower": 0.0,
+                "upper": 0.04,
+                "effort": 20.0,
+                "velocity": 0.2,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "panda_finger_joint2",
+                "type": "prismatic",
+                "lower": 0.0,
+                "upper": 0.04,
+                "effort": 20.0,
+                "velocity": 0.2,
+                "axis": "0 -1 0"
+            },
+            {
+                "name": "panda_finger_joint1",
+                "type": "prismatic",
+                "lower": 0.0,
+                "upper": 0.04,
+                "effort": 20.0,
+                "velocity": 0.2,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "panda_finger_joint2",
+                "type": "prismatic",
+                "lower": 0.0,
+                "upper": 0.04,
+                "effort": 20.0,
+                "velocity": 0.2,
+                "axis": "0 -1 0"
+            },
+            {
+                "name": "panda_finger_joint1",
+                "type": "prismatic",
+                "lower": 0.0,
+                "upper": 0.04,
+                "effort": 20.0,
+                "velocity": 0.2,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "panda_finger_joint2",
+                "type": "prismatic",
+                "lower": 0.0,
+                "upper": 0.04,
+                "effort": 20.0,
+                "velocity": 0.2,
+                "axis": "0 -1 0"
+            },
+            {
+                "name": "panda_finger_joint1",
+                "type": "prismatic",
+                "lower": -0.045,
+                "upper": 0.0,
+                "effort": 20.0,
+                "velocity": 0.2,
+                "axis": "0 1 0"
+            },
+            {
+                "name": "panda_finger_joint2",
+                "type": "prismatic",
+                "lower": 0.0,
+                "upper": 0.045,
+                "effort": 20.0,
+                "velocity": 0.2,
+                "axis": "0 1 0"
+            }
+        ]
+    },
+    "link_patterns": {},
+    "inertia_patterns": [
+        {
+            "link_name": "table_top_link",
+            "mass": 30.0,
+            "ixx": 2.5062,
+            "iyy": 0.90625,
+            "izz": 3.4,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "camera_link",
+            "mass": 0.072,
+            "ixx": 0.003881243,
+            "iyy": 0.00049894,
+            "izz": 0.003879257,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "body",
+            "mass": 3.3,
+            "ixx": 0.011253,
+            "iyy": 0.036203,
+            "izz": 0.042673,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "abduct_fl",
+            "mass": 0.54,
+            "ixx": 0.000381,
+            "iyy": 0.00056,
+            "izz": 0.000444,
+            "ixy": 5.8e-05,
+            "ixz": 4.5e-07,
+            "iyz": 9.5e-07
+        },
+        {
+            "link_name": "thigh_fl",
+            "mass": 0.634,
+            "ixx": 0.001983,
+            "iyy": 0.002103,
+            "izz": 0.000508,
+            "ixy": 0.000245,
+            "ixz": 1.3e-05,
+            "iyz": 1.5e-06
+        },
+        {
+            "link_name": "shank_fl",
+            "mass": 0.064,
+            "ixx": 0.000245,
+            "iyy": 0.000248,
+            "izz": 6e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "abduct_fr",
+            "mass": 0.54,
+            "ixx": 0.000381,
+            "iyy": 0.00056,
+            "izz": 0.000444,
+            "ixy": 5.8e-05,
+            "ixz": 4.5e-07,
+            "iyz": 9.5e-07
+        },
+        {
+            "link_name": "thigh_fr",
+            "mass": 0.634,
+            "ixx": 0.001983,
+            "iyy": 0.002103,
+            "izz": 0.000508,
+            "ixy": 0.000245,
+            "ixz": 1.3e-05,
+            "iyz": 1.5e-06
+        },
+        {
+            "link_name": "shank_fr",
+            "mass": 0.064,
+            "ixx": 0.000245,
+            "iyy": 0.000248,
+            "izz": 6e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "abduct_hl",
+            "mass": 0.54,
+            "ixx": 0.000381,
+            "iyy": 0.00056,
+            "izz": 0.000444,
+            "ixy": 5.8e-05,
+            "ixz": 4.5e-07,
+            "iyz": 9.5e-07
+        },
+        {
+            "link_name": "thigh_hl",
+            "mass": 0.634,
+            "ixx": 0.001983,
+            "iyy": 0.002103,
+            "izz": 0.000508,
+            "ixy": 0.000245,
+            "ixz": 1.3e-05,
+            "iyz": 1.5e-06
+        },
+        {
+            "link_name": "shank_hl",
+            "mass": 0.064,
+            "ixx": 0.000245,
+            "iyy": 0.000248,
+            "izz": 6e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "abduct_hr",
+            "mass": 0.54,
+            "ixx": 0.000381,
+            "iyy": 0.00056,
+            "izz": 0.000444,
+            "ixy": 5.8e-05,
+            "ixz": 4.5e-07,
+            "iyz": 9.5e-07
+        },
+        {
+            "link_name": "thigh_hr",
+            "mass": 0.634,
+            "ixx": 0.001983,
+            "iyy": 0.002103,
+            "izz": 0.000508,
+            "ixy": 0.000245,
+            "ixz": 1.3e-05,
+            "iyz": 1.5e-06
+        },
+        {
+            "link_name": "shank_hr",
+            "mass": 0.064,
+            "ixx": 0.000245,
+            "iyy": 0.000248,
+            "izz": 6e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_clav",
+            "mass": 4.466,
+            "ixx": 0.011,
+            "iyy": 0.009,
+            "izz": 0.004,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.004
+        },
+        {
+            "link_name": "l_foot",
+            "mass": 2.41,
+            "ixx": 0.002,
+            "iyy": 0.007,
+            "izz": 0.008,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_hand",
+            "mass": 0.5839,
+            "ixx": 0.000388,
+            "iyy": 0.000477,
+            "izz": 0.000379,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_larm",
+            "mass": 3.248,
+            "ixx": 0.00265,
+            "iyy": 0.00446,
+            "izz": 0.00446,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_lfarm",
+            "mass": 0.648,
+            "ixx": 0.000764,
+            "iyy": 0.000429,
+            "izz": 0.000825,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_lglut",
+            "mass": 0.898,
+            "ixx": 0.000691326,
+            "iyy": 0.00126856,
+            "izz": 0.00106487,
+            "ixy": -2.24344e-05,
+            "ixz": 2.50508e-06,
+            "iyz": 0.000137862
+        },
+        {
+            "link_name": "l_lleg",
+            "mass": 4.515,
+            "ixx": 0.077,
+            "iyy": 0.076,
+            "izz": 0.01,
+            "ixy": 0.0,
+            "ixz": -0.003,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_scap",
+            "mass": 3.899,
+            "ixx": 0.00319,
+            "iyy": 0.00583,
+            "izz": 0.00583,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_talus",
+            "mass": 0.125,
+            "ixx": 1.01674e-05,
+            "iyy": 8.42775e-06,
+            "izz": 1.30101e-05,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_uarm",
+            "mass": 4.386,
+            "ixx": 0.00656,
+            "iyy": 0.00358,
+            "izz": 0.00656,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_ufarm",
+            "mass": 2.4798,
+            "ixx": 0.012731,
+            "iyy": 0.002857,
+            "izz": 0.011948,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_uglut",
+            "mass": 1.959,
+            "ixx": 0.00074276,
+            "iyy": 0.000688179,
+            "izz": 0.00041242,
+            "ixy": -3.79607e-08,
+            "ixz": -2.79549e-05,
+            "iyz": -3.2735e-08
+        },
+        {
+            "link_name": "l_uleg",
+            "mass": 8.204,
+            "ixx": 0.09,
+            "iyy": 0.09,
+            "izz": 0.02,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "ltorso",
+            "mass": 2.27,
+            "ixx": 0.0039092,
+            "iyy": 0.00341694,
+            "izz": 0.00174492,
+            "ixy": -5.04491e-08,
+            "ixz": -0.000342157,
+            "iyz": 4.87119e-07
+        },
+        {
+            "link_name": "mtorso",
+            "mass": 0.799,
+            "ixx": 0.000454181,
+            "iyy": 0.000483282,
+            "izz": 0.000444215,
+            "ixy": -6.10764e-05,
+            "ixz": 3.94009e-05,
+            "iyz": 5.27463e-05
+        },
+        {
+            "link_name": "pelvis",
+            "mass": 9.509,
+            "ixx": 0.1244,
+            "iyy": 0.0958,
+            "izz": 0.1167,
+            "ixy": 0.0008,
+            "ixz": -0.0007,
+            "iyz": -0.0005
+        },
+        {
+            "link_name": "r_clav",
+            "mass": 4.466,
+            "ixx": 0.011,
+            "iyy": 0.009,
+            "izz": 0.004,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.004
+        },
+        {
+            "link_name": "r_foot",
+            "mass": 2.41,
+            "ixx": 0.002,
+            "iyy": 0.007,
+            "izz": 0.008,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "r_hand",
+            "mass": 0.5839,
+            "ixx": 0.000388,
+            "iyy": 0.000477,
+            "izz": 0.000379,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "r_larm",
+            "mass": 3.248,
+            "ixx": 0.00265,
+            "iyy": 0.00446,
+            "izz": 0.00446,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "r_lfarm",
+            "mass": 0.648,
+            "ixx": 0.000764,
+            "iyy": 0.000429,
+            "izz": 0.000825,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "r_lglut",
+            "mass": 0.898,
+            "ixx": 0.000691326,
+            "iyy": 0.00126856,
+            "izz": 0.00106487,
+            "ixy": 2.24344e-05,
+            "ixz": 2.50508e-06,
+            "iyz": -0.000137862
+        },
+        {
+            "link_name": "r_lleg",
+            "mass": 4.515,
+            "ixx": 0.077,
+            "iyy": 0.076,
+            "izz": 0.01,
+            "ixy": -0.0,
+            "ixz": -0.003,
+            "iyz": -0.0
+        },
+        {
+            "link_name": "r_scap",
+            "mass": 3.899,
+            "ixx": 0.00319,
+            "iyy": 0.00583,
+            "izz": 0.00583,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "r_talus",
+            "mass": 0.125,
+            "ixx": 1.01674e-05,
+            "iyy": 8.42775e-06,
+            "izz": 1.30101e-05,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "r_uarm",
+            "mass": 4.386,
+            "ixx": 0.00656,
+            "iyy": 0.00358,
+            "izz": 0.00656,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "r_ufarm",
+            "mass": 2.4798,
+            "ixx": 0.012731,
+            "iyy": 0.002857,
+            "izz": 0.011948,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "r_uglut",
+            "mass": 1.959,
+            "ixx": 0.00074276,
+            "iyy": 0.000688179,
+            "izz": 0.00041242,
+            "ixy": 3.79607e-08,
+            "ixz": -2.79549e-05,
+            "iyz": 3.2735e-08
+        },
+        {
+            "link_name": "r_uleg",
+            "mass": 8.204,
+            "ixx": 0.09,
+            "iyy": 0.09,
+            "izz": 0.02,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "utorso",
+            "mass": 84.409,
+            "ixx": 1.577,
+            "iyy": 1.602,
+            "izz": 0.565,
+            "ixy": -0.032,
+            "ixz": 0.102,
+            "iyz": 0.047
+        },
+        {
+            "link_name": "r_situational_awareness_camera_link",
+            "mass": 0.1,
+            "ixx": 1e-05,
+            "iyy": 1e-05,
+            "izz": 1e-05,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_situational_awareness_camera_link",
+            "mass": 0.1,
+            "ixx": 1e-05,
+            "iyy": 1e-05,
+            "izz": 1e-05,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "head",
+            "mass": 1.4199,
+            "ixx": 0.0039688,
+            "iyy": 0.0041178,
+            "izz": 0.0035243,
+            "ixy": -1.5797e-06,
+            "ixz": -0.00089293,
+            "iyz": -6.8415e-07
+        },
+        {
+            "link_name": "hokuyo_link",
+            "mass": 0.057664,
+            "ixx": 3.7174e-05,
+            "iyy": 4.2412e-05,
+            "izz": 4.167e-05,
+            "ixy": 4.9927e-08,
+            "ixz": 1.1015e-05,
+            "iyz": -9.8165e-09
+        },
+        {
+            "link_name": "head_hokuyo_frame",
+            "mass": 0.01,
+            "ixx": 1e-05,
+            "iyy": 1e-05,
+            "izz": 1e-05,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "left_camera_frame",
+            "mass": 0.1,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "right_camera_frame",
+            "mass": 0.1,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "center_top_led_frame",
+            "mass": 0.1,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "center_bottom_led_frame",
+            "mass": 0.1,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "left_led_frame",
+            "mass": 0.1,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "right_led_frame",
+            "mass": 0.1,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_hand_force_torque",
+            "mass": 0.1,
+            "ixx": 1e-05,
+            "iyy": 1e-05,
+            "izz": 1e-05,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "r_hand_force_torque",
+            "mass": 0.1,
+            "ixx": 1e-05,
+            "iyy": 1e-05,
+            "izz": 1e-05,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "base_link",
+            "mass": 116.0,
+            "ixx": 5.652232699207,
+            "iyy": 5.669473158652,
+            "izz": 3.683196351726,
+            "ixy": -0.009719934438,
+            "ixz": 1.293988226423,
+            "iyz": -0.007379583694
+        },
+        {
+            "link_name": "base_footprint",
+            "mass": 1.0,
+            "ixx": 0.01,
+            "iyy": 0.01,
+            "izz": 0.01,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "base_laser_link",
+            "mass": 0.001,
+            "ixx": 0.0001,
+            "iyy": 1e-06,
+            "izz": 0.0001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "fl_caster_rotation_link",
+            "mass": 3.473082,
+            "ixx": 0.012411765597,
+            "iyy": 0.015218160428,
+            "izz": 0.011763977943,
+            "ixy": -0.000711733678,
+            "ixz": 0.00050272983,
+            "iyz": -4.273467e-06
+        },
+        {
+            "link_name": "fl_caster_l_wheel_link",
+            "mass": 0.44036,
+            "ixx": 0.012411765597,
+            "iyy": 0.015218160428,
+            "izz": 0.011763977943,
+            "ixy": -0.000711733678,
+            "ixz": 0.00050272983,
+            "iyz": -4.273467e-06
+        },
+        {
+            "link_name": "fl_caster_r_wheel_link",
+            "mass": 0.44036,
+            "ixx": 0.012411765597,
+            "iyy": 0.015218160428,
+            "izz": 0.011763977943,
+            "ixy": -0.000711733678,
+            "ixz": 0.00050272983,
+            "iyz": -4.273467e-06
+        },
+        {
+            "link_name": "fr_caster_rotation_link",
+            "mass": 3.473082,
+            "ixx": 0.012411765597,
+            "iyy": 0.015218160428,
+            "izz": 0.011763977943,
+            "ixy": -0.000711733678,
+            "ixz": 0.00050272983,
+            "iyz": -4.273467e-06
+        },
+        {
+            "link_name": "fr_caster_l_wheel_link",
+            "mass": 0.44036,
+            "ixx": 0.012411765597,
+            "iyy": 0.015218160428,
+            "izz": 0.011763977943,
+            "ixy": -0.000711733678,
+            "ixz": 0.00050272983,
+            "iyz": -4.273467e-06
+        },
+        {
+            "link_name": "fr_caster_r_wheel_link",
+            "mass": 0.44036,
+            "ixx": 0.012411765597,
+            "iyy": 0.015218160428,
+            "izz": 0.011763977943,
+            "ixy": -0.000711733678,
+            "ixz": 0.00050272983,
+            "iyz": -4.273467e-06
+        },
+        {
+            "link_name": "bl_caster_rotation_link",
+            "mass": 3.473082,
+            "ixx": 0.012411765597,
+            "iyy": 0.015218160428,
+            "izz": 0.011763977943,
+            "ixy": -0.000711733678,
+            "ixz": 0.00050272983,
+            "iyz": -4.273467e-06
+        },
+        {
+            "link_name": "bl_caster_l_wheel_link",
+            "mass": 0.44036,
+            "ixx": 0.012411765597,
+            "iyy": 0.015218160428,
+            "izz": 0.011763977943,
+            "ixy": -0.000711733678,
+            "ixz": 0.00050272983,
+            "iyz": -4.273467e-06
+        },
+        {
+            "link_name": "bl_caster_r_wheel_link",
+            "mass": 0.44036,
+            "ixx": 0.012411765597,
+            "iyy": 0.015218160428,
+            "izz": 0.011763977943,
+            "ixy": -0.000711733678,
+            "ixz": 0.00050272983,
+            "iyz": -4.273467e-06
+        },
+        {
+            "link_name": "br_caster_rotation_link",
+            "mass": 3.473082,
+            "ixx": 0.012411765597,
+            "iyy": 0.015218160428,
+            "izz": 0.011763977943,
+            "ixy": -0.000711733678,
+            "ixz": 0.00050272983,
+            "iyz": -4.273467e-06
+        },
+        {
+            "link_name": "br_caster_l_wheel_link",
+            "mass": 0.44036,
+            "ixx": 0.012411765597,
+            "iyy": 0.015218160428,
+            "izz": 0.011763977943,
+            "ixy": -0.000711733678,
+            "ixz": 0.00050272983,
+            "iyz": -4.273467e-06
+        },
+        {
+            "link_name": "br_caster_r_wheel_link",
+            "mass": 0.44036,
+            "ixx": 0.012411765597,
+            "iyy": 0.015218160428,
+            "izz": 0.011763977943,
+            "ixy": -0.000711733678,
+            "ixz": 0.00050272983,
+            "iyz": -4.273467e-06
+        },
+        {
+            "link_name": "torso_lift_link",
+            "mass": 36.248046,
+            "ixx": 2.771653750257,
+            "iyy": 2.510019507959,
+            "izz": 0.526432355569,
+            "ixy": 0.004284522609,
+            "ixz": -0.160418504506,
+            "iyz": 0.029664468704
+        },
+        {
+            "link_name": "imu_link",
+            "mass": 0.001,
+            "ixx": 0.0001,
+            "iyy": 1e-06,
+            "izz": 0.0001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "head_pan_link",
+            "mass": 1.611118,
+            "ixx": 0.00482611007,
+            "iyy": 0.005218991412,
+            "izz": 0.008618784925,
+            "ixy": -0.000144683999,
+            "ixz": 0.000110076136,
+            "iyz": -0.000314239509
+        },
+        {
+            "link_name": "head_tilt_link",
+            "mass": 1.749727,
+            "ixx": 0.010602303435,
+            "iyy": 0.011874383747,
+            "izz": 0.005516790626,
+            "ixy": -0.000408814235,
+            "ixz": 0.00198303894,
+            "iyz": 0.000197908779
+        },
+        {
+            "link_name": "head_plate_frame",
+            "mass": 0.01,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "sensor_mount_link",
+            "mass": 0.05,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "high_def_frame",
+            "mass": 0.01,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "high_def_optical_frame",
+            "mass": 0.01,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "double_stereo_link",
+            "mass": 0.1,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "wide_stereo_link",
+            "mass": 0.1,
+            "ixx": 0.01,
+            "iyy": 0.01,
+            "izz": 0.01,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "wide_stereo_gazebo_l_stereo_camera_frame",
+            "mass": 0.01,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "wide_stereo_gazebo_r_stereo_camera_frame",
+            "mass": 0.01,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "narrow_stereo_link",
+            "mass": 0.1,
+            "ixx": 0.01,
+            "iyy": 0.01,
+            "izz": 0.01,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "narrow_stereo_gazebo_l_stereo_camera_frame",
+            "mass": 0.01,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "narrow_stereo_gazebo_r_stereo_camera_frame",
+            "mass": 0.01,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "laser_tilt_mount_link",
+            "mass": 0.05,
+            "ixx": 0.0001,
+            "iyy": 1e-05,
+            "izz": 0.0001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "laser_tilt_link",
+            "mass": 0.001,
+            "ixx": 0.0001,
+            "iyy": 1e-06,
+            "izz": 0.0001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "r_shoulder_pan_link",
+            "mass": 25.799322,
+            "ixx": 0.86617914248,
+            "iyy": 0.87421714893,
+            "izz": 0.27353821674,
+            "ixy": -0.06086507933,
+            "ixz": -0.12118061183,
+            "iyz": -0.05886609911
+        },
+        {
+            "link_name": "r_shoulder_lift_link",
+            "mass": 2.74988,
+            "ixx": 0.02105584615,
+            "iyy": 0.02127223737,
+            "izz": 0.01975753814,
+            "ixy": 0.00496704022,
+            "ixz": -0.00194808955,
+            "iyz": 0.0011042549
+        },
+        {
+            "link_name": "r_upper_arm_roll_link",
+            "mass": 0.1,
+            "ixx": 0.01,
+            "iyy": 0.01,
+            "izz": 0.01,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "r_upper_arm_link",
+            "mass": 6.01769,
+            "ixx": 0.01537748957,
+            "iyy": 0.0747367044,
+            "izz": 0.07608763307,
+            "ixy": 0.00375711247,
+            "ixz": -0.00070852914,
+            "iyz": -0.0001793645
+        },
+        {
+            "link_name": "r_forearm_roll_link",
+            "mass": 0.1,
+            "ixx": 0.01,
+            "iyy": 0.01,
+            "izz": 0.01,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "r_elbow_flex_link",
+            "mass": 1.90327,
+            "ixx": 0.00346541989,
+            "iyy": 0.00441606455,
+            "izz": 0.00359156824,
+            "ixy": 4.066825e-05,
+            "ixz": 0.00043171614,
+            "iyz": -3.968914e-05
+        },
+        {
+            "link_name": "r_forearm_link",
+            "mass": 2.57968,
+            "ixx": 0.00364857222,
+            "iyy": 0.01507736897,
+            "izz": 0.01659310749,
+            "ixy": 5.215877e-05,
+            "ixz": 0.00071534842,
+            "iyz": -1.31077e-05
+        },
+        {
+            "link_name": "r_wrist_flex_link",
+            "mass": 0.61402,
+            "ixx": 0.00065165722,
+            "iyy": 0.00019824443,
+            "izz": 0.00064450498,
+            "ixy": 2.8864e-07,
+            "ixz": 3.03477e-06,
+            "iyz": -2.2645e-07
+        },
+        {
+            "link_name": "r_wrist_roll_link",
+            "mass": 0.1,
+            "ixx": 0.01,
+            "iyy": 0.01,
+            "izz": 0.01,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "r_gripper_palm_link",
+            "mass": 0.58007,
+            "ixx": 0.00035223921,
+            "iyy": 0.00067741312,
+            "izz": 0.00086563316,
+            "ixy": -1.580476e-05,
+            "ixz": -9.175e-07,
+            "iyz": -5.9554e-07
+        },
+        {
+            "link_name": "r_gripper_motor_accelerometer_link",
+            "mass": 0.001,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "r_gripper_l_finger_link",
+            "mass": 0.17126,
+            "ixx": 7.756198e-05,
+            "iyy": 0.00019708305,
+            "izz": 0.00018105446,
+            "ixy": 1.49095e-06,
+            "ixz": -9.83385e-06,
+            "iyz": -3.06125e-06
+        },
+        {
+            "link_name": "r_gripper_r_finger_link",
+            "mass": 0.17389,
+            "ixx": 7.73841e-05,
+            "iyy": 0.00019847383,
+            "izz": 0.00018106988,
+            "ixy": -2.09309e-06,
+            "ixz": -8.36228e-06,
+            "iyz": 2.4611e-06
+        },
+        {
+            "link_name": "r_gripper_l_parallel_link",
+            "mass": 0.17126,
+            "ixx": 7.756198e-05,
+            "iyy": 0.00019708305,
+            "izz": 0.00018105446,
+            "ixy": 1.49095e-06,
+            "ixz": -9.83385e-06,
+            "iyz": -3.06125e-06
+        },
+        {
+            "link_name": "r_gripper_r_parallel_link",
+            "mass": 0.17389,
+            "ixx": 7.73841e-05,
+            "iyy": 0.00019847383,
+            "izz": 0.00018106988,
+            "ixy": -2.09309e-06,
+            "ixz": -8.36228e-06,
+            "iyz": 2.4611e-06
+        },
+        {
+            "link_name": "r_gripper_l_finger_tip_link",
+            "mass": 0.04419,
+            "ixx": 8.37047e-06,
+            "iyy": 9.87067e-06,
+            "izz": 1.541768e-05,
+            "ixy": 5.83632e-06,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "r_gripper_r_finger_tip_link",
+            "mass": 0.04419,
+            "ixx": 8.37047e-06,
+            "iyy": 9.87067e-06,
+            "izz": 1.541768e-05,
+            "ixy": -5.83632e-06,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_shoulder_pan_link",
+            "mass": 25.799322,
+            "ixx": 0.86617914248,
+            "iyy": 0.87421714893,
+            "izz": 0.27353821674,
+            "ixy": -0.06086507933,
+            "ixz": -0.12118061183,
+            "iyz": -0.05886609911
+        },
+        {
+            "link_name": "l_shoulder_lift_link",
+            "mass": 2.74988,
+            "ixx": 0.02105584615,
+            "iyy": 0.02127223737,
+            "izz": 0.01975753814,
+            "ixy": 0.00496704022,
+            "ixz": -0.00194808955,
+            "iyz": 0.0011042549
+        },
+        {
+            "link_name": "l_upper_arm_roll_link",
+            "mass": 0.1,
+            "ixx": 0.01,
+            "iyy": 0.01,
+            "izz": 0.01,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_upper_arm_link",
+            "mass": 6.01769,
+            "ixx": 0.01530603856,
+            "iyy": 0.07473694455,
+            "izz": 0.07601594191,
+            "ixy": -0.00339324862,
+            "ixz": 0.00060765455,
+            "iyz": -0.00019953729
+        },
+        {
+            "link_name": "l_forearm_roll_link",
+            "mass": 0.1,
+            "ixx": 0.01,
+            "iyy": 0.01,
+            "izz": 0.01,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_elbow_flex_link",
+            "mass": 1.90327,
+            "ixx": 0.00346541989,
+            "iyy": 0.00441606455,
+            "izz": 0.00359156824,
+            "ixy": 4.066825e-05,
+            "ixz": 0.00043171614,
+            "iyz": -3.968914e-05
+        },
+        {
+            "link_name": "l_forearm_link",
+            "mass": 2.57968,
+            "ixx": 0.00364857222,
+            "iyy": 0.01507736897,
+            "izz": 0.01659310749,
+            "ixy": 5.215877e-05,
+            "ixz": 0.00071534842,
+            "iyz": -1.31077e-05
+        },
+        {
+            "link_name": "l_wrist_flex_link",
+            "mass": 0.61402,
+            "ixx": 0.00065165722,
+            "iyy": 0.00019824443,
+            "izz": 0.00064450498,
+            "ixy": 2.8864e-07,
+            "ixz": 3.03477e-06,
+            "iyz": -2.2645e-07
+        },
+        {
+            "link_name": "l_wrist_roll_link",
+            "mass": 0.1,
+            "ixx": 0.01,
+            "iyy": 0.01,
+            "izz": 0.01,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_gripper_palm_link",
+            "mass": 0.58007,
+            "ixx": 0.00035223921,
+            "iyy": 0.00067741312,
+            "izz": 0.00086563316,
+            "ixy": -1.580476e-05,
+            "ixz": -9.175e-07,
+            "iyz": -5.9554e-07
+        },
+        {
+            "link_name": "l_gripper_motor_accelerometer_link",
+            "mass": 0.001,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_gripper_l_finger_link",
+            "mass": 0.17126,
+            "ixx": 7.756198e-05,
+            "iyy": 0.00019708305,
+            "izz": 0.00018105446,
+            "ixy": 1.49095e-06,
+            "ixz": -9.83385e-06,
+            "iyz": -3.06125e-06
+        },
+        {
+            "link_name": "l_gripper_r_finger_link",
+            "mass": 0.17389,
+            "ixx": 7.73841e-05,
+            "iyy": 0.00019847383,
+            "izz": 0.00018106988,
+            "ixy": -2.09309e-06,
+            "ixz": -8.36228e-06,
+            "iyz": 2.4611e-06
+        },
+        {
+            "link_name": "l_gripper_l_parallel_link",
+            "mass": 0.17126,
+            "ixx": 7.756198e-05,
+            "iyy": 0.00019708305,
+            "izz": 0.00018105446,
+            "ixy": 1.49095e-06,
+            "ixz": -9.83385e-06,
+            "iyz": -3.06125e-06
+        },
+        {
+            "link_name": "l_gripper_r_parallel_link",
+            "mass": 0.17389,
+            "ixx": 7.73841e-05,
+            "iyy": 0.00019847383,
+            "izz": 0.00018106988,
+            "ixy": -2.09309e-06,
+            "ixz": -8.36228e-06,
+            "iyz": 2.4611e-06
+        },
+        {
+            "link_name": "l_gripper_l_finger_tip_link",
+            "mass": 0.04419,
+            "ixx": 8.37047e-06,
+            "iyy": 9.87067e-06,
+            "izz": 1.541768e-05,
+            "ixy": 5.83632e-06,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_gripper_r_finger_tip_link",
+            "mass": 0.04419,
+            "ixx": 8.37047e-06,
+            "iyy": 9.87067e-06,
+            "izz": 1.541768e-05,
+            "ixy": -5.83632e-06,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "l_forearm_cam_frame",
+            "mass": 0.01,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "r_forearm_cam_frame",
+            "mass": 0.01,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "palm_link",
+            "mass": 0.4154,
+            "ixx": 0.002089,
+            "iyy": 0.001829,
+            "izz": 0.0004825,
+            "ixy": -3.6e-06,
+            "ixz": 0.0002233,
+            "iyz": -1.8e-05
+        },
+        {
+            "link_name": "link_8",
+            "mass": 0.0119,
+            "ixx": 1.95377e-06,
+            "iyy": 1.17908e-06,
+            "izz": 1.49673e-06,
+            "ixy": 3.03372e-09,
+            "ixz": 8.92323e-08,
+            "iyz": -3.7069e-08
+        },
+        {
+            "link_name": "link_9",
+            "mass": 0.065,
+            "ixx": 7.192e-05,
+            "iyy": 7.438e-05,
+            "izz": 5.406e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 7.322e-07
+        },
+        {
+            "link_name": "link_10",
+            "mass": 0.0355,
+            "ixx": 3.16925e-05,
+            "iyy": 3.10516e-05,
+            "izz": 3.20319e-06,
+            "ixy": 1.07094e-09,
+            "ixz": -4.91273e-09,
+            "iyz": 3.87549e-08
+        },
+        {
+            "link_name": "link_11",
+            "mass": 0.0096,
+            "ixx": 2.13975e-06,
+            "iyy": 1.52036e-06,
+            "izz": 1.20271e-06,
+            "ixy": 1.59554e-09,
+            "ixz": -7.47528e-09,
+            "iyz": -9.89336e-09
+        },
+        {
+            "link_name": "link_11_tip",
+            "mass": 0.0168,
+            "ixx": 1.19599e-05,
+            "iyy": 1.19598e-05,
+            "izz": 1.10345e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "link_4",
+            "mass": 0.0119,
+            "ixx": 1.95377e-06,
+            "iyy": 1.17908e-06,
+            "izz": 1.49673e-06,
+            "ixy": 3.03372e-09,
+            "ixz": 8.92323e-08,
+            "iyz": -3.7069e-08
+        },
+        {
+            "link_name": "link_5",
+            "mass": 0.065,
+            "ixx": 7.19218e-05,
+            "iyy": 7.4377e-05,
+            "izz": 5.40622e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 7.32186e-07
+        },
+        {
+            "link_name": "link_6",
+            "mass": 0.0355,
+            "ixx": 3.16925e-05,
+            "iyy": 3.10516e-05,
+            "izz": 3.20319e-06,
+            "ixy": 1.07094e-09,
+            "ixz": -4.91273e-09,
+            "iyz": 3.87549e-08
+        },
+        {
+            "link_name": "link_7",
+            "mass": 0.0096,
+            "ixx": 2.13975e-06,
+            "iyy": 1.52036e-06,
+            "izz": 1.20271e-06,
+            "ixy": 1.59554e-09,
+            "ixz": -7.47528e-09,
+            "iyz": -9.89336e-09
+        },
+        {
+            "link_name": "link_7_tip",
+            "mass": 0.0168,
+            "ixx": 1.19599e-05,
+            "iyy": 1.19598e-05,
+            "izz": 1.10345e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "link_0",
+            "mass": 0.0119,
+            "ixx": 1.95377e-06,
+            "iyy": 1.17908e-06,
+            "izz": 1.49673e-06,
+            "ixy": 3.03372e-09,
+            "ixz": 8.92323e-08,
+            "iyz": -3.7069e-08
+        },
+        {
+            "link_name": "link_1",
+            "mass": 0.065,
+            "ixx": 7.19218e-05,
+            "iyy": 7.4377e-05,
+            "izz": 5.40622e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 7.32186e-07
+        },
+        {
+            "link_name": "link_2",
+            "mass": 0.0355,
+            "ixx": 3.16925e-05,
+            "iyy": 3.10516e-05,
+            "izz": 3.20319e-06,
+            "ixy": 1.07094e-09,
+            "ixz": -4.91273e-09,
+            "iyz": 3.87549e-08
+        },
+        {
+            "link_name": "link_3",
+            "mass": 0.0096,
+            "ixx": 2.13975e-06,
+            "iyy": 1.52036e-06,
+            "izz": 1.20271e-06,
+            "ixy": 1.59554e-09,
+            "ixz": -7.47528e-09,
+            "iyz": -9.89336e-09
+        },
+        {
+            "link_name": "link_3_tip",
+            "mass": 0.0168,
+            "ixx": 1.19599e-05,
+            "iyy": 1.19598e-05,
+            "izz": 1.10345e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "link_12",
+            "mass": 0.0176,
+            "ixx": 8.13883e-06,
+            "iyy": 1.31421e-05,
+            "izz": 1.00171e-05,
+            "ixy": -2.55226e-06,
+            "ixz": 3.89933e-06,
+            "iyz": 1.46267e-06
+        },
+        {
+            "link_name": "link_13",
+            "mass": 0.0119,
+            "ixx": 1.9263e-06,
+            "iyy": 1.15276e-06,
+            "izz": 1.4957e-06,
+            "ixy": 3.05433e-09,
+            "ixz": 8.86582e-08,
+            "iyz": -3.64521e-08
+        },
+        {
+            "link_name": "link_14",
+            "mass": 0.038,
+            "ixx": 3.67044e-05,
+            "iyy": 3.54042e-05,
+            "izz": 3.63275e-06,
+            "ixy": 1.02277e-09,
+            "ixz": 1.4854e-07,
+            "iyz": -3.67203e-08
+        },
+        {
+            "link_name": "link_15",
+            "mass": 0.0388,
+            "ixx": 4.30919e-05,
+            "iyy": 3.85425e-05,
+            "izz": 1.72974e-05,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": -3.0146e-08
+        },
+        {
+            "link_name": "link_15_tip",
+            "mass": 0.0168,
+            "ixx": 1.19599e-05,
+            "iyy": 1.19598e-05,
+            "izz": 1.10345e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "palm_link",
+            "mass": 0.4154,
+            "ixx": 0.00208916,
+            "iyy": 0.00182848,
+            "izz": 0.000482459,
+            "ixy": -3.63457e-06,
+            "ixz": 0.000223277,
+            "iyz": -1.75634e-05
+        },
+        {
+            "link_name": "link_0",
+            "mass": 0.0119,
+            "ixx": 1.95377e-06,
+            "iyy": 1.17908e-06,
+            "izz": 1.49673e-06,
+            "ixy": 3.03372e-09,
+            "ixz": 8.92323e-08,
+            "iyz": -3.7069e-08
+        },
+        {
+            "link_name": "link_1",
+            "mass": 0.065,
+            "ixx": 7.19218e-05,
+            "iyy": 7.4377e-05,
+            "izz": 5.40622e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 7.32186e-07
+        },
+        {
+            "link_name": "link_2",
+            "mass": 0.0355,
+            "ixx": 3.16925e-05,
+            "iyy": 3.10516e-05,
+            "izz": 3.20319e-06,
+            "ixy": 1.07094e-09,
+            "ixz": -4.91273e-09,
+            "iyz": 3.87549e-08
+        },
+        {
+            "link_name": "link_3",
+            "mass": 0.0096,
+            "ixx": 2.13975e-06,
+            "iyy": 1.52036e-06,
+            "izz": 1.20271e-06,
+            "ixy": 1.59554e-09,
+            "ixz": -7.47528e-09,
+            "iyz": -9.89336e-09
+        },
+        {
+            "link_name": "link_3_tip",
+            "mass": 0.0168,
+            "ixx": 1.19599e-05,
+            "iyy": 1.19598e-05,
+            "izz": 1.10345e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "link_4",
+            "mass": 0.0119,
+            "ixx": 1.95377e-06,
+            "iyy": 1.17908e-06,
+            "izz": 1.49673e-06,
+            "ixy": 3.03372e-09,
+            "ixz": 8.92323e-08,
+            "iyz": -3.7069e-08
+        },
+        {
+            "link_name": "link_5",
+            "mass": 0.065,
+            "ixx": 7.19218e-05,
+            "iyy": 7.4377e-05,
+            "izz": 5.40622e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 7.32186e-07
+        },
+        {
+            "link_name": "link_6",
+            "mass": 0.0355,
+            "ixx": 3.16925e-05,
+            "iyy": 3.10516e-05,
+            "izz": 3.20319e-06,
+            "ixy": 1.07094e-09,
+            "ixz": -4.91273e-09,
+            "iyz": 3.87549e-08
+        },
+        {
+            "link_name": "link_7",
+            "mass": 0.0096,
+            "ixx": 2.13975e-06,
+            "iyy": 1.52036e-06,
+            "izz": 1.20271e-06,
+            "ixy": 1.59554e-09,
+            "ixz": -7.47528e-09,
+            "iyz": -9.89336e-09
+        },
+        {
+            "link_name": "link_7_tip",
+            "mass": 0.0168,
+            "ixx": 1.19599e-05,
+            "iyy": 1.19598e-05,
+            "izz": 1.10345e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "link_8",
+            "mass": 0.0119,
+            "ixx": 1.95377e-06,
+            "iyy": 1.17908e-06,
+            "izz": 1.49673e-06,
+            "ixy": 3.03372e-09,
+            "ixz": 8.92323e-08,
+            "iyz": -3.7069e-08
+        },
+        {
+            "link_name": "link_9",
+            "mass": 0.065,
+            "ixx": 7.19218e-05,
+            "iyy": 7.4377e-05,
+            "izz": 5.40622e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 7.32186e-07
+        },
+        {
+            "link_name": "link_10",
+            "mass": 0.0355,
+            "ixx": 3.16925e-05,
+            "iyy": 3.10516e-05,
+            "izz": 3.20319e-06,
+            "ixy": 1.07094e-09,
+            "ixz": -4.91273e-09,
+            "iyz": 3.87549e-08
+        },
+        {
+            "link_name": "link_11",
+            "mass": 0.0096,
+            "ixx": 2.13975e-06,
+            "iyy": 1.52036e-06,
+            "izz": 1.20271e-06,
+            "ixy": 1.59554e-09,
+            "ixz": -7.47528e-09,
+            "iyz": -9.89336e-09
+        },
+        {
+            "link_name": "link_11_tip",
+            "mass": 0.0168,
+            "ixx": 1.19599e-05,
+            "iyy": 1.19598e-05,
+            "izz": 1.10345e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "link_12",
+            "mass": 0.0176,
+            "ixx": 8.13883e-06,
+            "iyy": 1.31421e-05,
+            "izz": 1.00171e-05,
+            "ixy": 2.55226e-06,
+            "ixz": 3.89933e-06,
+            "iyz": -1.46267e-06
+        },
+        {
+            "link_name": "link_13",
+            "mass": 0.0119,
+            "ixx": 1.9263e-06,
+            "iyy": 1.15276e-06,
+            "izz": 1.4957e-06,
+            "ixy": 3.05433e-09,
+            "ixz": 8.86582e-08,
+            "iyz": -3.64521e-08
+        },
+        {
+            "link_name": "link_14",
+            "mass": 0.038,
+            "ixx": 3.67044e-05,
+            "iyy": 3.54042e-05,
+            "izz": 3.63275e-06,
+            "ixy": 1.02277e-09,
+            "ixz": 1.4854e-07,
+            "iyz": -3.67203e-08
+        },
+        {
+            "link_name": "link_15",
+            "mass": 0.0388,
+            "ixx": 4.30919e-05,
+            "iyy": 3.85425e-05,
+            "izz": 1.72974e-05,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": -3.0146e-08
+        },
+        {
+            "link_name": "link_15_tip",
+            "mass": 0.0168,
+            "ixx": 1.19599e-05,
+            "iyy": 1.19598e-05,
+            "izz": 1.10345e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "inertial_link",
+            "mass": 46.034,
+            "ixx": 0.6022,
+            "iyy": 1.7386,
+            "izz": 2.0296,
+            "ixy": -0.02364,
+            "ixz": -0.1197,
+            "iyz": -0.001544
+        },
+        {
+            "link_name": "front_left_wheel_link",
+            "mass": 2.637,
+            "ixx": 0.02467,
+            "iyy": 0.04411,
+            "izz": 0.02467,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "front_right_wheel_link",
+            "mass": 2.637,
+            "ixx": 0.02467,
+            "iyy": 0.04411,
+            "izz": 0.02467,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "rear_left_wheel_link",
+            "mass": 2.637,
+            "ixx": 0.02467,
+            "iyy": 0.04411,
+            "izz": 0.02467,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "rear_right_wheel_link",
+            "mass": 2.637,
+            "ixx": 0.02467,
+            "iyy": 0.04411,
+            "izz": 0.02467,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "link_root",
+            "mass": 0.001,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "link_x",
+            "mass": 0.01,
+            "ixx": 0.01,
+            "iyy": 0.01,
+            "izz": 0.01,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "link_y",
+            "mass": 0.01,
+            "ixx": 0.01,
+            "iyy": 0.01,
+            "izz": 0.01,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "base_link",
+            "mass": 5.0,
+            "ixx": 0.1,
+            "iyy": 0.1,
+            "izz": 0.2,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "left_arm_mount_cantilever_link",
+            "mass": 1.0,
+            "ixx": 100.0,
+            "iyy": 100.0,
+            "izz": 100.0,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "left_arm_mount_stack_link",
+            "mass": 1.0,
+            "ixx": 100.0,
+            "iyy": 100.0,
+            "izz": 100.0,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "right_arm_mount_cantilever_link",
+            "mass": 1.0,
+            "ixx": 100.0,
+            "iyy": 100.0,
+            "izz": 100.0,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "right_arm_mount_stack_link",
+            "mass": 1.0,
+            "ixx": 100.0,
+            "iyy": 100.0,
+            "izz": 100.0,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "homecart_baseplate_link",
+            "mass": 1.0,
+            "ixx": 100.0,
+            "iyy": 100.0,
+            "izz": 100.0,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "homecart_cart_link",
+            "mass": 1.0,
+            "ixx": 100.0,
+            "iyy": 100.0,
+            "izz": 100.0,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "homecart_upper_structure_link",
+            "mass": 1.0,
+            "ixx": 100.0,
+            "iyy": 100.0,
+            "izz": 100.0,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_base",
+            "mass": 0.46784,
+            "ixx": 0.000951270861568,
+            "iyy": 0.000951270861568,
+            "izz": 0.000374272,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_1",
+            "mass": 0.7477,
+            "ixx": 0.00152031725204,
+            "iyy": 0.00152031725204,
+            "izz": 0.00059816,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_2",
+            "mass": 0.99,
+            "ixx": 0.010502207991,
+            "iyy": 0.000792,
+            "izz": 0.010502207991,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_3",
+            "mass": 0.6763,
+            "ixx": 0.00142022431908,
+            "iyy": 0.000304335,
+            "izz": 0.00142022431908,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_4",
+            "mass": 0.1785,
+            "ixx": 7.73496906e-05,
+            "iyy": 7.73496906e-05,
+            "izz": 0.0001428,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_5",
+            "mass": 0.1785,
+            "ixx": 7.73496906e-05,
+            "iyy": 7.73496906e-05,
+            "izz": 0.0001428,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_6",
+            "mass": 0.727,
+            "ixx": 0.0003453236187,
+            "iyy": 0.0003453236187,
+            "izz": 0.0005816,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_finger_1",
+            "mass": 0.01,
+            "ixx": 0.0026,
+            "iyy": 0.0026,
+            "izz": 0.0026,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_finger_tip_1",
+            "mass": 0.01,
+            "ixx": 0.0026,
+            "iyy": 0.0026,
+            "izz": 0.0026,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_finger_2",
+            "mass": 0.01,
+            "ixx": 0.0026,
+            "iyy": 0.0026,
+            "izz": 0.0026,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_finger_tip_2",
+            "mass": 0.01,
+            "ixx": 0.0026,
+            "iyy": 0.0026,
+            "izz": 0.0026,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_finger_3",
+            "mass": 0.01,
+            "ixx": 0.0026,
+            "iyy": 0.0026,
+            "izz": 0.0026,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_finger_tip_3",
+            "mass": 0.01,
+            "ixx": 0.0026,
+            "iyy": 0.0026,
+            "izz": 0.0026,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_base",
+            "mass": 0.46784,
+            "ixx": 0.000951270861568,
+            "iyy": 0.000951270861568,
+            "izz": 0.000374272,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_1",
+            "mass": 0.7477,
+            "ixx": 0.00152031725204,
+            "iyy": 0.00152031725204,
+            "izz": 0.00059816,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_2",
+            "mass": 0.8447,
+            "ixx": 0.00247073761701,
+            "iyy": 0.000380115,
+            "izz": 0.00247073761701,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_3",
+            "mass": 0.8447,
+            "ixx": 0.00247073761701,
+            "iyy": 0.00247073761701,
+            "izz": 0.000380115,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_4",
+            "mass": 0.6763,
+            "ixx": 0.00142022431908,
+            "iyy": 0.000304335,
+            "izz": 0.00142022431908,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_5",
+            "mass": 0.463,
+            "ixx": 0.0004321316048,
+            "iyy": 0.0004321316048,
+            "izz": 9.26e-05,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_6",
+            "mass": 0.463,
+            "ixx": 0.0004321316048,
+            "iyy": 9.26e-05,
+            "izz": 0.0004321316048,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_7",
+            "mass": 0.001,
+            "ixx": 1e-06,
+            "iyy": 1e-06,
+            "izz": 1e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_base",
+            "mass": 0.46784,
+            "ixx": 0.000951270861568,
+            "iyy": 0.000951270861568,
+            "izz": 0.000374272,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_1",
+            "mass": 0.7477,
+            "ixx": 0.00152031725204,
+            "iyy": 0.00152031725204,
+            "izz": 0.00059816,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_2",
+            "mass": 0.8447,
+            "ixx": 0.00247073761701,
+            "iyy": 0.000380115,
+            "izz": 0.00247073761701,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_3",
+            "mass": 0.8447,
+            "ixx": 0.00247073761701,
+            "iyy": 0.00247073761701,
+            "izz": 0.000380115,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_4",
+            "mass": 0.6763,
+            "ixx": 0.00142022431908,
+            "iyy": 0.000304335,
+            "izz": 0.00142022431908,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_5",
+            "mass": 0.463,
+            "ixx": 0.0004321316048,
+            "iyy": 0.0004321316048,
+            "izz": 9.26e-05,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_6",
+            "mass": 0.463,
+            "ixx": 0.0004321316048,
+            "iyy": 9.26e-05,
+            "izz": 0.0004321316048,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_7",
+            "mass": 0.727,
+            "ixx": 0.0003453236187,
+            "iyy": 0.0003453236187,
+            "izz": 0.0005816,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_1",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_tip_1",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_2",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_tip_2",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_3",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_tip_3",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "hand_base",
+            "mass": 0.727,
+            "ixx": 0.0003453236187,
+            "iyy": 0.0003453236187,
+            "izz": 0.0005816,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_1",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_tip_1",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_2",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_tip_2",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_3",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_tip_3",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_base",
+            "mass": 0.46784,
+            "ixx": 0.000951270861568,
+            "iyy": 0.000951270861568,
+            "izz": 0.000374272,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_1",
+            "mass": 0.7477,
+            "ixx": 0.00152031725204,
+            "iyy": 0.00152031725204,
+            "izz": 0.00059816,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_2",
+            "mass": 0.8447,
+            "ixx": 0.00247073761701,
+            "iyy": 0.000380115,
+            "izz": 0.00247073761701,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_3",
+            "mass": 0.8447,
+            "ixx": 0.00247073761701,
+            "iyy": 0.00247073761701,
+            "izz": 0.000380115,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_4",
+            "mass": 0.6763,
+            "ixx": 0.00142022431908,
+            "iyy": 0.000304335,
+            "izz": 0.00142022431908,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_5",
+            "mass": 0.463,
+            "ixx": 0.0004321316048,
+            "iyy": 0.0004321316048,
+            "izz": 9.26e-05,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_6",
+            "mass": 0.463,
+            "ixx": 0.0004321316048,
+            "iyy": 9.26e-05,
+            "izz": 0.0004321316048,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_7",
+            "mass": 0.727,
+            "ixx": 0.0003453236187,
+            "iyy": 0.0003453236187,
+            "izz": 0.0005816,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_1",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_tip_1",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_2",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_tip_2",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_3",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_tip_3",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "hand_base",
+            "mass": 0.727,
+            "ixx": 0.0003453236187,
+            "iyy": 0.0003453236187,
+            "izz": 0.0005816,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_1",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_tip_1",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_2",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_tip_2",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_3",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_finger_tip_3",
+            "mass": 0.01,
+            "ixx": 7.8999684e-07,
+            "iyy": 7.8999684e-07,
+            "izz": 8e-08,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_base",
+            "mass": 0.46784,
+            "ixx": 0.000951270861568,
+            "iyy": 0.000951270861568,
+            "izz": 0.000374272,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_1",
+            "mass": 0.7477,
+            "ixx": 0.00152031725204,
+            "iyy": 0.00152031725204,
+            "izz": 0.00059816,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_2",
+            "mass": 0.8447,
+            "ixx": 0.00247073761701,
+            "iyy": 0.000380115,
+            "izz": 0.00247073761701,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_3",
+            "mass": 0.8447,
+            "ixx": 0.00247073761701,
+            "iyy": 0.00247073761701,
+            "izz": 0.000380115,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_4",
+            "mass": 0.6763,
+            "ixx": 0.00142022431908,
+            "iyy": 0.000304335,
+            "izz": 0.00142022431908,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_5",
+            "mass": 0.463,
+            "ixx": 0.0004321316048,
+            "iyy": 0.0004321316048,
+            "izz": 9.26e-05,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_6",
+            "mass": 0.463,
+            "ixx": 0.0004321316048,
+            "iyy": 9.26e-05,
+            "izz": 0.0004321316048,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2s7s300_link_7",
+            "mass": 0.001,
+            "ixx": 1e-06,
+            "iyy": 1e-06,
+            "izz": 1e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_base",
+            "mass": 0.46784,
+            "ixx": 0.000951270861568,
+            "iyy": 0.000951270861568,
+            "izz": 0.000374272,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_1",
+            "mass": 0.7477,
+            "ixx": 0.00152031725204,
+            "iyy": 0.00152031725204,
+            "izz": 0.00059816,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_2",
+            "mass": 0.99,
+            "ixx": 0.010502207991,
+            "iyy": 0.000792,
+            "izz": 0.010502207991,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_3",
+            "mass": 0.6763,
+            "ixx": 0.00142022431908,
+            "iyy": 0.000304335,
+            "izz": 0.00142022431908,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_4",
+            "mass": 0.1785,
+            "ixx": 7.73496906e-05,
+            "iyy": 7.73496906e-05,
+            "izz": 0.0001428,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_5",
+            "mass": 0.1785,
+            "ixx": 7.73496906e-05,
+            "iyy": 7.73496906e-05,
+            "izz": 0.0001428,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_6",
+            "mass": 0.727,
+            "ixx": 0.0003453236187,
+            "iyy": 0.0003453236187,
+            "izz": 0.0005816,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_finger_1",
+            "mass": 0.01,
+            "ixx": 0.0026,
+            "iyy": 0.0026,
+            "izz": 0.0026,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_finger_tip_1",
+            "mass": 0.01,
+            "ixx": 0.0026,
+            "iyy": 0.0026,
+            "izz": 0.0026,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_finger_2",
+            "mass": 0.01,
+            "ixx": 0.0026,
+            "iyy": 0.0026,
+            "izz": 0.0026,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_finger_tip_2",
+            "mass": 0.01,
+            "ixx": 0.0026,
+            "iyy": 0.0026,
+            "izz": 0.0026,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_finger_3",
+            "mass": 0.01,
+            "ixx": 0.0026,
+            "iyy": 0.0026,
+            "izz": 0.0026,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "j2n6s300_link_finger_tip_3",
+            "mass": 0.01,
+            "ixx": 0.0026,
+            "iyy": 0.0026,
+            "izz": 0.0026,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "ur_base_link",
+            "mass": 2.0,
+            "ixx": 0.0030531654454,
+            "iyy": 0.0030531654454,
+            "izz": 0.005625,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "ur_shoulder_link",
+            "mass": 2.0,
+            "ixx": 0.008093163429399999,
+            "iyy": 0.008093163429399999,
+            "izz": 0.005625,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "ur_upper_arm_link",
+            "mass": 3.42,
+            "ixx": 0.021777126289145996,
+            "iyy": 0.021777126289145996,
+            "izz": 0.00961875,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "ur_forearm_link",
+            "mass": 1.26,
+            "ixx": 0.006535617385751999,
+            "iyy": 0.006535617385751999,
+            "izz": 0.00354375,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "ur_wrist_1_link",
+            "mass": 0.8,
+            "ixx": 0.002084999166,
+            "iyy": 0.002084999166,
+            "izz": 0.00225,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "ur_wrist_2_link",
+            "mass": 0.8,
+            "ixx": 0.002084999166,
+            "iyy": 0.002084999166,
+            "izz": 0.00225,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "ur_wrist_3_link",
+            "mass": 0.35,
+            "ixx": 0.00014104994358,
+            "iyy": 0.00014104994358,
+            "izz": 0.0001792,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "ur_base_link",
+            "mass": 2.0,
+            "ixx": 0.0030531654454,
+            "iyy": 0.0030531654454,
+            "izz": 0.005625,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "ur_shoulder_link",
+            "mass": 2.0,
+            "ixx": 0.008093163429399999,
+            "iyy": 0.008093163429399999,
+            "izz": 0.005625,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "ur_upper_arm_link",
+            "mass": 3.42,
+            "ixx": 0.021777126289145996,
+            "iyy": 0.021777126289145996,
+            "izz": 0.00961875,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "ur_forearm_link",
+            "mass": 1.26,
+            "ixx": 0.006535617385751999,
+            "iyy": 0.006535617385751999,
+            "izz": 0.00354375,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "ur_wrist_1_link",
+            "mass": 0.8,
+            "ixx": 0.002084999166,
+            "iyy": 0.002084999166,
+            "izz": 0.00225,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "ur_wrist_2_link",
+            "mass": 0.8,
+            "ixx": 0.002084999166,
+            "iyy": 0.002084999166,
+            "izz": 0.00225,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "ur_wrist_3_link",
+            "mass": 0.35,
+            "ixx": 0.00014104994358,
+            "iyy": 0.00014104994358,
+            "izz": 0.0001792,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_0",
+            "mass": 5.0,
+            "ixx": 0.05,
+            "iyy": 0.06,
+            "izz": 0.03,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_1",
+            "mass": 5.76,
+            "ixx": 0.033,
+            "iyy": 0.0333,
+            "izz": 0.0123,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_2",
+            "mass": 6.35,
+            "ixx": 0.0305,
+            "iyy": 0.011,
+            "izz": 0.0304,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_3",
+            "mass": 3.5,
+            "ixx": 0.025,
+            "iyy": 0.0238,
+            "izz": 0.0076,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_4",
+            "mass": 3.5,
+            "ixx": 0.017,
+            "iyy": 0.006,
+            "izz": 0.0164,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_5",
+            "mass": 3.5,
+            "ixx": 0.01,
+            "iyy": 0.0087,
+            "izz": 0.00449,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_6",
+            "mass": 1.8,
+            "ixx": 0.0049,
+            "iyy": 0.0047,
+            "izz": 0.0036,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_7",
+            "mass": 1.2,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_0",
+            "mass": 5.0,
+            "ixx": 0.05,
+            "iyy": 0.06,
+            "izz": 0.03,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_1",
+            "mass": 5.76,
+            "ixx": 0.033,
+            "iyy": 0.0333,
+            "izz": 0.0123,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_2",
+            "mass": 6.35,
+            "ixx": 0.0305,
+            "iyy": 0.011,
+            "izz": 0.0304,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_3",
+            "mass": 3.5,
+            "ixx": 0.025,
+            "iyy": 0.0238,
+            "izz": 0.0076,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_4",
+            "mass": 3.5,
+            "ixx": 0.017,
+            "iyy": 0.006,
+            "izz": 0.0164,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_5",
+            "mass": 3.5,
+            "ixx": 0.01,
+            "iyy": 0.0087,
+            "izz": 0.00449,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_6",
+            "mass": 1.8,
+            "ixx": 0.0049,
+            "iyy": 0.0047,
+            "izz": 0.0036,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_7",
+            "mass": 1.2,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_0",
+            "mass": 5.0,
+            "ixx": 0.05,
+            "iyy": 0.06,
+            "izz": 0.03,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_1",
+            "mass": 5.76,
+            "ixx": 0.033,
+            "iyy": 0.0333,
+            "izz": 0.0123,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_2",
+            "mass": 6.35,
+            "ixx": 0.0305,
+            "iyy": 0.011,
+            "izz": 0.0304,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_3",
+            "mass": 3.5,
+            "ixx": 0.025,
+            "iyy": 0.0238,
+            "izz": 0.0076,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_4",
+            "mass": 3.5,
+            "ixx": 0.017,
+            "iyy": 0.006,
+            "izz": 0.0164,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_5",
+            "mass": 3.5,
+            "ixx": 0.01,
+            "iyy": 0.0087,
+            "izz": 0.00449,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_6",
+            "mass": 1.8,
+            "ixx": 0.0049,
+            "iyy": 0.0047,
+            "izz": 0.0036,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_7",
+            "mass": 1.2,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "left_iiwa_link_0",
+            "mass": 5.0,
+            "ixx": 0.05,
+            "iyy": 0.06,
+            "izz": 0.03,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "left_iiwa_link_1",
+            "mass": 5.76,
+            "ixx": 0.033,
+            "iyy": 0.0333,
+            "izz": 0.0123,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "left_iiwa_link_2",
+            "mass": 6.35,
+            "ixx": 0.0305,
+            "iyy": 0.011,
+            "izz": 0.0304,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "left_iiwa_link_3",
+            "mass": 3.5,
+            "ixx": 0.025,
+            "iyy": 0.0238,
+            "izz": 0.0076,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "left_iiwa_link_4",
+            "mass": 3.5,
+            "ixx": 0.017,
+            "iyy": 0.006,
+            "izz": 0.0164,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "left_iiwa_link_5",
+            "mass": 3.5,
+            "ixx": 0.01,
+            "iyy": 0.0087,
+            "izz": 0.00449,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "left_iiwa_link_6",
+            "mass": 1.8,
+            "ixx": 0.0049,
+            "iyy": 0.0047,
+            "izz": 0.0036,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "left_iiwa_link_7",
+            "mass": 1.2,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "right_iiwa_link_0",
+            "mass": 5.0,
+            "ixx": 0.05,
+            "iyy": 0.06,
+            "izz": 0.03,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "right_iiwa_link_1",
+            "mass": 5.76,
+            "ixx": 0.033,
+            "iyy": 0.0333,
+            "izz": 0.0123,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "right_iiwa_link_2",
+            "mass": 6.35,
+            "ixx": 0.0305,
+            "iyy": 0.011,
+            "izz": 0.0304,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "right_iiwa_link_3",
+            "mass": 3.5,
+            "ixx": 0.025,
+            "iyy": 0.0238,
+            "izz": 0.0076,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "right_iiwa_link_4",
+            "mass": 3.5,
+            "ixx": 0.017,
+            "iyy": 0.006,
+            "izz": 0.0164,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "right_iiwa_link_5",
+            "mass": 3.5,
+            "ixx": 0.01,
+            "iyy": 0.0087,
+            "izz": 0.00449,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "right_iiwa_link_6",
+            "mass": 1.8,
+            "ixx": 0.0049,
+            "iyy": 0.0047,
+            "izz": 0.0036,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "right_iiwa_link_7",
+            "mass": 1.2,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_0",
+            "mass": 5.0,
+            "ixx": 0.05,
+            "iyy": 0.06,
+            "izz": 0.03,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_1",
+            "mass": 5.76,
+            "ixx": 0.033,
+            "iyy": 0.0333,
+            "izz": 0.0123,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_2",
+            "mass": 6.35,
+            "ixx": 0.0305,
+            "iyy": 0.011,
+            "izz": 0.0304,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_3",
+            "mass": 3.5,
+            "ixx": 0.025,
+            "iyy": 0.0238,
+            "izz": 0.0076,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_4",
+            "mass": 3.5,
+            "ixx": 0.017,
+            "iyy": 0.006,
+            "izz": 0.0164,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_5",
+            "mass": 3.5,
+            "ixx": 0.01,
+            "iyy": 0.0087,
+            "izz": 0.00449,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_6",
+            "mass": 1.8,
+            "ixx": 0.0049,
+            "iyy": 0.0047,
+            "izz": 0.0036,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_7",
+            "mass": 1.2,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_0",
+            "mass": 5.0,
+            "ixx": 0.05,
+            "iyy": 0.06,
+            "izz": 0.03,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_1",
+            "mass": 5.76,
+            "ixx": 0.033,
+            "iyy": 0.0333,
+            "izz": 0.0123,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_2",
+            "mass": 6.35,
+            "ixx": 0.0305,
+            "iyy": 0.011,
+            "izz": 0.0304,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_3",
+            "mass": 3.5,
+            "ixx": 0.025,
+            "iyy": 0.0238,
+            "izz": 0.0076,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_4",
+            "mass": 3.5,
+            "ixx": 0.017,
+            "iyy": 0.006,
+            "izz": 0.0164,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_5",
+            "mass": 3.5,
+            "ixx": 0.01,
+            "iyy": 0.0087,
+            "izz": 0.00449,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_6",
+            "mass": 1.8,
+            "ixx": 0.0049,
+            "iyy": 0.0047,
+            "izz": 0.0036,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_7",
+            "mass": 1.2,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_0",
+            "mass": 5.0,
+            "ixx": 0.05,
+            "iyy": 0.06,
+            "izz": 0.03,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_1",
+            "mass": 5.76,
+            "ixx": 0.033,
+            "iyy": 0.0333,
+            "izz": 0.0123,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_2",
+            "mass": 6.35,
+            "ixx": 0.0305,
+            "iyy": 0.011,
+            "izz": 0.0304,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_3",
+            "mass": 3.5,
+            "ixx": 0.025,
+            "iyy": 0.0238,
+            "izz": 0.0076,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_4",
+            "mass": 3.5,
+            "ixx": 0.017,
+            "iyy": 0.006,
+            "izz": 0.0164,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_5",
+            "mass": 3.5,
+            "ixx": 0.01,
+            "iyy": 0.0087,
+            "izz": 0.00449,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_6",
+            "mass": 1.8,
+            "ixx": 0.0049,
+            "iyy": 0.0047,
+            "izz": 0.0036,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_7",
+            "mass": 1.2,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_0",
+            "mass": 5.0,
+            "ixx": 0.05,
+            "iyy": 0.06,
+            "izz": 0.03,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_1",
+            "mass": 5.76,
+            "ixx": 0.033,
+            "iyy": 0.0333,
+            "izz": 0.0123,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_2",
+            "mass": 6.35,
+            "ixx": 0.0305,
+            "iyy": 0.011,
+            "izz": 0.0304,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_3",
+            "mass": 3.5,
+            "ixx": 0.025,
+            "iyy": 0.0238,
+            "izz": 0.0076,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_4",
+            "mass": 3.5,
+            "ixx": 0.017,
+            "iyy": 0.006,
+            "izz": 0.0164,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_5",
+            "mass": 3.5,
+            "ixx": 0.01,
+            "iyy": 0.0087,
+            "izz": 0.00449,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_6",
+            "mass": 1.8,
+            "ixx": 0.0049,
+            "iyy": 0.0047,
+            "izz": 0.0036,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "iiwa_link_7",
+            "mass": 1.2,
+            "ixx": 0.001,
+            "iyy": 0.001,
+            "izz": 0.001,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "panda_hand",
+            "mass": 0.73,
+            "ixx": 0.00278560230025,
+            "iyy": 0.000400033405336,
+            "izz": 0.00256378041832,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "panda_leftfinger",
+            "mass": 0.1,
+            "ixx": 3.01220925051e-05,
+            "iyy": 2.95873808038e-05,
+            "izz": 6.95125211657e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "panda_rightfinger",
+            "mass": 0.1,
+            "ixx": 3.01220925051e-05,
+            "iyy": 2.95873808038e-05,
+            "izz": 6.95125211657e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "panda_link0",
+            "mass": 2.92,
+            "ixx": 0.00782229414331,
+            "iyy": 0.0109027971813,
+            "izz": 0.0102355503949,
+            "ixy": -1.56191622996e-05,
+            "ixz": -0.00126005738123,
+            "iyz": 1.08233858202e-05
+        },
+        {
+            "link_name": "panda_link1",
+            "mass": 2.74,
+            "ixx": 0.0180416958283,
+            "iyy": 0.0159136071891,
+            "izz": 0.00620690827127,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0046758424612
+        },
+        {
+            "link_name": "panda_link2",
+            "mass": 2.74,
+            "ixx": 0.0182856182281,
+            "iyy": 0.00621358421175,
+            "izz": 0.0161514346309,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": -0.00472844221905
+        },
+        {
+            "link_name": "panda_link3",
+            "mass": 2.38,
+            "ixx": 0.00771376630908,
+            "iyy": 0.00989108008727,
+            "izz": 0.00811723558464,
+            "ixy": -0.00248490625138,
+            "ixz": -0.00332147581033,
+            "iyz": -0.00217796151484
+        },
+        {
+            "link_name": "panda_link4",
+            "mass": 2.38,
+            "ixx": 0.00799663881132,
+            "iyy": 0.00825390705278,
+            "izz": 0.0102515004345,
+            "ixy": 0.00347095570217,
+            "ixz": -0.00241222942995,
+            "iyz": 0.00235774044121
+        },
+        {
+            "link_name": "panda_link5_lower",
+            "mass": 2.74,
+            "ixx": 0.030371374513,
+            "iyy": 0.0288752887402,
+            "izz": 0.00444134056164,
+            "ixy": 6.50283587108e-07,
+            "ixz": -1.05129179916e-05,
+            "iyz": -0.00775653445787
+        },
+        {
+            "link_name": "panda_link6",
+            "mass": 1.55,
+            "ixx": 0.00303336450376,
+            "iyy": 0.00404479911567,
+            "izz": 0.00558234286039,
+            "ixy": -0.000437276865508,
+            "ixz": 0.000629257294877,
+            "iyz": 0.000130472021025
+        },
+        {
+            "link_name": "panda_link7",
+            "mass": 0.54,
+            "ixx": 0.000888868887021,
+            "iyy": 0.000888001373233,
+            "izz": 0.0007176834609,
+            "ixy": -0.00012239074652,
+            "ixz": 3.98699829666e-05,
+            "iyz": -9.33825115206e-05
+        },
+        {
+            "link_name": "panda_hand",
+            "mass": 0.73,
+            "ixx": 0.00278560230025,
+            "iyy": 0.000400033405336,
+            "izz": 0.00256378041832,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "panda_leftfinger",
+            "mass": 0.1,
+            "ixx": 3.01220925051e-05,
+            "iyy": 2.95873808038e-05,
+            "izz": 6.95125211657e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "panda_rightfinger",
+            "mass": 0.1,
+            "ixx": 3.01220925051e-05,
+            "iyy": 2.95873808038e-05,
+            "izz": 6.95125211657e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "panda_link0",
+            "mass": 2.92,
+            "ixx": 0.00782229414331,
+            "iyy": 0.0109027971813,
+            "izz": 0.0102355503949,
+            "ixy": -1.56191622996e-05,
+            "ixz": -0.00126005738123,
+            "iyz": 1.08233858202e-05
+        },
+        {
+            "link_name": "panda_link1",
+            "mass": 2.74,
+            "ixx": 0.0180416958283,
+            "iyy": 0.0159136071891,
+            "izz": 0.00620690827127,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0046758424612
+        },
+        {
+            "link_name": "panda_link2",
+            "mass": 2.74,
+            "ixx": 0.0182856182281,
+            "iyy": 0.00621358421175,
+            "izz": 0.0161514346309,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": -0.00472844221905
+        },
+        {
+            "link_name": "panda_link3",
+            "mass": 2.38,
+            "ixx": 0.00771376630908,
+            "iyy": 0.00989108008727,
+            "izz": 0.00811723558464,
+            "ixy": -0.00248490625138,
+            "ixz": -0.00332147581033,
+            "iyz": -0.00217796151484
+        },
+        {
+            "link_name": "panda_link4",
+            "mass": 2.38,
+            "ixx": 0.00799663881132,
+            "iyy": 0.00825390705278,
+            "izz": 0.0102515004345,
+            "ixy": 0.00347095570217,
+            "ixz": -0.00241222942995,
+            "iyz": 0.00235774044121
+        },
+        {
+            "link_name": "panda_link5",
+            "mass": 2.74,
+            "ixx": 0.030371374513,
+            "iyy": 0.0288752887402,
+            "izz": 0.00444134056164,
+            "ixy": 6.50283587108e-07,
+            "ixz": -1.05129179916e-05,
+            "iyz": -0.00775653445787
+        },
+        {
+            "link_name": "panda_link6",
+            "mass": 1.55,
+            "ixx": 0.00303336450376,
+            "iyy": 0.00404479911567,
+            "izz": 0.00558234286039,
+            "ixy": -0.000437276865508,
+            "ixz": 0.000629257294877,
+            "iyz": 0.000130472021025
+        },
+        {
+            "link_name": "panda_link7",
+            "mass": 0.54,
+            "ixx": 0.000888868887021,
+            "iyy": 0.000888001373233,
+            "izz": 0.0007176834609,
+            "ixy": -0.00012239074652,
+            "ixz": 3.98699829666e-05,
+            "iyz": -9.33825115206e-05
+        },
+        {
+            "link_name": "panda_link0",
+            "mass": 2.92,
+            "ixx": 0.00782229414331,
+            "iyy": 0.0109027971813,
+            "izz": 0.0102355503949,
+            "ixy": -1.56191622996e-05,
+            "ixz": -0.00126005738123,
+            "iyz": 1.08233858202e-05
+        },
+        {
+            "link_name": "panda_link1",
+            "mass": 2.74,
+            "ixx": 0.0180416958283,
+            "iyy": 0.0159136071891,
+            "izz": 0.00620690827127,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0046758424612
+        },
+        {
+            "link_name": "panda_link2",
+            "mass": 2.74,
+            "ixx": 0.0182856182281,
+            "iyy": 0.00621358421175,
+            "izz": 0.0161514346309,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": -0.00472844221905
+        },
+        {
+            "link_name": "panda_link3",
+            "mass": 2.38,
+            "ixx": 0.00771376630908,
+            "iyy": 0.00989108008727,
+            "izz": 0.00811723558464,
+            "ixy": -0.00248490625138,
+            "ixz": -0.00332147581033,
+            "iyz": -0.00217796151484
+        },
+        {
+            "link_name": "panda_link4",
+            "mass": 2.38,
+            "ixx": 0.00799663881132,
+            "iyy": 0.00825390705278,
+            "izz": 0.0102515004345,
+            "ixy": 0.00347095570217,
+            "ixz": -0.00241222942995,
+            "iyz": 0.00235774044121
+        },
+        {
+            "link_name": "panda_link5",
+            "mass": 2.74,
+            "ixx": 0.030371374513,
+            "iyy": 0.0288752887402,
+            "izz": 0.00444134056164,
+            "ixy": 6.50283587108e-07,
+            "ixz": -1.05129179916e-05,
+            "iyz": -0.00775653445787
+        },
+        {
+            "link_name": "panda_link6",
+            "mass": 1.55,
+            "ixx": 0.00303336450376,
+            "iyy": 0.00404479911567,
+            "izz": 0.00558234286039,
+            "ixy": -0.000437276865508,
+            "ixz": 0.000629257294877,
+            "iyz": 0.000130472021025
+        },
+        {
+            "link_name": "panda_link7",
+            "mass": 0.54,
+            "ixx": 0.000888868887021,
+            "iyy": 0.000888001373233,
+            "izz": 0.0007176834609,
+            "ixy": -0.00012239074652,
+            "ixz": 3.98699829666e-05,
+            "iyz": -9.33825115206e-05
+        },
+        {
+            "link_name": "panda_hand",
+            "mass": 0.73,
+            "ixx": 0.00278560230025,
+            "iyy": 0.000400033405336,
+            "izz": 0.00256378041832,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "panda_leftfinger",
+            "mass": 0.1,
+            "ixx": 3.01220925051e-05,
+            "iyy": 2.95873808038e-05,
+            "izz": 6.95125211657e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "panda_rightfinger",
+            "mass": 0.1,
+            "ixx": 3.01220925051e-05,
+            "iyy": 2.95873808038e-05,
+            "izz": 6.95125211657e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "panda_hand",
+            "mass": 0.73,
+            "ixx": 0.00278560230025,
+            "iyy": 0.000400033405336,
+            "izz": 0.00256378041832,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "panda_leftfinger",
+            "mass": 0.1,
+            "ixx": 3.01220925051e-05,
+            "iyy": 2.95873808038e-05,
+            "izz": 6.95125211657e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "panda_rightfinger",
+            "mass": 0.1,
+            "ixx": 3.01220925051e-05,
+            "iyy": 2.95873808038e-05,
+            "izz": 6.95125211657e-06,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0
+        },
+        {
+            "link_name": "panda_link0",
+            "mass": 2.92,
+            "ixx": 0.00782229414331,
+            "iyy": 0.0109027971813,
+            "izz": 0.0102355503949,
+            "ixy": -1.56191622996e-05,
+            "ixz": -0.00126005738123,
+            "iyz": 1.08233858202e-05
+        },
+        {
+            "link_name": "panda_link1",
+            "mass": 2.74,
+            "ixx": 0.0180416958283,
+            "iyy": 0.0159136071891,
+            "izz": 0.00620690827127,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": 0.0046758424612
+        },
+        {
+            "link_name": "panda_link2",
+            "mass": 2.74,
+            "ixx": 0.0182856182281,
+            "iyy": 0.00621358421175,
+            "izz": 0.0161514346309,
+            "ixy": 0.0,
+            "ixz": 0.0,
+            "iyz": -0.00472844221905
+        },
+        {
+            "link_name": "panda_link3",
+            "mass": 2.38,
+            "ixx": 0.00771376630908,
+            "iyy": 0.00989108008727,
+            "izz": 0.00811723558464,
+            "ixy": -0.00248490625138,
+            "ixz": -0.00332147581033,
+            "iyz": -0.00217796151484
+        },
+        {
+            "link_name": "panda_link4",
+            "mass": 2.38,
+            "ixx": 0.00799663881132,
+            "iyy": 0.00825390705278,
+            "izz": 0.0102515004345,
+            "ixy": 0.00347095570217,
+            "ixz": -0.00241222942995,
+            "iyz": 0.00235774044121
+        },
+        {
+            "link_name": "panda_link5_lower",
+            "mass": 2.74,
+            "ixx": 0.030371374513,
+            "iyy": 0.0288752887402,
+            "izz": 0.00444134056164,
+            "ixy": 6.50283587108e-07,
+            "ixz": -1.05129179916e-05,
+            "iyz": -0.00775653445787
+        },
+        {
+            "link_name": "panda_link6",
+            "mass": 1.55,
+            "ixx": 0.00303336450376,
+            "iyy": 0.00404479911567,
+            "izz": 0.00558234286039,
+            "ixy": -0.000437276865508,
+            "ixz": 0.000629257294877,
+            "iyz": 0.000130472021025
+        },
+        {
+            "link_name": "panda_link7",
+            "mass": 0.54,
+            "ixx": 0.000888868887021,
+            "iyy": 0.000888001373233,
+            "izz": 0.0007176834609,
+            "ixy": -0.00012239074652,
+            "ixz": 3.98699829666e-05,
+            "iyz": -9.33825115206e-05
+        }
+    ],
+    "collision_patterns": {
+        "box": 63,
+        "cylinder": 65,
+        "sphere": 631,
+        "mesh": 50
+    },
+    "material_patterns": {}
+}

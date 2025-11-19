@@ -1,0 +1,189 @@
+{
+  "_comment": "URDF templates for different robot types based on repository analysis",
+
+  "serial_manipulator": {
+    "description": "Serial chain manipulator (e.g., Panda, IIWA, UR)",
+    "typical_dof": [6, 7],
+    "examples_in_repo": ["panda_arm_hand.urdf", "iiwa14_primitive_collision.urdf", "j2s7s300.urdf"],
+
+    "structure": {
+      "base_link": "Fixed to world or mobile base",
+      "joints": "Sequence of revolute joints (occasionally prismatic)",
+      "end_effector": "Tool mount or gripper attachment point"
+    },
+
+    "naming_conventions": {
+      "robot_name": "Matches URDF <robot name='...'> attribute",
+      "link_pattern": "{robot_name}_link{number} or {robot_name}_link_{number}",
+      "joint_pattern": "{robot_name}_joint{number} or {robot_name}_joint_{number}",
+      "examples": {
+        "panda": "panda_link0, panda_link1, ..., panda_joint1, panda_joint2, ...",
+        "iiwa": "iiwa_link_0, iiwa_link_1, ..., iiwa_joint_1, iiwa_joint_2, ..."
+      }
+    },
+
+    "typical_joint_parameters": {
+      "revolute": {
+        "lower_limit": {"range": [-3.14, -0.5], "typical": -2.8973},
+        "upper_limit": {"range": [0.5, 3.14], "typical": 2.8973},
+        "effort": {"range": [10, 320], "typical_by_joint": {
+          "base_joints_1_3": [87, 320],
+          "middle_joints_4_5": [50, 176],
+          "wrist_joints_6_7": [12, 40]
+        }},
+        "velocity": {"range": [1.0, 2.6], "typical": 2.175},
+        "damping": {"range": [0.1, 10.0], "typical": 0.5}
+      }
+    },
+
+    "typical_mass_distribution": {
+      "base_links": {"range": [2.0, 6.0], "typical": 5.0},
+      "middle_links": {"range": [2.0, 4.0], "typical": 3.5},
+      "end_links": {"range": [0.5, 2.0], "typical": 1.2}
+    },
+
+    "collision_geometry_patterns": {
+      "primitive_based": {
+        "description": "Use cylinders/spheres for faster collision checking",
+        "example": "iiwa14_primitive_collision.urdf uses cylinders for links"
+      },
+      "sphere_based": {
+        "description": "Multiple spheres approximate complex shapes",
+        "example": "panda_arm_hand.urdf uses 3-14 spheres per link",
+        "typical_radius": [0.035, 0.06]
+      },
+      "mesh_based": {
+        "description": "Accurate collision with mesh files",
+        "formats": ["obj", "stl"],
+        "use_case": "End-effector and critical contact regions"
+      }
+    },
+
+    "template_skeleton": {
+      "xml_structure": "See urdf_templates/serial_manipulator_template.urdf",
+      "key_elements": [
+        "<?xml version='1.0'?>",
+        "<robot xmlns:drake='http://drake.mit.edu' name='robot_name'>",
+        "  <link name='base_link'>...</link>",
+        "  <joint name='joint1' type='revolute'>...</joint>",
+        "  <link name='link1'>...</link>",
+        "  ...",
+        "  <transmission>...</transmission>",
+        "</robot>"
+      ]
+    }
+  },
+
+  "gripper_hand": {
+    "description": "Parallel jaw gripper or dexterous hand",
+    "typical_dof": [2, 16],
+    "examples_in_repo": ["panda_hand", "robotiq_2f_85.urdf", "allegro_hand_description"],
+
+    "structure": {
+      "parallel_jaw": {
+        "description": "Two fingers with prismatic or mimic joints",
+        "joint_types": ["prismatic", "revolute with mimic"],
+        "typical_stroke": [0.0, 0.08]
+      },
+      "dexterous_hand": {
+        "description": "Multi-fingered hand with many DOF",
+        "fingers": [3, 5],
+        "joints_per_finger": [3, 4]
+      }
+    },
+
+    "typical_joint_parameters": {
+      "prismatic_finger": {
+        "lower": 0.0,
+        "upper": {"range": [0.04, 0.08], "typical": 0.04},
+        "effort": {"range": [20, 100], "typical": 20},
+        "velocity": {"range": [0.1, 0.2], "typical": 0.2}
+      },
+      "revolute_finger": {
+        "lower": {"range": [-0.5, 0.0], "typical": -0.196},
+        "upper": {"range": [1.0, 1.8], "typical": 1.61},
+        "effort": {"range": [0.7, 5.0], "typical": 0.7},
+        "velocity": {"range": [1.0, 5.0], "typical": 2.0}
+      }
+    },
+
+    "special_features": {
+      "mimic_joints": {
+        "description": "One actuator controls multiple joints",
+        "example": "<mimic joint='finger_joint1' multiplier='1' offset='0'/>"
+      },
+      "transmission": {
+        "description": "Maps actuator forces to joint torques",
+        "typical_gear_ratio": [1.0, 100.0]
+      }
+    }
+  },
+
+  "mobile_base": {
+    "description": "Wheeled or omni-directional mobile platform",
+    "typical_dof": [3, 4],
+    "examples_in_repo": ["husky.urdf", "omni_robot.urdf"],
+
+    "structure": {
+      "differential_drive": {
+        "wheels": 2,
+        "joint_type": "continuous",
+        "additional_casters": [0, 2]
+      },
+      "omni_directional": {
+        "description": "X-Y translation + rotation",
+        "joints": ["prismatic_x", "prismatic_y", "revolute_z"]
+      }
+    },
+
+    "typical_parameters": {
+      "wheel_radius": [0.1, 0.2],
+      "wheel_separation": [0.3, 0.6],
+      "base_mass": [20, 100],
+      "max_velocity": [0.5, 2.0]
+    }
+  },
+
+  "humanoid": {
+    "description": "Bipedal humanoid robot",
+    "typical_dof": [30, 40],
+    "examples_in_repo": ["atlas_minimal_contact.urdf", "pr2_simplified.urdf"],
+
+    "structure": {
+      "floating_base": "6 DOF floating base (3 translation + 3 rotation)",
+      "legs": "Each leg: 6-7 DOF (hip 3, knee 1, ankle 2-3)",
+      "arms": "Each arm: 6-7 DOF",
+      "torso": "0-3 DOF",
+      "head": "0-2 DOF"
+    },
+
+    "key_features": {
+      "floating_base": {
+        "representation": "Quaternion [qw, qx, qy, qz] + Position [x, y, z]",
+        "state_size": 7
+      },
+      "contact_points": {
+        "description": "Defined on feet for ground contact",
+        "typical_count": [2, 8]
+      }
+    }
+  },
+
+  "quadruped": {
+    "description": "Four-legged robot",
+    "typical_dof": 12,
+    "examples_in_repo": ["mini_cheetah_simple_v2.urdf"],
+
+    "structure": {
+      "floating_base": "6 DOF",
+      "legs": "4 legs, each with 3 DOF (hip 2, knee 1)",
+      "total_actuated_joints": 12
+    },
+
+    "typical_joint_ranges": {
+      "hip_abduction": [-0.8, 0.8],
+      "hip_flexion": [-2.5, 2.5],
+      "knee": [-2.8, 0.0]
+    }
+  }
+}

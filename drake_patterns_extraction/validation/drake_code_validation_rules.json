@@ -1,0 +1,227 @@
+{
+  "_comment": "Drake Python code validation rules and best practices",
+
+  "import_requirements": {
+    "essential_imports": {
+      "geometry": "from pydrake.geometry import StartMeshcat",
+      "parsing": "from pydrake.multibody.parsing import Parser",
+      "plant": "from pydrake.multibody.plant import AddMultibodyPlantSceneGraph",
+      "framework": "from pydrake.systems.framework import DiagramBuilder",
+      "simulation": "from pydrake.systems.analysis import Simulator",
+      "visualization": "from pydrake.visualization import AddDefaultVisualization"
+    },
+
+    "common_additional_imports": {
+      "math": "from pydrake.math import RigidTransform, RotationMatrix, RollPitchYaw",
+      "ik": "from pydrake.all import InverseKinematics, Solve",
+      "controllers": "from pydrake.systems.framework import LeafSystem",
+      "logging": "from pydrake.systems.primitives import LogVectorOutput",
+      "constants": "from pydrake.systems.primitives import ConstantVectorSource"
+    },
+
+    "numpy": "import numpy as np  # Almost always needed"
+  },
+
+  "initialization_sequence": {
+    "correct_order": [
+      "1. meshcat = StartMeshcat()",
+      "2. meshcat.Delete()  # Clear previous visualizations",
+      "3. builder = DiagramBuilder()",
+      "4. plant, scene_graph = AddMultibodyPlantSceneGraph(builder, time_step=...)",
+      "5. parser = Parser(plant)",
+      "6. parser.AddModelsFromUrl(...)  # Load models",
+      "7. plant.WeldFrames(...)  # Fix base if needed",
+      "8. plant.Finalize()  # CRITICAL: Must be before visualization",
+      "9. AddDefaultVisualization(builder, meshcat)",
+      "10. diagram = builder.Build()"
+    ],
+
+    "critical_points": {
+      "meshcat_before_build": "Start meshcat before building diagram",
+      "finalize_before_viz": "MUST call plant.Finalize() before AddDefaultVisualization",
+      "finalize_once": "plant.Finalize() can only be called once",
+      "build_last": "diagram = builder.Build() must be last step"
+    }
+  },
+
+  "common_errors": {
+    "plant_already_finalized": {
+      "error_message": "RuntimeError: Plant is already finalized",
+      "cause": "Trying to add bodies/joints/geometries after plant.Finalize()",
+      "fix": "Move all plant modifications (AddRigidBody, WeldFrames, RegisterCollisionGeometry) BEFORE Finalize()",
+      "code_example": "# WRONG:\nplant.Finalize()\nplant.WeldFrames(...)  # Error!\n\n# CORRECT:\nplant.WeldFrames(...)\nplant.Finalize()"
+    },
+
+    "time_step_zero_error": {
+      "error_message": "ValueError: time_step must be positive for discrete systems",
+      "cause": "Using time_step=0.0 when discrete system is required",
+      "fix": "Use time_step >= 0.0001 (typically 0.001 or 0.0001)",
+      "when_zero_ok": "time_step=0.0 is valid for continuous systems without actuation"
+    },
+
+    "port_connection_error": {
+      "error_message": "RuntimeError: Port not connected",
+      "cause": "System input/output ports not connected",
+      "fix": "builder.Connect(source.get_output_port(), destination.get_input_port())",
+      "check": "Ensure all required ports are connected before builder.Build()"
+    },
+
+    "context_mismatch": {
+      "error_message": "RuntimeError: Context does not belong to this system",
+      "cause": "Using context from one system with another system",
+      "fix": "Create context from the correct system: context = system.CreateDefaultContext()"
+    },
+
+    "file_not_found": {
+      "error_message": "File not found or invalid URDF/SDF",
+      "cause": "Incorrect path to robot model",
+      "fix": "Use os.path.abspath() for file:// URLs or check path validity",
+      "example": "parser.AddModelsFromUrl('file://' + os.path.abspath(robot_path))"
+    },
+
+    "missing_base_weld": {
+      "symptom": "Robot falls through floor immediately",
+      "cause": "Base link not welded to world",
+      "fix": "plant.WeldFrames(plant.world_frame(), base_link.body_frame())"
+    },
+
+    "simulation_explosion": {
+      "symptom": "Robot parts fly apart, NaN values, simulation crashes",
+      "causes": [
+        "Invalid inertia matrix in URDF",
+        "Zero or negative mass",
+        "Time step too large",
+        "No collision geometry on ground"
+      ],
+      "fixes": [
+        "Validate URDF inertial properties",
+        "Reduce time_step (try 0.001 or 0.0001)",
+        "Add ground plane collision geometry",
+        "Check for penetrating initial conditions"
+      ]
+    }
+  },
+
+  "best_practices": {
+    "meshcat_cleanup": {
+      "rule": "Always call meshcat.Delete() at start",
+      "reason": "Clears previous visualizations",
+      "code": "meshcat = StartMeshcat()\nmeshcat.Delete()\nmeshcat.DeleteAddedControls()"
+    },
+
+    "realtime_rate": {
+      "rule": "Set simulator.set_target_realtime_rate(1.0) for real-time viz",
+      "values": {
+        "1.0": "Real-time speed",
+        ">1.0": "Faster than real-time",
+        "<1.0": "Slower than real-time",
+        "0.0": "Run as fast as possible (no real-time constraint)"
+      }
+    },
+
+    "recording": {
+      "pattern": "meshcat.StartRecording()\nsimulator.AdvanceTo(sim_time)\nmeshcat.PublishRecording()",
+      "purpose": "Enables timeline scrubbing in Meshcat viewer"
+    },
+
+    "time_step_selection": {
+      "general_simulation": 0.001,
+      "fast_simulation": 0.01,
+      "high_accuracy": 0.0001,
+      "guideline": "Smaller time step = more accurate but slower"
+    },
+
+    "state_initialization": {
+      "before_finalize": "plant.SetDefaultPositions(model, q_init)",
+      "after_finalize": "plant.SetPositions(context, q_init)",
+      "floating_bodies": "plant.SetDefaultFreeBodyPose(body, RigidTransform(...))"
+    },
+
+    "error_handling": {
+      "try_catch": "Wrap parser.AddModelsFromUrl() in try-except",
+      "check_ik": "Always check if IK result.is_success() before using solution",
+      "validate_inputs": "Check array dimensions before setting states"
+    }
+  },
+
+  "controller_patterns": {
+    "pd_controller": {
+      "inherit": "class MyController(LeafSystem)",
+      "input_ports": ["current_state", "desired_state"],
+      "output_ports": ["control_torque"],
+      "update_method": "DeclarePeriodicDiscreteUpdateEvent() or DeclareVectorOutputPort()",
+      "gains": "Tune Kp and Kd per joint based on inertia and task"
+    },
+
+    "inverse_kinematics": {
+      "setup": "ik = InverseKinematics(plant, context)",
+      "constraints": ["AddPositionConstraint", "AddOrientationConstraint"],
+      "costs": "prog.AddQuadraticErrorCost() to stay near nominal",
+      "solve": "result = Solve(prog, initial_guess)",
+      "check": "if result.is_success(): q_sol = result.GetSolution(ik.q())"
+    },
+
+    "state_feedback": {
+      "get_state": "x = plant.get_state_output_port().Eval(context)",
+      "split": "q = x[:n_q], v = x[n_q:]",
+      "set_state": "plant.SetPositions(context, q); plant.SetVelocities(context, v)"
+    }
+  },
+
+  "logging_and_visualization": {
+    "add_logger": {
+      "code": "logger = LogVectorOutput(plant.get_state_output_port(), builder)",
+      "retrieve": "log = logger.FindLog(simulator.get_context())",
+      "data": "time = log.sample_times(); data = log.data()"
+    },
+
+    "save_diagram": {
+      "code": "svg_data = diagram.GetGraphvizString(max_depth=2)\nimport pydot\ngraph = pydot.graph_from_dot_data(svg_data)[0]\ngraph.write_png('diagram.png')"
+    },
+
+    "visualization_options": {
+      "default": "AddDefaultVisualization(builder, meshcat)",
+      "custom": "MeshcatVisualizer for more control",
+      "publish_period": "Set publish_every_time_step=True for smooth animation"
+    }
+  },
+
+  "performance_tips": {
+    "collision_geometries": {
+      "tip": "Use primitive shapes (spheres, cylinders) instead of meshes when possible",
+      "reason": "10-100x faster collision detection"
+    },
+
+    "time_step": {
+      "tip": "Use largest time_step that maintains stability",
+      "typical": "0.001 for manipulation, 0.01 for visualization only"
+    },
+
+    "contact_models": {
+      "point_contact": "Default, fast but less accurate",
+      "hydroelastic": "More accurate soft contact, slower",
+      "when_to_use": "Hydroelastic for deformable objects, point for rigid"
+    }
+  },
+
+  "debugging_checklist": [
+    "✓ Check all imports are correct",
+    "✓ Meshcat started and cleaned",
+    "✓ DiagramBuilder created",
+    "✓ Plant finalized BEFORE visualization",
+    "✓ All system ports connected",
+    "✓ Initial states set appropriately",
+    "✓ Time step is reasonable (0.0001 - 0.01)",
+    "✓ URDF/SDF file paths are valid",
+    "✓ Base link welded if robot should be fixed",
+    "✓ Simulator initialized before AdvanceTo()",
+    "✓ Check for error messages in console"
+  ],
+
+  "code_structure_template": {
+    "header": "# Imports\n# Configuration constants",
+    "setup_function": "def create_simulation():\n    # Build diagram\n    return diagram",
+    "run_function": "def run_simulation():\n    # Create simulator\n    # Run simulation",
+    "main": "if __name__ == '__main__':\n    run_simulation()"
+  }
+}

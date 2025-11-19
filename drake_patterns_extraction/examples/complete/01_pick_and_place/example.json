@@ -1,0 +1,231 @@
+{
+  "example_name": "Simple Pick and Place with Panda Robot",
+  "difficulty": "intermediate",
+  "estimated_time": "30 minutes to understand and run",
+
+  "user_request": "Create a simulation with a Panda robot that picks up a red cube from position (0.5, 0.3, 0.05) and places it at (0.5, -0.3, 0.05)",
+
+  "components": {
+    "robot": {
+      "type": "Franka Emika Panda 7-DOF arm with gripper",
+      "urdf": "../../../models/descriptions/robots/arms/franka_description/urdf/panda_arm_hand.urdf",
+      "dof": 9,
+      "base_fixed": true
+    },
+
+    "objects": {
+      "cube": {
+        "type": "box",
+        "size": [0.05, 0.05, 0.05],
+        "mass": 0.1,
+        "color": "red (1.0, 0.0, 0.0, 1.0)",
+        "initial_pose": [0.5, 0.3, 0.05, 0, 0, 0]
+      },
+      "table": {
+        "type": "box",
+        "size": [1.0, 0.8, 0.02],
+        "height": 0.4,
+        "static": true,
+        "color": "brown (0.6, 0.4, 0.2, 1.0)"
+      },
+      "ground": {
+        "type": "halfspace",
+        "static": true,
+        "color": "gray (0.5, 0.5, 0.5, 1.0)"
+      }
+    },
+
+    "controller": {
+      "type": "PD+G (PD with gravity compensation)",
+      "gains": {
+        "kp": [120, 120, 120, 100, 50, 45, 15, 120, 120],
+        "kd": [8, 8, 8, 5, 2, 2, 2, 5, 5]
+      }
+    },
+
+    "trajectory": {
+      "type": "waypoint-based inverse kinematics",
+      "waypoints": [
+        {
+          "name": "home",
+          "position": [0.3, 0.0, 0.4],
+          "orientation": "down (RPY: [π, 0, 0])"
+        },
+        {
+          "name": "pre_grasp",
+          "position": [0.5, 0.3, 0.15],
+          "orientation": "down",
+          "gripper": "open"
+        },
+        {
+          "name": "grasp",
+          "position": [0.5, 0.3, 0.05],
+          "orientation": "down",
+          "gripper": "close"
+        },
+        {
+          "name": "lift",
+          "position": [0.5, 0.3, 0.15],
+          "orientation": "down",
+          "gripper": "close"
+        },
+        {
+          "name": "pre_place",
+          "position": [0.5, -0.3, 0.15],
+          "orientation": "down",
+          "gripper": "close"
+        },
+        {
+          "name": "place",
+          "position": [0.5, -0.3, 0.05],
+          "orientation": "down",
+          "gripper": "open"
+        },
+        {
+          "name": "retreat",
+          "position": [0.5, -0.3, 0.15],
+          "orientation": "down",
+          "gripper": "open"
+        },
+        {
+          "name": "home",
+          "position": [0.3, 0.0, 0.4],
+          "orientation": "down",
+          "gripper": "open"
+        }
+      ]
+    }
+  },
+
+  "implementation_steps": {
+    "step1_scene_setup": {
+      "description": "Create simulation scene with robot, table, ground, and cube",
+      "drake_components": ["DiagramBuilder", "MultibodyPlant", "SceneGraph", "Parser"],
+      "tasks": [
+        "Start Meshcat visualizer",
+        "Create DiagramBuilder",
+        "Add MultibodyPlant with time_step=0.001",
+        "Load Panda robot URDF",
+        "Weld robot base to world at (0, 0, 0.4)",
+        "Add table (static box at z=0.39)",
+        "Add ground plane (HalfSpace at z=0)",
+        "Add manipulable cube at (0.5, 0.3, 0.05)",
+        "Finalize plant"
+      ]
+    },
+
+    "step2_inverse_kinematics": {
+      "description": "Use IK to compute joint configurations for each waypoint",
+      "method": "InverseKinematics with position and orientation constraints",
+      "constraints": {
+        "position_tolerance": 0.001,
+        "orientation_tolerance": 0.01
+      },
+      "optimization": "Quadratic cost to stay near nominal configuration"
+    },
+
+    "step3_controller": {
+      "description": "Implement PD+G controller to track waypoints",
+      "type": "LeafSystem with discrete update",
+      "control_law": "tau = Kp*(q_des - q) - Kd*q_dot + g(q)",
+      "update_rate": "1000 Hz (0.001 sec)"
+    },
+
+    "step4_trajectory_execution": {
+      "description": "Execute trajectory through waypoints with timing",
+      "approach": "Time-based waypoint switching",
+      "hold_time_per_waypoint": 2.0,
+      "total_simulation_time": 16.0
+    },
+
+    "step5_visualization": {
+      "description": "Visualize in Meshcat with recording",
+      "features": [
+        "Real-time visualization",
+        "Timeline scrubbing",
+        "Camera controls"
+      ]
+    }
+  },
+
+  "expected_behavior": {
+    "timeline": {
+      "0-2s": "Robot at home position",
+      "2-4s": "Move to pre-grasp above cube",
+      "4-6s": "Descend to grasp cube",
+      "6-8s": "Close gripper and lift cube",
+      "8-10s": "Move to pre-place position",
+      "10-12s": "Descend to place position",
+      "12-14s": "Open gripper and release cube",
+      "14-16s": "Return to home position"
+    },
+
+    "success_criteria": {
+      "cube_grasped": "Cube moves with gripper after grasp",
+      "cube_placed": "Cube final position within 0.01m of (0.5, -0.3, 0.05)",
+      "no_collisions": "No unexpected collisions during trajectory",
+      "smooth_motion": "Joint velocities remain within limits"
+    }
+  },
+
+  "key_parameters": {
+    "robot": {
+      "end_effector_frame": "panda_hand",
+      "gripper_joints": ["panda_finger_joint1", "panda_finger_joint2"],
+      "gripper_open": 0.04,
+      "gripper_close": 0.0
+    },
+
+    "object": {
+      "cube_mass": 0.1,
+      "cube_size": [0.05, 0.05, 0.05],
+      "cube_friction": 0.6,
+      "pick_location": [0.5, 0.3, 0.05],
+      "place_location": [0.5, -0.3, 0.05]
+    },
+
+    "control": {
+      "time_step": 0.001,
+      "controller_frequency": 1000,
+      "waypoint_hold_time": 2.0
+    }
+  },
+
+  "generated_files": {
+    "simulation.py": "Complete Drake simulation script",
+    "world.sdf": "Optional: SDF world file (can also create scene programmatically)",
+    "README.md": "Instructions for running the example"
+  },
+
+  "common_issues": {
+    "ik_fails": {
+      "symptom": "IK solver returns None for some waypoints",
+      "solution": "Adjust waypoint positions to be within robot workspace, relax tolerances"
+    },
+    "cube_falls_through": {
+      "symptom": "Cube doesn't collide with table",
+      "solution": "Ensure table has collision geometry and is marked static"
+    },
+    "gripper_doesnt_grasp": {
+      "symptom": "Cube doesn't move with gripper",
+      "solution": "Check friction coefficients, gripper force, contact model"
+    },
+    "robot_oscillates": {
+      "symptom": "Robot shakes at waypoints",
+      "solution": "Reduce Kp gains, increase Kd gains, reduce time step"
+    }
+  },
+
+  "extensions": {
+    "advanced_grasp": "Use contact forces to detect successful grasp",
+    "obstacle_avoidance": "Add obstacles and use motion planning",
+    "multi_object": "Pick and sort multiple objects",
+    "force_control": "Use force feedback for gentle grasping"
+  },
+
+  "references": {
+    "drake_tutorials": "https://deepnote.com/workspace/Drake-0b3b2c53-a7ad-441b-80f8-bf8350752305/project/Tutorials-2b4fc509-aef2-417d-a40d-6071dfed9199",
+    "manipulation_class": "http://manipulation.csail.mit.edu/",
+    "drake_ik_docs": "https://drake.mit.edu/doxygen_cxx/classdrake_1_1multibody_1_1_inverse_kinematics.html"
+  }
+}
